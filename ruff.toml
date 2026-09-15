@@ -1,0 +1,50 @@
+# Ruff config lives here rather than in pyproject.toml so that linting works on
+# branches where the Python package has not landed yet, and so the vendored trees
+# can be excluded in one place.
+
+target-version = "py311"
+line-length = 100
+src = ["src/python", "tests/python"]
+
+extend-exclude = [
+    # Vendored agent skills, synced from an upstream repo by .agents/bin/sync-skills.py.
+    # Not ours to reformat. .claude/skills/ is symlinks into the same tree, and the
+    # formatter follows them, so both paths have to be named.
+    ".agents/skills",
+    ".claude/skills",
+    "submodules",
+]
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+]
+# flake8-use-pathlib (PTH) is deliberately not selected. It fires on every os.path
+# call in working tooling and buys no correctness, so it would be a large rewrite
+# for style alone.
+
+[lint.flake8-bugbear]
+# Typer builds its CLI out of calls in argument defaults; that is the documented
+# API, not the B008 mistake.
+extend-immutable-calls = [
+    "typer.Argument",
+    "typer.Option",
+]
+
+[lint.per-file-ignores]
+# Tests assert on literal shapes and use bare asserts by design.
+"tests/**" = ["B011"]
+
+[lint.isort]
+known-first-party = ["hmp_project"]
+
+[format]
+docstring-code-format = true
