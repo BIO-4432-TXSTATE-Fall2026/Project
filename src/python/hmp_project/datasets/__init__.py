@@ -4,12 +4,14 @@ from __future__ import annotations
 
 from hmp_project.datasets.base import Dataset, S3Dataset
 from hmp_project.datasets.hmp import HMPDataset
+from hmp_project.datasets.hmpdcc import HMPDCCDataset
 from hmp_project.datasets.sra_metadata import SRAMetadataDataset
 from hmp_project.manifest import Spec
 from hmp_project.providers import Provider
 
 DATASETS: dict[str, type[S3Dataset]] = {
     "hmp": HMPDataset,
+    "hmpdcc": HMPDCCDataset,
     "sra-metadata": SRAMetadataDataset,
 }
 
@@ -38,6 +40,7 @@ def open_dataset(spec: Spec, provider: Provider | None = None) -> Dataset:
 __all__ = [
     "DATASETS",
     "Dataset",
+    "HMPDCCDataset",
     "HMPDataset",
     "S3Dataset",
     "SRAMetadataDataset",
