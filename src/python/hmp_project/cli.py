@@ -25,10 +25,17 @@ def _new(args: argparse.Namespace) -> None:
     if not NAME.fullmatch(args.name) or args.name.endswith(".lock"):
         raise SystemExit(f"invalid spec name {args.name!r}: use lowercase letters, digits, . _ -")
     path = args.manifests_dir / f"{args.name}.json"
+    region = None
+    if args.region is not None:
+        try:
+            region = DATASETS[args.dataset].resolve_region(args.region)
+        except ValueError as error:
+            raise SystemExit(f"{args.dataset}: {error}") from None
     try:
         spec = write_spec(
             path,
             dataset=args.dataset,
+            region=region,
             prefix=args.prefix,
             include=args.include or ["*"],
             exclude=args.exclude,
@@ -58,6 +65,10 @@ def main(argv: list[str] | None = None) -> int:
     new = commands.add_parser("new", help="create a dataset spec in the manifests directory")
     new.add_argument("name", help="spec name; becomes <manifests-dir>/<name>.json")
     new.add_argument("--dataset", required=True, choices=sorted(DATASETS))
+    new.add_argument(
+        "--region",
+        help="AWS region, or an unambiguous part of one such as east; default: the dataset's first",
+    )
     new.add_argument("--prefix", required=True, help="remote prefix, e.g. HHS/HMQCP")
     new.add_argument(
         "--include", action="append", default=[], metavar="GLOB", help="repeatable; default *"

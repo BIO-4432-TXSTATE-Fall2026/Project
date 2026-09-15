@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 LOCK_SUFFIX = ".lock.json"
-SPEC_FIELDS = {"description", "dataset", "prefix", "include", "exclude"}
+SPEC_FIELDS = {"description", "dataset", "region", "prefix", "include", "exclude"}
 
 
 @dataclass(frozen=True)
@@ -26,6 +26,7 @@ class Spec:
     include: tuple[str, ...] = ("*",)
     exclude: tuple[str, ...] = ()
     description: str = ""
+    region: str | None = None  # None means the dataset's default region
 
     @classmethod
     def load(cls, path: Path) -> Spec:
@@ -42,6 +43,7 @@ class Spec:
             include=tuple(raw.get("include", ["*"])),
             exclude=tuple(raw.get("exclude", [])),
             description=raw.get("description", ""),
+            region=raw.get("region"),
         )
 
     @property
@@ -61,11 +63,15 @@ def write_spec(
     include: list[str],
     exclude: list[str],
     description: str = "",
+    region: str | None = None,
 ) -> Spec:
     """Create a new spec file. Refuses to overwrite, since the lock is tied to the spec."""
     if path.name.endswith(LOCK_SUFFIX):
         raise ValueError(f"{path}: spec names must not end in {LOCK_SUFFIX}")
-    raw: dict[str, Any] = {"dataset": dataset, "prefix": prefix, "include": include}
+    raw: dict[str, Any] = {"dataset": dataset}
+    if region:
+        raw["region"] = region
+    raw |= {"prefix": prefix, "include": include}
     if exclude:
         raw["exclude"] = exclude
     if description:
