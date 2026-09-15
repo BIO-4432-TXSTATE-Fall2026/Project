@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
+from typing import ClassVar
 
-from hmp_project.datasets.base import Dataset
-from hmp_project.provider import Provider, S3Provider
+from hmp_project.datasets.base import S3Dataset
 
 
-class HMPDataset(Dataset):
+class HMPDataset(S3Dataset):
     """Human Microbiome Project data from the AWS Open Data bucket.
 
     ``prefix`` picks the product, e.g. ``HHS/HMQCP`` or ``HHS/HMSMCP``. Some raw-read
@@ -14,16 +13,4 @@ class HMPDataset(Dataset):
     See https://registry.opendata.aws/human-microbiome-project/.
     """
 
-    BUCKET = "human-microbiome-project"
-    REGION = "us-west-2"
-
-    def __init__(
-        self,
-        prefix: str,
-        *,
-        include: Iterable[str] = ("*",),
-        exclude: Iterable[str] = (),
-        provider: Provider | None = None,
-    ) -> None:
-        provider = provider or S3Provider(self.BUCKET, region=self.REGION)
-        super().__init__(provider, prefix, include=include, exclude=exclude)
+    BUCKETS: ClassVar[dict[str, str]] = {"us-west-2": "human-microbiome-project"}
