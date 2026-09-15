@@ -6,7 +6,7 @@ from hmp_project.datasets.base import Dataset, S3Dataset
 from hmp_project.datasets.hmp import HMPDataset
 from hmp_project.datasets.sra_metadata import SRAMetadataDataset
 from hmp_project.manifest import Spec
-from hmp_project.provider import Provider
+from hmp_project.providers import Provider
 
 DATASETS: dict[str, type[S3Dataset]] = {
     "hmp": HMPDataset,

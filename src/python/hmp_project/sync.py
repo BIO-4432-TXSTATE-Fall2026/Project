@@ -11,7 +11,7 @@ from typing import Any
 
 from hmp_project.datasets import open_dataset
 from hmp_project.manifest import Spec, read_lock, sha256_file, write_lock
-from hmp_project.provider import Provider, RemoteObject
+from hmp_project.providers import Provider, RemoteObject
 
 
 @dataclass

@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from fnmatch import fnmatchcase
 from pathlib import Path
 
-from hmp_project.provider import Provider, RemoteObject
+from hmp_project.providers import Provider, RemoteObject
 
 
 class Dataset:

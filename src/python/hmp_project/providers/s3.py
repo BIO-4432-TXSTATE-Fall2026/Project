@@ -8,7 +8,7 @@ import boto3
 from botocore import UNSIGNED
 from botocore.config import Config
 
-from hmp_project.provider.base import Provider, RemoteObject
+from hmp_project.providers.base import Provider, RemoteObject
 
 
 class S3Provider(Provider):

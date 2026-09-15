@@ -10,7 +10,7 @@ from typing import Any
 import pytest
 
 from hmp_project.manifest import Spec
-from hmp_project.provider import Provider, RemoteObject
+from hmp_project.providers import Provider, RemoteObject
 
 
 class FakeProvider(Provider):
