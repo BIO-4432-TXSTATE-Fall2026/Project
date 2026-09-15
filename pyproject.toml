@@ -1,0 +1,59 @@
+[project]
+authors = [{name = "HalkScout", email = "andrewscouten@gmail.com"}]
+dependencies = ["boto3"]
+description = "Data loading for the BIO 4432 project"
+name = "hmp_project"
+requires-python = ">= 3.11"
+version = "0.1.0"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/python/hmp_project"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "osx-64", "linux-64", "win-64"]
+
+[tool.pixi.pypi-dependencies]
+hmp_project = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+new = "python -m hmp_project new"
+sync = "python -m hmp_project sync"
+
+[tool.pixi.feature.test.tasks]
+test = "pytest"
+
+[tool.pixi.feature.test.dependencies]
+pytest = ">=9.1.1,<10"
+
+[tool.pixi.feature.lint.tasks]
+lint = "ruff check . && ruff format --check ."
+format = "ruff format . && ruff check --fix ."
+
+[tool.pixi.feature.lint.dependencies]
+ruff = ">=0.16.7,<0.17"
+
+# Pixi provides R and renv; renv manages R packages in src/R/renv.lock.
+[tool.pixi.feature.r.tasks]
+r-restore = { cmd = "Rscript -e 'renv::restore(prompt = FALSE)'", cwd = "src/R" }
+r-snapshot = { cmd = "Rscript -e 'renv::snapshot(prompt = FALSE)'", cwd = "src/R" }
+
+[tool.pixi.feature.r.dependencies]
+# conda-forge's r-renv builds only go up to R 4.5.
+r-base = "4.5.*"
+r-renv = ">=1.2.4,<2"
+
+[tool.pixi.environments]
+default = { features = ["test", "lint"], solve-group = "default" }
+r = { features = ["r"] }
+
+[tool.pixi.dependencies]
+python = ">=3.11"
+boto3 = ">=1.43.92,<2"
