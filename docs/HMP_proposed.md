@@ -1,7 +1,7 @@
 # HMP data proposed for the tandem repeat entropy project
 
 Which parts of `s3://human-microbiome-project` fit the proposal in
-`docs/Bioinformatics_7361C-2.pdf`, where HMP/iHMP is the positive control: high-depth
+`docs/proposal.pdf`, where HMP/iHMP is the positive control: high-depth
 oral and gut data establishing baseline TR entropy for taxa shared with tumor datasets.
 
 Sizes and counts come from the bucket listing in `manifests/hmp.lock.json`
