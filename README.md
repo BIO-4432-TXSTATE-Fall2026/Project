@@ -38,7 +38,8 @@ that added, changed, removed, or downloaded something. Files land in `data/<name
 `sync --no-download` records the remote listing in the lock without fetching anything;
 those files have a null `sha256` until a real sync downloads them.
 
-Datasets are `hmp` and `sra-metadata` (NCBI SRA run metadata as Parquet). Each lists the
+Datasets are `hmp`, `hmpdcc` (iHMP and a per-run copy of HMP1 from the HMP DACC), and
+`sra-metadata` (NCBI SRA run metadata as Parquet). Each lists the
 AWS regions it is hosted in; `new --region` takes a region code or an unambiguous part of
 one, such as `east`, and rejects regions the dataset is not hosted in:
 
