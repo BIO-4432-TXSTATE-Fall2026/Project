@@ -41,13 +41,16 @@ def sync(
     data_dir: Path,
     *,
     dry_run: bool = False,
+    download: bool = True,
     provider: Provider | None = None,
 ) -> SyncResult:
     """Download new, changed, or locally missing files into ``data_dir/<spec name>``.
 
-    Files that disappear upstream are dropped from the lock but left on disk. The
-    lock gains a history entry only when a run adds, changes, removes, or downloads
-    something, or the spec itself changed.
+    With ``download=False`` the lock records the remote listing only; files never
+    fetched have a null ``sha256`` and ``downloaded_at``. Files that disappear
+    upstream are dropped from the lock but left on disk. The lock gains a history
+    entry only when a run adds, changes, removes, or downloads something, or the
+    spec itself changed.
     """
     dataset = open_dataset(spec, provider)
     lock = read_lock(spec.lock_path)
@@ -57,7 +60,8 @@ def sync(
 
     result = SyncResult()
     records = []
-    for obj in dataset.select():
+    selected = dataset.select()
+    for obj in selected:
         dest = dataset.local_path(obj, root)
         record = previous.get(obj.key)
         if record is None:
@@ -69,7 +73,17 @@ def sync(
 
         result.files += 1
         result.bytes += obj.size
-        if stale or not present:
+        if present and not stale:
+            if record is not None and record["sha256"] is not None:
+                sha256, downloaded_at = record["sha256"], record["downloaded_at"]
+            else:
+                # On disk but never hashed (interrupted run, or listed only): adopt it.
+                sha256, downloaded_at = sha256_file(dest), now
+        elif not download:
+            kept = record if record is not None and not stale else None
+            sha256 = kept["sha256"] if kept else None
+            downloaded_at = kept["downloaded_at"] if kept else None
+        else:
             result.downloaded.append(obj.key)
             if dry_run:
                 continue
@@ -77,11 +91,6 @@ def sync(
             if dest.stat().st_size != obj.size:
                 raise OSError(f"{dest}: expected {obj.size} bytes, got {dest.stat().st_size}")
             sha256, downloaded_at = sha256_file(dest), now
-        elif record is None:
-            # On disk from an interrupted earlier run but never locked: adopt it.
-            sha256, downloaded_at = sha256_file(dest), now
-        else:
-            sha256, downloaded_at = record["sha256"], record["downloaded_at"]
 
         records.append(
             {
@@ -94,7 +103,7 @@ def sync(
             }
         )
 
-    result.removed = sorted(previous.keys() - {record["key"] for record in records})
+    result.removed = sorted(previous.keys() - {obj.key for obj in selected})
     if dry_run:
         return result
 

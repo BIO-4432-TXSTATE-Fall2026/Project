@@ -93,6 +93,39 @@ def test_dry_run_writes_nothing(tmp_path, provider, write_spec):
     assert not (tmp_path / "data").exists()
 
 
+def test_dry_run_reports_upstream_change_as_changed_not_removed(tmp_path, provider, write_spec):
+    spec = write_spec(exclude=["*.old"])
+    sync(spec, tmp_path / "data", provider=provider)
+    provider.put(V13, b"v13 revised")
+
+    result = sync(spec, tmp_path / "data", provider=provider, dry_run=True)
+
+    assert result.changed == [V13]
+    assert result.removed == []
+
+
+def test_no_download_records_listing_then_real_sync_fills_hashes(tmp_path, provider, write_spec):
+    spec = write_spec(exclude=["*.old"])
+
+    result = sync(spec, tmp_path / "data", provider=provider, download=False)
+
+    assert provider.downloads == []
+    assert result.added == [V35, V13]
+    assert not (tmp_path / "data").exists()
+    lock = lock_of(spec)
+    assert [(f["key"], f["sha256"], f["downloaded_at"]) for f in lock["files"]] == [
+        (V35, None, None),
+        (V13, None, None),
+    ]
+    assert lock["history"][-1]["downloaded"] == []
+
+    result = sync(spec, tmp_path / "data", provider=provider)
+
+    assert provider.downloads == [V35, V13]
+    assert result.added == result.changed == []
+    assert all(f["sha256"] for f in lock_of(spec)["files"])
+
+
 def test_include_filters_relative_to_prefix(tmp_path, provider, write_spec):
     spec = write_spec(include=["nested/*"])
 

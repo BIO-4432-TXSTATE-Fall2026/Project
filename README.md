@@ -35,6 +35,9 @@ pixi run sync manifests/hmp-hmqcp.json
 file's size, ETag, upstream timestamp, and sha256, plus a history entry for every sync
 that added, changed, removed, or downloaded something. Files land in `data/<name>/`.
 
+`sync --no-download` records the remote listing in the lock without fetching anything;
+those files have a null `sha256` until a real sync downloads them.
+
 Browse what HMP offers with
 `aws s3 ls --no-sign-request s3://human-microbiome-project/HHS/`.
 

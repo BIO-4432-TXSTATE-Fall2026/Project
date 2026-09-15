@@ -42,7 +42,7 @@ def _new(args: argparse.Namespace) -> None:
 def _sync(args: argparse.Namespace) -> None:
     for path in args.specs:
         spec = Spec.load(path)
-        result = sync(spec, args.data_dir, dry_run=args.dry_run)
+        result = sync(spec, args.data_dir, dry_run=args.dry_run, download=not args.no_download)
         verb = "would download" if args.dry_run else "downloaded"
         print(
             f"{spec.name}: {result.files} files ({_size(result.bytes)}); "
@@ -74,6 +74,11 @@ def main(argv: list[str] | None = None) -> int:
     sync_parser.add_argument("--data-dir", type=Path, default=Path("data"))
     sync_parser.add_argument(
         "--dry-run", action="store_true", help="report what would change; write nothing"
+    )
+    sync_parser.add_argument(
+        "--no-download",
+        action="store_true",
+        help="record the remote listing in the lockfile without downloading files",
     )
     sync_parser.set_defaults(handler=_sync)
 
