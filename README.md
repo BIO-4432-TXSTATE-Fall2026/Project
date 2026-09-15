@@ -13,7 +13,7 @@ pixi run -e r r-restore  # R packages from src/R/renv.lock (optional)
 
 | Path                            | Purpose                                                   |
 | ------------------------------- | --------------------------------------------------------- |
-| `src/python/hmp_project/provider` | Downloads remote files as-is (e.g. S3). No preprocessing. |
+| `src/python/hmp_project/providers` | Downloads remote files as-is (e.g. S3). No preprocessing. |
 | `src/python/hmp_project/datasets` | Uses a provider to select a dataset (e.g. HMP).          |
 | `src/python/hmp_project/cli.py`   | The only thing that writes `manifests/`.                 |
 | `src/R`                         | R code; packages are managed by renv.                     |

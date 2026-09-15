@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from typing import ClassVar
 
 from hmp_project.datasets.base.dataset import Dataset
-from hmp_project.provider import Provider, S3Provider
+from hmp_project.providers import Provider, S3Provider
 
 
 class S3Dataset(Dataset):
