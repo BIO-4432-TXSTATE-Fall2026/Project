@@ -13,62 +13,117 @@ Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are i
 - [ ] Replace TCGA and Gihawi et al. (2023) validation in Table 1 and Section 3 with
       Salter et al. (2014) and the spike-in benchmark; move TCGA to future work
 
-## 1. Data loading tooling
+## 1. Data acquisition
+
+Every dataset the project uses, where it comes from, and what it is for. "Tool" is the
+`dataset` name in a manifest spec; manifests are created with the project CLI.
+
+| Dataset                        | Source                                            | Tool           | Role in the project                                                   |
+| ------------------------------ | ------------------------------------------------- | -------------- | --------------------------------------------------------------------- |
+| HMP1 shotgun reads             | `s3://human-microbiome-project` `HHS/HMASM/WGS/`  | `hmp`          | Genuine taxa: baseline TR entropy (H1), negative side of H2           |
+| HMP reference genomes          | `s3://human-microbiome-project` `reference_genomes/` | `hmp`       | TR locus catalog for target genera                                    |
+| HMP mock community genomes     | `s3://human-microbiome-project` `HHS/HMMC/`       | `hmp`          | Known strains for checking catalog loci and allele calls              |
+| HMP aligned reads (maybe)      | `s3://human-microbiome-project` `HHS/HMSCP/`      | `hmp`          | Possible replacement for read anchoring, if soft-clipping allows      |
+| SRA run metadata               | `s3://sra-pub-metadata-us-east-1`                 | `sra-metadata` | Map HMP samples to runs, center, and date (H2 batch labels)           |
+| iHMP                           | `s3://hmpdcc` `ihmp/`                             | `hmpdcc`       | Extra oral and gut data, or drop from Table 1                         |
+| Salter et al. (2014) reads     | ENA `ERP006808`, runs from `s3://sra-pub-run-odp` | `sra`          | Real contaminants with kit labels: contaminant side of H1, kit batches for H2 |
+| Contaminant reference genomes  | NCBI assemblies (S3 mirror if one exists)         | none yet       | TR locus catalog for contaminant genera; source of spike-in reads     |
+| Zeller et al. (2014) reads (optional) | ENA `ERP005534`, runs from `s3://sra-pub-run-odp` | `sra`   | Cancer-associated taxa across patients; weak evidence for H2          |
+| ~~TCGA COAD/STAD~~             | NCI GDC; needs dbGaP access                       | none           | Future work                                                           |
+
+### Sources
+
+- **HMP1 shotgun reads, reference genomes, mock community, aligned reads:**
+  [Human Microbiome Project Consortium 2012, Nature](https://doi.org/10.1038/nature11234);
+  [Registry of Open Data on AWS](https://registry.opendata.aws/human-microbiome-project/)
+- **SRA run metadata:** [NCBI SRA, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-sra/)
+- **iHMP:** [iHMP Research Network Consortium 2019, Nature](https://doi.org/10.1038/s41586-019-1238-8);
+  [HMP DACC](https://www.hmpdacc.org/)
+- **Salter et al. (2014) reads:**
+  [Salter et al. 2014, BMC Biology](https://link.springer.com/article/10.1186/s12915-014-0087-z);
+  [ENA `ERP006808`](https://www.ebi.ac.uk/ena/browser/view/ERP006808);
+  [NCBI SRA, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-sra/)
+- **Contaminant reference genomes:** [NCBI Datasets genomes](https://www.ncbi.nlm.nih.gov/datasets/genome/);
+  [NCBI assembly FTP](https://ftp.ncbi.nlm.nih.gov/genomes/all/)
+- **Zeller et al. (2014) reads:** [Zeller et al. 2014 data reuse](https://pmc.ncbi.nlm.nih.gov/articles/PMC4865240/);
+  [Wirbel et al. 2019, Nature Medicine](https://www.nature.com/articles/s41591-019-0406-6);
+  [ENA `ERP005534`](https://www.ebi.ac.uk/ena/browser/view/ERP005534)
+- **TCGA COAD/STAD:** [Grossman et al. 2016, NEJM](https://doi.org/10.1056/NEJMp1607591);
+  [NCI GDC portal](https://portal.gdc.cancer.gov/)
+
+### Shared tooling
 
 - [x] S3 provider, dataset selection by prefix and globs, manifest CLI
 - [x] `sync --no-download` to record listings without fetching
-- [x] Full HMP bucket listing (`manifests/hmp.lock.json`)
-- [x] Choose which HMP products to use (`docs/HMP_proposed.md`)
-- [x] `sra-metadata` dataset and per-spec region selection
-- [x] iHMP provider (HMP DACC portal)
-- [ ] ~~TCGA COAD/STAD provider (NCI GDC; needs dbGaP access)~~
-- [x] SRA runs dataset (`sra-pub-run-odp`, selected by run accession; `.sra` files still
-      need `fasterq-dump`)
-- [ ] NCBI genome provider for contaminant genera
+- [x] Selection by accession and per-spec region
+- [x] `convert` for `.sra` runs with `fasterq-dump`
 
-## 2. Data acquisition
+### HMP1 shotgun reads
 
-### HMP (positive control; genuine-taxa side of H2)
+- [x] Full bucket listing (`manifests/hmp.lock.json`) and product choice
+      (`docs/HMP_proposed.md`)
+- [ ] Sync `subgingival_plaque` (pilot; too few samples for entropy)
+- [ ] Verify read length
+- [ ] Sync `tongue_dorsum` and `stool`
 
-- [ ] Sync `HHS/HMASM/WGS/subgingival_plaque` (pilot; too few samples for entropy)
-- [ ] Verify HMP1 WGS read length
-- [ ] Sync `HHS/HMMC/` mock community genomes
+### HMP reference and mock community genomes
+
 - [ ] Map `reference_genomes/` directory IDs to organisms
 - [ ] Sync `*.nuc.fsa` or `*.gbk` for target genera
-- [ ] Sync SRA metadata and map each `SRS` sample to its runs, center, and date (H2)
-- [ ] Sync `tongue_dorsum` and `stool` WGS
-- [ ] Choose iHMP data from `hmpdcc` `ihmp/`, or drop iHMP from Table 1
+- [ ] Sync `HHS/HMMC/`
 
-### Contaminant ground truth (replaces TCGA)
+### HMP aligned reads
 
-- [ ] Fetch Salter et al. (2014) shotgun reads (`ERP006808`) with kit and dilution per run
-- [ ] Fetch reference genomes for contaminant genera (*S. bongori*, *Ralstonia*,
-      *Bradyrhizobium*)
+- [ ] Decide whether `HHS/HMSCP/` alignments are usable (soft-clipping bias)
+
+### SRA run metadata
+
+- [x] `sra-metadata` dataset
+- [ ] Sync and map each HMP `SRS` sample to its runs, center, and date
+
+### iHMP
+
+- [x] `hmpdcc` dataset
+- [ ] Choose data from `ihmp/`, or drop iHMP from Table 1
+
+### Salter et al. (2014) reads
+
+- [x] `sra` dataset
+- [ ] Map `ERP006808` to run accessions with kit and dilution per run
+- [ ] Sync and convert the runs
+
+### Contaminant reference genomes
+
 - [ ] Choose spike-in contaminant genera, informed by Gihawi et al. (2023) rejected taxa
-- [ ] Optional: fetch Zeller et al. (2014) CRC fecal metagenomes (`ERP005534`)
+- [ ] Find an NCBI assembly source and add a dataset (or provider) for it
+- [ ] Fetch genomes for *S. bongori*, *Ralstonia*, *Bradyrhizobium*, and the chosen
+      spike-in genera, with several strains per genus
 
-## 3. Reference cataloging
+### Zeller et al. (2014) reads (optional)
+
+- [ ] Map `ERP005534` to run accessions, then sync and convert
+
+## 2. Reference cataloging
 
 - [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
       TR locus catalog
 - [ ] Adapt PhasomeIt cataloging logic
 - [ ] Check catalog loci against the mock community genomes
 
-## 4. Allele calling and error correction
+## 3. Allele calling and error correction
 
 - [ ] Anchor reads to cataloged loci
 - [ ] Measure allele lengths per sample
 - [ ] Apply a stutter model adapted from STRling and HipSTR
-- [ ] Decide whether `HHS/HMSCP/` alignments are usable (soft-clipping bias)
 
-## 5. Confounder control
+## 4. Confounder control
 
 - [ ] Compute cross-sample TR entropy per locus
 - [ ] Use a bias-corrected estimator (e.g. Chao–Shen), no rarefying
 - [ ] Include sequencing depth as a covariate
 - [ ] Establish HMP baseline entropy for shared taxa (positive control)
 
-## 6. Classification and validation
+## 5. Classification and validation
 
 - [ ] Build the spike-in benchmark: clonal contaminant reads on HMP samples, one strain
       per synthetic batch, titrated to tumor-like depths
@@ -80,7 +135,6 @@ Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are i
       HMP taxa do not cluster by center
 - [ ] Compare against decontam as the baseline
 
-## 7. Open source
+## 6. Open source
 
 - [ ] Contribute microbial TR locus discovery improvements to inTRuder
-
