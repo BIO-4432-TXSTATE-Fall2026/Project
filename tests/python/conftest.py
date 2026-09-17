@@ -36,6 +36,14 @@ class FakeProvider(Provider):
         dest.write_bytes(self.objects[obj.key][0])
         self.downloads.append(obj.key)
 
+    def download_range(self, obj: RemoteObject, start: int, end: int, dest: Path) -> None:
+        data = self.objects[obj.key][0]
+        if hashlib.md5(data).hexdigest() != obj.etag:
+            raise OSError(f"{obj.key} changed")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(data[start:end])
+        self.downloads.append(f"{obj.key}[{start}:{end}]")
+
     def describe(self) -> dict[str, Any]:
         return {"type": "fake"}
 

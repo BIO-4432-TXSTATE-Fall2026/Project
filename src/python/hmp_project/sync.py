@@ -87,7 +87,7 @@ def sync(
             result.downloaded.append(obj.key)
             if dry_run:
                 continue
-            dataset.provider.download(obj, dest)
+            dataset.download(obj, dest)
             if dest.stat().st_size != obj.size:
                 raise OSError(f"{dest}: expected {obj.size} bytes, got {dest.stat().st_size}")
             sha256, downloaded_at = sha256_file(dest), now

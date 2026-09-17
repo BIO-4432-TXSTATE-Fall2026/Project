@@ -56,19 +56,29 @@ class Dataset:
         self.include = tuple(include)
         self.exclude = tuple(exclude)
 
+    def matches(self, key: str) -> bool:
+        """Whether ``key`` passes the globs, relative to ``root_prefix``."""
+        relative = key.removeprefix(self.root_prefix)
+        if not relative or relative.endswith("/"):  # directory placeholder objects
+            return False
+        return any(fnmatchcase(relative, p) for p in self.include) and not any(
+            fnmatchcase(relative, p) for p in self.exclude
+        )
+
     def select(self) -> list[RemoteObject]:
         # Keyed by key, so overlapping prefixes yield each object once.
         selected: dict[str, RemoteObject] = {}
         for prefix in self.prefixes:
             for obj in self.provider.list_objects(prefix):
-                relative = obj.key.removeprefix(self.root_prefix)
-                if not relative or relative.endswith("/"):  # directory placeholder objects
-                    continue
-                if any(fnmatchcase(relative, p) for p in self.include) and not any(
-                    fnmatchcase(relative, p) for p in self.exclude
-                ):
+                if self.matches(obj.key):
                     selected[obj.key] = obj
         return sorted(selected.values(), key=lambda obj: obj.key)
+
+    def download(self, obj: RemoteObject, dest: Path) -> None:
+        """Write a selected object to ``dest``. Datasets whose selected objects are not
+        remote objects themselves, such as byte ranges of one, override this.
+        """
+        self.provider.download(obj, dest)
 
     def local_path(self, key: str, root: Path) -> Path:
         """Where the object at ``key`` is stored under ``root``, mirroring the key below

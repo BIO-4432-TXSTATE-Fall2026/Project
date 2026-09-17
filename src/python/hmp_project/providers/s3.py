@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
@@ -40,6 +41,18 @@ class S3Provider(Provider):
         # download_file writes to a temporary name and renames, so an interrupted
         # transfer never leaves a truncated file at dest.
         self._client.download_file(self.bucket, obj.key, str(dest))
+
+    def download_range(self, obj: RemoteObject, start: int, end: int, dest: Path) -> None:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        response = self._client.get_object(
+            Bucket=self.bucket, Key=obj.key, Range=f"bytes={start}-{end - 1}", IfMatch=obj.etag
+        )
+        # Written beside dest and renamed, like download_file, so no truncated file remains.
+        partial = dest.with_name(f".{dest.name}.part")
+        with partial.open("wb") as f:
+            for chunk in response["Body"].iter_chunks(1 << 20):
+                f.write(chunk)
+        os.replace(partial, dest)
 
     def describe(self) -> dict[str, Any]:
         return {
