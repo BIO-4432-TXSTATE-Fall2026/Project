@@ -38,14 +38,26 @@ that added, changed, removed, or downloaded something. Files land in `data/<name
 `sync --no-download` records the remote listing in the lock without fetching anything;
 those files have a null `sha256` until a real sync downloads them.
 
-Datasets are `hmp`, `hmpdcc` (iHMP and a per-run copy of HMP1 from the HMP DACC), and
-`sra-metadata` (NCBI SRA run metadata as Parquet). Each lists the
-AWS regions it is hosted in; `new --region` takes a region code or an unambiguous part of
-one, such as `east`, and rejects regions the dataset is not hosted in:
+Datasets are `hmp`, `hmpdcc` (iHMP and a per-run copy of HMP1 from the HMP DACC),
+`sra` (NCBI SRA run data), and `sra-metadata` (SRA run metadata as Parquet). Each
+lists the AWS regions it is hosted in; `new --region` takes a region code or an
+unambiguous part of one, such as `east`, and rejects regions the dataset is not hosted in:
 
 ```sh
 pixi run new sra-metadata --dataset sra-metadata --region east --prefix sra/metadata
 ```
+
+`sra` is selected by run accession instead of by prefix, because its bucket holds
+every public SRA run and listing a prefix broad enough to cover several runs would take
+hours:
+
+```sh
+pixi run new salter --dataset sra --accession ERR1014220 --accession ERR1014221
+```
+
+Each run lands in `data/<name>/<accession>/`. Those objects are `.sra` archives rather
+than FASTQ, so reads need `fasterq-dump` from sra-tools, which is not yet a project
+dependency. Find run accessions with the `sra-metadata` dataset first.
 
 Browse what HMP offers with
 `aws s3 ls --no-sign-request s3://human-microbiome-project/HHS/`.

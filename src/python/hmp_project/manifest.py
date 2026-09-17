@@ -1,8 +1,9 @@
 """Specs and lockfiles in ``manifests/``.
 
-``<name>.json`` is written by hand and says what to fetch. ``<name>.lock.json`` is
-written by ``sync`` and records what was fetched, plus a history entry for every run
-that changed something, so upstream changes stay visible in version control.
+``<name>.json`` says what to fetch and is written by the ``new`` command.
+``<name>.lock.json`` is written by ``sync`` and records what was fetched, plus a history
+entry for every run that changed something, so upstream changes stay visible in version
+control.
 """
 
 from __future__ import annotations
@@ -15,14 +16,15 @@ from pathlib import Path
 from typing import Any
 
 LOCK_SUFFIX = ".lock.json"
-SPEC_FIELDS = {"description", "dataset", "region", "prefix", "include", "exclude"}
+SPEC_FIELDS = {"description", "dataset", "region", "prefix", "accessions", "include", "exclude"}
 
 
 @dataclass(frozen=True)
 class Spec:
     path: Path
     dataset: str
-    prefix: str
+    prefix: str = ""
+    accessions: tuple[str, ...] = ()  # an alternative to prefix, for datasets that take them
     include: tuple[str, ...] = ("*",)
     exclude: tuple[str, ...] = ()
     description: str = ""
@@ -36,10 +38,16 @@ class Spec:
         unknown = raw.keys() - SPEC_FIELDS
         if unknown:
             raise ValueError(f"{path}: unknown spec fields {sorted(unknown)}")
+        if ("prefix" in raw) == ("accessions" in raw):
+            raise ValueError(f"{path}: give either 'prefix' or 'accessions', not both")
+        accessions = tuple(raw.get("accessions") or ())
+        if "accessions" in raw and not accessions:
+            raise ValueError(f"{path}: 'accessions' is empty")
         return cls(
             path=path,
             dataset=raw["dataset"],
-            prefix=raw["prefix"],
+            prefix=raw.get("prefix", ""),
+            accessions=accessions,
             include=tuple(raw.get("include", ["*"])),
             exclude=tuple(raw.get("exclude", [])),
             description=raw.get("description", ""),
@@ -59,19 +67,23 @@ def write_spec(
     path: Path,
     *,
     dataset: str,
-    prefix: str,
     include: list[str],
     exclude: list[str],
+    prefix: str | None = None,
+    accessions: list[str] | None = None,
     description: str = "",
     region: str | None = None,
 ) -> Spec:
     """Create a new spec file. Refuses to overwrite, since the lock is tied to the spec."""
     if path.name.endswith(LOCK_SUFFIX):
         raise ValueError(f"{path}: spec names must not end in {LOCK_SUFFIX}")
+    if (prefix is None) == (not accessions):
+        raise ValueError(f"{path}: give either a prefix or accessions, not both")
     raw: dict[str, Any] = {"dataset": dataset}
     if region:
         raw["region"] = region
-    raw |= {"prefix": prefix, "include": include}
+    raw |= {"accessions": list(accessions)} if accessions else {"prefix": prefix}
+    raw["include"] = include
     if exclude:
         raw["exclude"] = exclude
     if description:

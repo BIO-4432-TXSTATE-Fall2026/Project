@@ -24,19 +24,25 @@ def _size(n: float) -> str:
 def _new(args: argparse.Namespace) -> None:
     if not NAME.fullmatch(args.name) or args.name.endswith(".lock"):
         raise SystemExit(f"invalid spec name {args.name!r}: use lowercase letters, digits, . _ -")
+    if (args.prefix is None) == (not args.accession):
+        raise SystemExit("give either --prefix or --accession, not both")
     path = args.manifests_dir / f"{args.name}.json"
+    dataset = DATASETS[args.dataset]
     region = None
-    if args.region is not None:
-        try:
-            region = DATASETS[args.dataset].resolve_region(args.region)
-        except ValueError as error:
-            raise SystemExit(f"{args.dataset}: {error}") from None
+    try:
+        if args.region is not None:
+            region = dataset.resolve_region(args.region)
+        for accession in args.accession:
+            dataset.accession_prefix(accession)
+    except ValueError as error:
+        raise SystemExit(f"{args.dataset}: {error}") from None
     try:
         spec = write_spec(
             path,
             dataset=args.dataset,
             region=region,
             prefix=args.prefix,
+            accessions=args.accession,
             include=args.include or ["*"],
             exclude=args.exclude,
             description=args.description,
@@ -69,7 +75,14 @@ def main(argv: list[str] | None = None) -> int:
         "--region",
         help="AWS region, or an unambiguous part of one such as east; default: the dataset's first",
     )
-    new.add_argument("--prefix", required=True, help="remote prefix, e.g. HHS/HMQCP")
+    new.add_argument("--prefix", help="remote prefix, e.g. HHS/HMQCP")
+    new.add_argument(
+        "--accession",
+        action="append",
+        default=[],
+        metavar="ACC",
+        help="repeatable; select by accession instead of --prefix, e.g. SRR059395",
+    )
     new.add_argument(
         "--include", action="append", default=[], metavar="GLOB", help="repeatable; default *"
     )

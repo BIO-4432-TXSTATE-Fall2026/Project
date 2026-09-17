@@ -5,6 +5,7 @@ from __future__ import annotations
 from hmp_project.datasets.base import Dataset, S3Dataset
 from hmp_project.datasets.hmp import HMPDataset
 from hmp_project.datasets.hmpdcc import HMPDCCDataset
+from hmp_project.datasets.sra import SRADataset
 from hmp_project.datasets.sra_metadata import SRAMetadataDataset
 from hmp_project.manifest import Spec
 from hmp_project.providers import Provider
@@ -12,6 +13,7 @@ from hmp_project.providers import Provider
 DATASETS: dict[str, type[S3Dataset]] = {
     "hmp": HMPDataset,
     "hmpdcc": HMPDCCDataset,
+    "sra": SRADataset,
     "sra-metadata": SRAMetadataDataset,
 }
 
@@ -26,15 +28,16 @@ def open_dataset(spec: Spec, provider: Provider | None = None) -> Dataset:
         raise ValueError(message) from None
     try:
         region = factory.resolve_region(spec.region)
+        return factory(
+            spec.prefix,
+            accessions=spec.accessions,
+            region=region,
+            include=spec.include,
+            exclude=spec.exclude,
+            provider=provider,
+        )
     except ValueError as error:
         raise ValueError(f"{spec.path}: {spec.dataset}: {error}") from None
-    return factory(
-        spec.prefix,
-        region=region,
-        include=spec.include,
-        exclude=spec.exclude,
-        provider=provider,
-    )
 
 
 __all__ = [
@@ -43,6 +46,7 @@ __all__ = [
     "HMPDCCDataset",
     "HMPDataset",
     "S3Dataset",
+    "SRADataset",
     "SRAMetadataDataset",
     "open_dataset",
 ]

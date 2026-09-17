@@ -10,14 +10,18 @@ from hmp_project.providers import Provider, S3Provider
 class S3Dataset(Dataset):
     """A dataset served from S3. ``BUCKETS`` maps each region the data is hosted in to
     the bucket there; the first entry is the default.
+
+    Selection is by ``prefix``, or by ``accessions`` for datasets that override
+    :meth:`accession_prefix` because their layout puts one accession under one prefix.
     """
 
     BUCKETS: ClassVar[dict[str, str]]
 
     def __init__(
         self,
-        prefix: str,
+        prefix: str = "",
         *,
+        accessions: Iterable[str] = (),
         region: str | None = None,
         include: Iterable[str] = ("*",),
         exclude: Iterable[str] = (),
@@ -25,7 +29,16 @@ class S3Dataset(Dataset):
     ) -> None:
         self.region = self.resolve_region(region)
         provider = provider or S3Provider(self.BUCKETS[self.region], region=self.region)
-        super().__init__(provider, prefix, include=include, exclude=exclude)
+        self.accessions = tuple(accessions)
+        prefixes = [self.accession_prefix(a) for a in self.accessions] or [prefix]
+        super().__init__(provider, prefixes, include=include, exclude=exclude)
+
+    @classmethod
+    def accession_prefix(cls, accession: str) -> str:
+        """The prefix holding ``accession``. Only datasets addressed by accession
+        override this; the rest are selected by prefix and reject accessions.
+        """
+        raise ValueError(f"{cls.__name__} selects by prefix, not by accession")
 
     @classmethod
     def resolve_region(cls, region: str | None = None) -> str:

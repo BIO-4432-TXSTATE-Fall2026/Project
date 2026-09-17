@@ -134,7 +134,7 @@ def sync(
         {
             "spec": spec.path.name,
             "dataset": spec.dataset,
-            "source": dataset.provider.uri(dataset.prefix),
+            "source": dataset.provider.uri(dataset.root_prefix),
             "files": records,
             "history": history,
         },

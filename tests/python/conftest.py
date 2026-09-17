@@ -41,6 +41,12 @@ class FakeProvider(Provider):
 
 
 @pytest.fixture
+def make_provider():
+    """Build a :class:`FakeProvider` from ``{key: contents}``."""
+    return FakeProvider
+
+
+@pytest.fixture
 def provider() -> FakeProvider:
     return FakeProvider(
         {

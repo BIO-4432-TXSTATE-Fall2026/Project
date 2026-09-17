@@ -142,3 +142,41 @@ def test_spec_rejects_unknown_fields_and_lockfiles(tmp_path, write_spec):
     spec.path.write_text(json.dumps({"dataset": "hmp", "prefix": "x", "bucket": "y"}))
     with pytest.raises(ValueError, match="unknown spec fields"):
         Spec.load(spec.path)
+
+
+@pytest.mark.parametrize(
+    ("raw", "message"),
+    [
+        ({"dataset": "sra", "prefix": "sra/", "accessions": ["SRR059395"]}, "not both"),
+        ({"dataset": "sra"}, "not both"),
+        ({"dataset": "sra", "accessions": []}, "'accessions' is empty"),
+    ],
+)
+def test_spec_requires_exactly_one_of_prefix_and_accessions(write_spec, raw, message):
+    spec = write_spec()
+    spec.path.write_text(json.dumps(raw))
+
+    with pytest.raises(ValueError, match=message):
+        Spec.load(spec.path)
+
+
+def test_accession_spec_fetches_only_its_runs_each_in_its_own_directory(tmp_path, make_provider):
+    provider = make_provider(
+        {
+            "sra/ERR1014220/ERR1014220": b"one",
+            "sra/ERR1014221/ERR1014221": b"two",
+            "sra/ERR9999999/ERR9999999": b"not selected",
+        }
+    )
+    path = tmp_path / "manifests" / "salter.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"dataset": "sra", "accessions": ["ERR1014220", "ERR1014221"]}))
+    spec = Spec.load(path)
+
+    result = sync(spec, tmp_path / "data", provider=provider)
+
+    assert (tmp_path / "data/salter/ERR1014220/ERR1014220").read_bytes() == b"one"
+    assert (tmp_path / "data/salter/ERR1014221/ERR1014221").read_bytes() == b"two"
+    assert not (tmp_path / "data/salter/ERR9999999").exists()
+    assert result.files == 2
+    assert lock_of(spec)["source"] == "fake://bucket/sra/"
