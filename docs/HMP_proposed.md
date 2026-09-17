@@ -40,8 +40,9 @@ body site. 690 of 752 sequenced samples passed HMP QC and are included.
 - Pilot on `subgingival_plaque`: small, and enriched for Fusobacterium and Porphyromonas.
 - Then scale to `tongue_dorsum` and `stool` for depth and gut coverage.
 - Skip `buccal_mucosa`: most samples are shallow (median 0.7 GB).
-- HMP1 WGS reads are short (~100 bp Illumina; not yet verified against these files),
-  which caps the repeat lengths a single read can span.
+- HMP1 WGS reads are short: Illumina GAIIx trimmed to 60–100 bp (median 97–100 in the
+  first 100k reads of three `subgingival_plaque` samples), which caps the repeat lengths
+  a single read can span.
 
 ### 2. `reference_genomes/`: TR locus catalog
 

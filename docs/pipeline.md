@@ -62,9 +62,12 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 - [x] Full bucket listing (`manifests/hmp.lock.json`) and product choice
       (`docs/HMP_proposed.md`)
-- [ ] Sync `subgingival_plaque` (pilot; too few samples for entropy)
-- [ ] Verify read length
-- [ ] Sync `tongue_dorsum` and `stool`
+- [x] Record the `subgingival_plaque` listing with `sync --no-download` (pilot; too few
+      samples for entropy). Reads are streamed from S3, not downloaded
+- [x] Verify read length: Illumina GAIIx, trimmed to 60–100 bp (median 97–100); each
+      tarball holds `.1`, `.2`, and `.singleton` FASTQ, in varying order
+- [x] Record the `tongue_dorsum` (128 samples, 760 GB) and `stool` (139 samples, 998 GB)
+      listings with `sync --no-download`; reads are streamed, not downloaded
 
 ### HMP reference and mock community genomes
 
@@ -112,6 +115,9 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 ## 3. Allele calling and error correction
 
+- [ ] Stream HMP1 reads from S3 through a locus filter, one SLURM array task per sample,
+      keeping only locus-hitting reads and per-sample read counts; test on
+      `subgingival_plaque` first
 - [ ] Anchor reads to cataloged loci
 - [ ] Measure allele lengths per sample
 - [ ] Apply a stutter model adapted from STRling and HipSTR

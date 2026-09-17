@@ -1,0 +1,8 @@
+{
+  "description": "HMP1 WGS reads, tongue dorsum; listing only, reads are streamed",
+  "dataset": "hmp",
+  "prefix": "HHS/HMASM/WGS/tongue_dorsum",
+  "include": [
+    "SRS*.tar.bz2"
+  ]
+}

@@ -1,0 +1,1183 @@
+{
+  "spec": "hmp-tongue-dorsum.json",
+  "dataset": "hmp",
+  "source": "s3://human-microbiome-project/HHS/HMASM/WGS/tongue_dorsum/",
+  "files": [
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS011140.tar.bz2",
+      "size": 5585336024,
+      "etag": "113f32cae32e2233a686c2d3fad0f177-356",
+      "last_modified": "2013-09-23T15:38:20Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS011243.tar.bz2",
+      "size": 4928787308,
+      "etag": "db1ac619186a3c504897d30f05882f76-314",
+      "last_modified": "2013-09-23T15:51:00Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS011306.tar.bz2",
+      "size": 7801267867,
+      "etag": "3aabd12b1841b22fa65e0a68699aa30b-496",
+      "last_modified": "2013-09-23T15:58:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS012279.tar.bz2",
+      "size": 7637343983,
+      "etag": "e26086e8f05be59bafa0d533bd46a1b1-486",
+      "last_modified": "2013-09-23T16:13:56Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013164.tar.bz2",
+      "size": 6540431245,
+      "etag": "e89af8a4600695dbae2a993a6a80112e-416",
+      "last_modified": "2013-09-23T16:33:32Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013234.tar.bz2",
+      "size": 5389142253,
+      "etag": "3dbd3b6f7f723999610f0f7f7ee3b290-343",
+      "last_modified": "2013-09-23T16:50:46Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013502.tar.bz2",
+      "size": 2689117899,
+      "etag": "fe672de59ad32abbbba6e9b09a324a09-171",
+      "last_modified": "2013-09-23T16:59:31Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013705.tar.bz2",
+      "size": 7286921783,
+      "etag": "229bec7e178346a3e6e33a16b7d882d8-464",
+      "last_modified": "2013-09-23T17:05:04Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013818.tar.bz2",
+      "size": 4084013557,
+      "etag": "842675c5e88c03024df27f0a80ad4a71-260",
+      "last_modified": "2013-09-23T17:19:34Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS013879.tar.bz2",
+      "size": 6112464420,
+      "etag": "1ea56118c9b361350247bb96cc305016-389",
+      "last_modified": "2013-09-23T17:33:08Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014124.tar.bz2",
+      "size": 6751777967,
+      "etag": "87671d4d04d305d86782de241d587676-430",
+      "last_modified": "2013-09-23T17:41:20Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014271.tar.bz2",
+      "size": 6005221232,
+      "etag": "c46db43784616258d8b3e4cbb836b56e-382",
+      "last_modified": "2013-09-23T17:57:48Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014470.tar.bz2",
+      "size": 5614806525,
+      "etag": "8de71b1c8cacf2a6aed29ca2108d6e9b-357",
+      "last_modified": "2013-09-23T18:15:59Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014573.tar.bz2",
+      "size": 5509097485,
+      "etag": "17b0aa0685a2e7113aecffd17ab3e773-351",
+      "last_modified": "2013-09-23T18:30:15Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014684.tar.bz2",
+      "size": 8144123962,
+      "etag": "5a227b49d29d906258b74d9feee7aadb-518",
+      "last_modified": "2013-09-23T18:43:22Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS014888.tar.bz2",
+      "size": 5691058068,
+      "etag": "62cddafedbf4daaf0abd6a01b2d6d484-362",
+      "last_modified": "2013-09-23T18:59:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015038.tar.bz2",
+      "size": 2869480332,
+      "etag": "0d0bbbf3f56190920cc0edb49c2627de-183",
+      "last_modified": "2013-09-23T19:10:40Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015057.tar.bz2",
+      "size": 7101267405,
+      "etag": "cb0dea05114ecf41f79a6aa64e501052-452",
+      "last_modified": "2013-09-23T19:20:17Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015209.tar.bz2",
+      "size": 7383503621,
+      "etag": "7f2042744e18a2055d285bda3b63a9aa-470",
+      "last_modified": "2013-09-23T19:41:35Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015272.tar.bz2",
+      "size": 5023537757,
+      "etag": "8134dccef7558396d35873619923f4de-320",
+      "last_modified": "2013-09-23T20:04:00Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015395.tar.bz2",
+      "size": 4883257745,
+      "etag": "3cfb5ba73f94ca7e0c385a8aa49ec670-311",
+      "last_modified": "2013-09-23T20:20:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015434.tar.bz2",
+      "size": 7097982670,
+      "etag": "12e18d46f094f6c7f780499c38421d4a-452",
+      "last_modified": "2013-09-23T20:33:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015537.tar.bz2",
+      "size": 4732236726,
+      "etag": "ff5d23fc47b7be39b6ddac6701235b5f-301",
+      "last_modified": "2013-09-23T20:56:07Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015644.tar.bz2",
+      "size": 5326378549,
+      "etag": "8e8b0a8685844495ea1bcae64e960158-339",
+      "last_modified": "2013-09-23T21:06:57Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015762.tar.bz2",
+      "size": 7069600296,
+      "etag": "bcae5fdb9fa96a2f0bfc9c5907ad573c-450",
+      "last_modified": "2013-09-23T21:20:10Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015797.tar.bz2",
+      "size": 7059520690,
+      "etag": "b124a499487c921b19d5784093df12ec-449",
+      "last_modified": "2013-09-23T21:39:06Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015893.tar.bz2",
+      "size": 5122237358,
+      "etag": "c7ad7ecfc6fb52d78277312e59fc3998-326",
+      "last_modified": "2013-09-23T21:58:03Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS015941.tar.bz2",
+      "size": 5941084331,
+      "etag": "b2ceaa15ce8622df47acaf82c8abba95-378",
+      "last_modified": "2013-09-23T22:15:16Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016002.tar.bz2",
+      "size": 6585699864,
+      "etag": "21b8532036a60d3b52b8ca226b50a8ce-419",
+      "last_modified": "2013-09-23T22:29:56Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016037.tar.bz2",
+      "size": 6871345745,
+      "etag": "a738fbf81594bb89621261b3d138a031-437",
+      "last_modified": "2013-09-23T22:41:38Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016086.tar.bz2",
+      "size": 4767707191,
+      "etag": "88ccd3ae0c0796a6b1440e8e0b0c50a9-304",
+      "last_modified": "2013-09-23T22:54:44Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016225.tar.bz2",
+      "size": 7254201150,
+      "etag": "a5943ae04132b4919ddd161b912b60af-462",
+      "last_modified": "2013-09-23T23:22:55Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016319.tar.bz2",
+      "size": 6557249119,
+      "etag": "b09b1adbd2446441c5a348e5cd700d71-417",
+      "last_modified": "2013-09-23T23:49:41Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016342.tar.bz2",
+      "size": 5341715792,
+      "etag": "50432faf409acbc47475ad0f4035dd44-340",
+      "last_modified": "2013-09-24T00:06:39Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016501.tar.bz2",
+      "size": 5142755184,
+      "etag": "63da06a20f0b2b113ea1b106a6b56dba-327",
+      "last_modified": "2013-09-24T00:23:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016529.tar.bz2",
+      "size": 5766041890,
+      "etag": "64292fcb0641d2fb703919b4f5690c22-367",
+      "last_modified": "2013-09-24T00:38:42Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS016569.tar.bz2",
+      "size": 6938592217,
+      "etag": "2de0088f0f75361667658a09cf3519cd-442",
+      "last_modified": "2013-09-24T00:51:31Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017120.tar.bz2",
+      "size": 6459096536,
+      "etag": "9c5b849fa954ac35e305493324388637-411",
+      "last_modified": "2013-09-24T01:06:30Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017209.tar.bz2",
+      "size": 6074802435,
+      "etag": "4c57b130a9cc4a703c15392cbbf56521-387",
+      "last_modified": "2013-09-24T01:23:57Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017439.tar.bz2",
+      "size": 6171025500,
+      "etag": "b6860c0f369201a9ed7471a5272ff2ef-393",
+      "last_modified": "2013-09-24T01:45:25Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017533.tar.bz2",
+      "size": 4927743315,
+      "etag": "6d96aa39a60b07908b70ebef1347a9d3-314",
+      "last_modified": "2013-09-24T02:08:53Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017713.tar.bz2",
+      "size": 4323175091,
+      "etag": "6070d0940997d0ce98ba3adca33897da-275",
+      "last_modified": "2013-09-24T02:34:20Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS017808.tar.bz2",
+      "size": 6233615161,
+      "etag": "aa89791d2a67ee33dae490f38f3d6831-397",
+      "last_modified": "2013-09-24T03:14:49Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018145.tar.bz2",
+      "size": 7877517571,
+      "etag": "dcbc163fdf64e60455d44541aae39623-501",
+      "last_modified": "2013-09-24T04:19:51Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018300.tar.bz2",
+      "size": 7104481703,
+      "etag": "e0d40dc20a56b03d0d078340cd7aa4c5-452",
+      "last_modified": "2013-09-24T05:24:52Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018357.tar.bz2",
+      "size": 5567237535,
+      "etag": "2ad4a65dbc35c95e70cf64de83d9e7f8-354",
+      "last_modified": "2013-09-24T05:46:29Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018439.tar.bz2",
+      "size": 7623716756,
+      "etag": "99ac1f0693481bfba3e49b07c650ef85-485",
+      "last_modified": "2013-09-24T06:06:37Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018591.tar.bz2",
+      "size": 5918785937,
+      "etag": "a6c7cf26d97122047e3b1110238b5713-377",
+      "last_modified": "2013-09-24T06:27:42Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018739.tar.bz2",
+      "size": 5618655987,
+      "etag": "1d5b082c6974fcf1ce5bd25b35b55722-358",
+      "last_modified": "2013-09-24T06:46:22Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018791.tar.bz2",
+      "size": 8285648079,
+      "etag": "cd6ed312d52f421778460afc6d5270bb-527",
+      "last_modified": "2013-09-24T07:12:43Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS018969.tar.bz2",
+      "size": 3176315970,
+      "etag": "0b8a1117852a91bb1a6b86fc610de8f0-202",
+      "last_modified": "2013-09-24T07:37:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019022.tar.bz2",
+      "size": 4432740417,
+      "etag": "fef965eab71540a83be6b8b9f6f159f3-282",
+      "last_modified": "2013-09-24T07:44:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019045.tar.bz2",
+      "size": 4892040766,
+      "etag": "595c516ea284bad87a68ee20df18b91d-312",
+      "last_modified": "2013-09-24T07:55:26Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019071.tar.bz2",
+      "size": 7893442784,
+      "etag": "7960de7081636098b93f592b06b014aa-502",
+      "last_modified": "2013-09-24T08:10:19Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019122.tar.bz2",
+      "size": 7180433458,
+      "etag": "cfc96b47b1d17ed9a1c5eb0eaeed08f6-457",
+      "last_modified": "2013-09-24T08:31:17Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019219.tar.bz2",
+      "size": 5206973451,
+      "etag": "2be8c1bb6231c52504eea5729d2172a7-332",
+      "last_modified": "2013-09-24T08:51:15Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019327.tar.bz2",
+      "size": 5457787288,
+      "etag": "1024d47ae925460e5579532aba51c450-347",
+      "last_modified": "2013-09-24T08:59:38Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019389.tar.bz2",
+      "size": 2382375220,
+      "etag": "f1aefac2e81e5a5ec2168f60d9de47f6-152",
+      "last_modified": "2013-09-24T09:13:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019607.tar.bz2",
+      "size": 6322382226,
+      "etag": "d4d6b01eca3bd45a38fa358c979c5db8-402",
+      "last_modified": "2013-09-24T09:19:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019894.tar.bz2",
+      "size": 6269259390,
+      "etag": "bf82dbd90a89eadebd90d4d700cad638-399",
+      "last_modified": "2013-09-24T09:37:03Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS019974.tar.bz2",
+      "size": 6693219261,
+      "etag": "d88a5b485424ccbfb9463d87346b5018-426",
+      "last_modified": "2013-09-24T09:50:38Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS020220.tar.bz2",
+      "size": 5886259826,
+      "etag": "2455432d73e09b23ec1c680928ed510a-375",
+      "last_modified": "2013-09-24T10:05:11Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS020334.tar.bz2",
+      "size": 3762602524,
+      "etag": "d9a7a0f66194e267719eda8927c4b11c-240",
+      "last_modified": "2013-09-24T10:18:37Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS020856.tar.bz2",
+      "size": 6548591340,
+      "etag": "486375073383f552f40cd9de568f7105-417",
+      "last_modified": "2013-09-24T10:30:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS021496.tar.bz2",
+      "size": 6958737506,
+      "etag": "5036c167deab7942276089cde715030e-443",
+      "last_modified": "2013-09-24T10:39:44Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS021954.tar.bz2",
+      "size": 6436611560,
+      "etag": "7bc6d71b97efcbb404b77748dabcb2c5-410",
+      "last_modified": "2013-09-24T10:51:08Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS022077.tar.bz2",
+      "size": 6503340151,
+      "etag": "fc566ef5b2e639a39f9526048bcb402f-414",
+      "last_modified": "2013-09-24T11:05:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS022143.tar.bz2",
+      "size": 7989265389,
+      "etag": "5a2a0a0c4001139b758b81b9c002cf3f-508",
+      "last_modified": "2013-09-24T11:21:17Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS022530.tar.bz2",
+      "size": 3598556015,
+      "etag": "7e28e056b446d401d84877e13f233e9c-229",
+      "last_modified": "2013-09-24T11:45:09Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS022621.tar.bz2",
+      "size": 8080121263,
+      "etag": "03d2ea0a421b18b2bbe57b254a219df7-514",
+      "last_modified": "2013-09-24T12:01:51Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS022719.tar.bz2",
+      "size": 6184193442,
+      "etag": "e9dea642fddcbdfb4830848de9be6401-394",
+      "last_modified": "2013-09-24T12:20:49Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023352.tar.bz2",
+      "size": 6679910716,
+      "etag": "c5cb6187a42a136917e7a99615b4c4c8-425",
+      "last_modified": "2013-09-24T12:31:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023557.tar.bz2",
+      "size": 3548487434,
+      "etag": "6a46d270d9eefa84ba6c2871a003512c-226",
+      "last_modified": "2013-09-24T12:55:25Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023617.tar.bz2",
+      "size": 7734608011,
+      "etag": "a73c7f26e254bc8ba445f10b4dfe7438-492",
+      "last_modified": "2013-09-24T13:07:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023835.tar.bz2",
+      "size": 5822499875,
+      "etag": "c8c09e43ce90a2ba610d5d73c83d8216-371",
+      "last_modified": "2013-09-24T13:23:41Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023926.tar.bz2",
+      "size": 6920772914,
+      "etag": "e0d97971946bbb159a914f31b25859ce-441",
+      "last_modified": "2013-09-24T13:32:13Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS023958.tar.bz2",
+      "size": 7203685247,
+      "etag": "97d7faf0af24634d8b59c6269a7b7272-458",
+      "last_modified": "2013-09-24T13:47:20Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024015.tar.bz2",
+      "size": 6506136980,
+      "etag": "217e17307ba34434fee15ee9b575838d-414",
+      "last_modified": "2013-09-24T14:04:07Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024081.tar.bz2",
+      "size": 7573215102,
+      "etag": "43791fef0bc429b9320e6d6f3e45c5aa-482",
+      "last_modified": "2013-09-24T14:11:20Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024138.tar.bz2",
+      "size": 6498343577,
+      "etag": "f170ae59633b3c62db92165e25aa6088-414",
+      "last_modified": "2013-09-24T14:22:22Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024277.tar.bz2",
+      "size": 7827546900,
+      "etag": "09b8052999329aee29aeebe18ccd2255-498",
+      "last_modified": "2013-09-24T14:38:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024318.tar.bz2",
+      "size": 4688006321,
+      "etag": "dda097d2cb02f00533c1197823672306-299",
+      "last_modified": "2013-09-24T14:55:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024375.tar.bz2",
+      "size": 6025968451,
+      "etag": "59e8dc754788cfb2753e6e458b011ede-384",
+      "last_modified": "2013-09-24T15:01:19Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024441.tar.bz2",
+      "size": 7161584189,
+      "etag": "bf1f7bd602cbd9c41828db982ea9397e-456",
+      "last_modified": "2013-09-24T15:15:06Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024580.tar.bz2",
+      "size": 6031328132,
+      "etag": "55c357b0bcdea57af4481296ac440455-384",
+      "last_modified": "2013-09-24T15:23:11Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS024637.tar.bz2",
+      "size": 3101127388,
+      "etag": "d07719aa6515a2fed3ea0dd2d47d0db9-198",
+      "last_modified": "2013-09-24T15:34:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS042131.tar.bz2",
+      "size": 5856439617,
+      "etag": "a89541b552d885071d537ba480dcdb92-373",
+      "last_modified": "2013-09-24T15:42:12Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS042643.tar.bz2",
+      "size": 7039048097,
+      "etag": "f1badf5fb845eaba32938e0aee3e01e4-448",
+      "last_modified": "2013-09-24T15:58:32Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS042910.tar.bz2",
+      "size": 7155326670,
+      "etag": "efecd322ea7a9bc66545c320668b32a5-455",
+      "last_modified": "2013-09-24T16:08:38Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS043663.tar.bz2",
+      "size": 9031140685,
+      "etag": "7217338e6f628049dfc8c25ad91ef730-575",
+      "last_modified": "2013-09-24T16:27:49Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS044373.tar.bz2",
+      "size": 6649589799,
+      "etag": "bea239d926492a91f0538459f2b138fd-423",
+      "last_modified": "2013-09-24T16:52:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS044486.tar.bz2",
+      "size": 4539154013,
+      "etag": "ce9203d8d9c834185fbd02c90f0572f8-289",
+      "last_modified": "2013-09-24T17:07:51Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS044662.tar.bz2",
+      "size": 4092820632,
+      "etag": "18dafe487b45245f63ccc0e8479767eb-261",
+      "last_modified": "2013-09-24T17:18:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS045127.tar.bz2",
+      "size": 2405705857,
+      "etag": "80f2d0188ca8f3b27315928ec66da8a0-153",
+      "last_modified": "2013-09-24T17:29:40Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS045715.tar.bz2",
+      "size": 7167523487,
+      "etag": "f7ef5dbd6f56308b110213883d50e0bd-456",
+      "last_modified": "2013-09-24T17:40:57Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS047210.tar.bz2",
+      "size": 5947807631,
+      "etag": "1622a5064198e776bc4bb5e9240aa32f-379",
+      "last_modified": "2013-09-24T17:52:47Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS047219.tar.bz2",
+      "size": 5892787878,
+      "etag": "d46f0f298d9cbe59cebaf2d9016808ea-375",
+      "last_modified": "2013-09-24T18:08:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS047824.tar.bz2",
+      "size": 6636476636,
+      "etag": "0125d40bc9de4a6fc2667f2ed49f1ec1-422",
+      "last_modified": "2013-09-24T18:24:42Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS048411.tar.bz2",
+      "size": 6577710883,
+      "etag": "9f4f836c3c243feeaadc64903828756b-419",
+      "last_modified": "2013-09-24T18:43:40Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS048791.tar.bz2",
+      "size": 4602010403,
+      "etag": "ca54841d0c5cd80a63a5dc0e7393ba28-293",
+      "last_modified": "2013-09-24T19:03:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS049147.tar.bz2",
+      "size": 7146880245,
+      "etag": "b3322ac313c9e760cd783a5c5c90bcbf-455",
+      "last_modified": "2013-09-24T19:14:02Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS049389.tar.bz2",
+      "size": 7190856905,
+      "etag": "5df2f1264aca5fa6c903d35ddf85025b-458",
+      "last_modified": "2013-09-24T19:30:34Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS050244.tar.bz2",
+      "size": 7586847483,
+      "etag": "56b59cb1605cf126bcb97d3782acce98-483",
+      "last_modified": "2013-09-24T19:43:42Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS050669.tar.bz2",
+      "size": 8091627924,
+      "etag": "c5924d92fc188aee1b4e8426a9b7130e-515",
+      "last_modified": "2013-09-24T20:00:13Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS051791.tar.bz2",
+      "size": 6265846298,
+      "etag": "3e5e3d65651060cee0deae698b73d2db-399",
+      "last_modified": "2013-09-24T20:19:16Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS052227.tar.bz2",
+      "size": 3166044433,
+      "etag": "0f52a0e418132da0e277cc2da8edb565-202",
+      "last_modified": "2013-09-24T20:37:19Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS053603.tar.bz2",
+      "size": 5002600622,
+      "etag": "f070dd3b3fecaf832f48a8eff30fc570-319",
+      "last_modified": "2013-09-24T20:47:01Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS053854.tar.bz2",
+      "size": 6228737237,
+      "etag": "d49439961dcdc0299403b8e9465460f6-397",
+      "last_modified": "2013-09-24T21:03:12Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS054687.tar.bz2",
+      "size": 5386561226,
+      "etag": "ac9bb2055667daff07f0e4428b7b4b88-343",
+      "last_modified": "2013-09-24T21:21:21Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS055426.tar.bz2",
+      "size": 2519430196,
+      "etag": "0ee1b82bfd6622f364e897980efb4613-161",
+      "last_modified": "2013-09-24T21:29:55Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS056323.tar.bz2",
+      "size": 4321880481,
+      "etag": "f82d389ee458df37c13f9cf870859a1a-275",
+      "last_modified": "2013-09-24T21:37:36Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS056622.tar.bz2",
+      "size": 6192761295,
+      "etag": "b4e9a01b925d5451cd5fbc87d9260689-394",
+      "last_modified": "2013-09-24T21:42:47Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS057205.tar.bz2",
+      "size": 5811917656,
+      "etag": "577c5ff9503daa4a26a36d7366b7b00b-370",
+      "last_modified": "2013-09-24T21:50:26Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS057355.tar.bz2",
+      "size": 2657781014,
+      "etag": "2b552493d41d5051000e56fc1a35bc41-169",
+      "last_modified": "2013-09-24T22:02:37Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS057539.tar.bz2",
+      "size": 6157438753,
+      "etag": "ddef72b5eead3724cf5cbc0de964bf48-392",
+      "last_modified": "2013-09-24T22:05:34Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS057692.tar.bz2",
+      "size": 7078038359,
+      "etag": "8e71eb12f717d2621edcabc3037cac88-451",
+      "last_modified": "2013-09-24T22:19:05Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS057791.tar.bz2",
+      "size": 6335922877,
+      "etag": "bcc07621e0c6316a30a7e05f20d57735-403",
+      "last_modified": "2013-09-24T22:41:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS058336.tar.bz2",
+      "size": 5310085423,
+      "etag": "f69871ca456814e722e70f1f77b618c1-338",
+      "last_modified": "2013-09-24T22:52:04Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS062540.tar.bz2",
+      "size": 1957219605,
+      "etag": "34d744f97d83257bcd0f43fd20f66545-125",
+      "last_modified": "2013-09-24T23:08:06Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS062544.tar.bz2",
+      "size": 7461304161,
+      "etag": "0220311ad3a4576918e48c5b2b70868a-475",
+      "last_modified": "2013-09-24T23:11:37Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS062761.tar.bz2",
+      "size": 8417525290,
+      "etag": "135e4fed80512fedd11d2c1ab9ad4c5a-536",
+      "last_modified": "2013-09-24T23:32:32Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS063193.tar.bz2",
+      "size": 4148156790,
+      "etag": "744e8a52104a2daa30664ff31ebb1546-264",
+      "last_modified": "2013-09-24T23:52:54Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS063288.tar.bz2",
+      "size": 5035366104,
+      "etag": "b38d00c77243ecbfff7987c98c3b1d14-321",
+      "last_modified": "2013-09-24T23:58:24Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS063932.tar.bz2",
+      "size": 6739000374,
+      "etag": "968ceed3dda17cd1101dbe4fa8da55d8-429",
+      "last_modified": "2013-09-25T00:09:37Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS064423.tar.bz2",
+      "size": 5505444586,
+      "etag": "f43a1e3231728aa7e0effd8dee413087-351",
+      "last_modified": "2013-09-25T00:25:58Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS064774.tar.bz2",
+      "size": 5880067289,
+      "etag": "5e71c1d5e83f64d751f6a83d8d50675b-374",
+      "last_modified": "2013-09-25T00:36:27Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS065278.tar.bz2",
+      "size": 5236413047,
+      "etag": "d63d5add476849f619d929d38330e7be-333",
+      "last_modified": "2013-09-25T00:46:32Z",
+      "sha256": null,
+      "downloaded_at": null
+    },
+    {
+      "key": "HHS/HMASM/WGS/tongue_dorsum/SRS077736.tar.bz2",
+      "size": 5659358981,
+      "etag": "0c2841e05bedc6f47328664b0fdea2b3-360",
+      "last_modified": "2013-09-25T00:53:17Z",
+      "sha256": null,
+      "downloaded_at": null
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-09-17T15:45:36.296789Z",
+      "spec_sha256": "2e8855d07784723db9a821ac462d0eb14ed7b5cae39296307ff9496d253da605",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "human-microbiome-project",
+          "region": "us-west-2",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 128,
+      "bytes": 760054936242,
+      "added": [
+        "HHS/HMASM/WGS/tongue_dorsum/SRS011140.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS011243.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS011306.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS012279.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013164.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013234.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013502.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013705.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013818.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS013879.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014124.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014271.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014470.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014573.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014684.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS014888.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015038.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015057.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015209.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015272.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015395.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015434.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015537.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015644.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015762.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015797.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015893.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS015941.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016002.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016037.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016086.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016225.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016319.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016342.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016501.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016529.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS016569.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017120.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017209.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017439.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017533.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017713.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS017808.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018145.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018300.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018357.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018439.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018591.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018739.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018791.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS018969.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019022.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019045.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019071.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019122.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019219.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019327.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019389.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019607.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019894.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS019974.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS020220.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS020334.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS020856.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS021496.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS021954.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS022077.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS022143.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS022530.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS022621.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS022719.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023352.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023557.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023617.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023835.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023926.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS023958.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024015.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024081.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024138.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024277.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024318.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024375.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024441.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024580.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS024637.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS042131.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS042643.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS042910.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS043663.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS044373.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS044486.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS044662.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS045127.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS045715.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS047210.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS047219.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS047824.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS048411.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS048791.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS049147.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS049389.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS050244.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS050669.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS051791.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS052227.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS053603.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS053854.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS054687.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS055426.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS056323.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS056622.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS057205.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS057355.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS057539.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS057692.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS057791.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS058336.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS062540.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS062544.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS062761.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS063193.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS063288.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS063932.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS064423.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS064774.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS065278.tar.bz2",
+        "HHS/HMASM/WGS/tongue_dorsum/SRS077736.tar.bz2"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": []
+    }
+  ]
+}
