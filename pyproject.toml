@@ -1,5 +1,5 @@
 [project]
-authors = [{name = "HalkScout", email = "andrewscouten@gmail.com"}]
+authors = [{name = "Andrew Scouten", email = "andrewscouten@gmail.com"}]
 dependencies = ["boto3"]
 description = "Data loading for the BIO 4432 project"
 name = "hmp_project"
