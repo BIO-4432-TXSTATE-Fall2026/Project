@@ -11,6 +11,12 @@ def _as_prefix(prefix: str) -> str:
     return prefix if not prefix or prefix.endswith("/") else f"{prefix}/"
 
 
+def parent_prefix(prefix: str) -> str:
+    """The prefix one ``/``-delimited level above ``prefix``; ``""`` at the top."""
+    head, _, _ = _as_prefix(prefix).rstrip("/").rpartition("/")
+    return _as_prefix(head)
+
+
 def _common_prefix(prefixes: tuple[str, ...]) -> str:
     """The longest ``/``-delimited prefix every entry of ``prefixes`` starts with."""
     shared: list[str] = []
@@ -25,9 +31,9 @@ class Dataset:
     """The objects under any of ``prefixes`` whose key matches an ``include`` glob and no
     ``exclude`` glob. Globs follow :func:`fnmatch.fnmatchcase`, so ``*`` also matches ``/``.
 
-    Globs match, and local paths are mirrored, relative to the prefixes' common parent
-    rather than to each prefix, so two prefixes holding the same filename stay distinct
-    on disk. With a single prefix that parent is the prefix itself.
+    Globs match, and local paths are mirrored, relative to ``root_prefix``. It defaults to
+    the prefixes' common parent rather than each prefix, so two prefixes holding the same
+    filename stay distinct on disk; with a single prefix that parent is the prefix itself.
     """
 
     def __init__(
@@ -37,12 +43,16 @@ class Dataset:
         *,
         include: Iterable[str] = ("*",),
         exclude: Iterable[str] = (),
+        root_prefix: str | None = None,
     ) -> None:
         self.provider = provider
         self.prefixes = tuple(dict.fromkeys(_as_prefix(prefix) for prefix in prefixes))
         if not self.prefixes:
             raise ValueError("a dataset needs at least one prefix")
-        self.root_prefix = _common_prefix(self.prefixes)
+        common = _common_prefix(self.prefixes)
+        self.root_prefix = common if root_prefix is None else _as_prefix(root_prefix)
+        if not common.startswith(self.root_prefix):
+            raise ValueError(f"root prefix {root_prefix!r} does not contain every prefix")
         self.include = tuple(include)
         self.exclude = tuple(exclude)
 

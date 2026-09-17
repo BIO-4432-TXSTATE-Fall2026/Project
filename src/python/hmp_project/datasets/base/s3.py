@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from typing import ClassVar
 
-from hmp_project.datasets.base.dataset import Dataset
+from hmp_project.datasets.base.dataset import Dataset, parent_prefix
 from hmp_project.providers import Provider, S3Provider
 
 
@@ -13,6 +13,8 @@ class S3Dataset(Dataset):
 
     Selection is by ``prefix``, or by ``accessions`` for datasets that override
     :meth:`accession_prefix` because their layout puts one accession under one prefix.
+    Accessions are mirrored locally from the level above their prefixes, so each keeps
+    its own directory however many a spec lists.
     """
 
     BUCKETS: ClassVar[dict[str, str]]
@@ -30,8 +32,15 @@ class S3Dataset(Dataset):
         self.region = self.resolve_region(region)
         provider = provider or S3Provider(self.BUCKETS[self.region], region=self.region)
         self.accessions = tuple(accessions)
-        prefixes = [self.accession_prefix(a) for a in self.accessions] or [prefix]
-        super().__init__(provider, prefixes, include=include, exclude=exclude)
+        if self.accessions:
+            prefixes = [self.accession_prefix(a) for a in self.accessions]
+            parents = {parent_prefix(p) for p in prefixes}
+            root_prefix = parents.pop() if len(parents) == 1 else None
+        else:
+            prefixes, root_prefix = [prefix], None
+        super().__init__(
+            provider, prefixes, include=include, exclude=exclude, root_prefix=root_prefix
+        )
 
     @classmethod
     def accession_prefix(cls, accession: str) -> str:

@@ -180,3 +180,14 @@ def test_accession_spec_fetches_only_its_runs_each_in_its_own_directory(tmp_path
     assert not (tmp_path / "data/salter/ERR9999999").exists()
     assert result.files == 2
     assert lock_of(spec)["source"] == "fake://bucket/sra/"
+
+
+def test_a_single_accession_still_gets_its_own_directory(tmp_path, make_provider):
+    provider = make_provider({"sra/ERR1014220/ERR1014220": b"one"})
+    path = tmp_path / "manifests" / "one.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"dataset": "sra", "accessions": ["ERR1014220"]}))
+
+    sync(Spec.load(path), tmp_path / "data", provider=provider)
+
+    assert (tmp_path / "data/one/ERR1014220/ERR1014220").read_bytes() == b"one"
