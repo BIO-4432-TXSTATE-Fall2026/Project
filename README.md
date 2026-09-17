@@ -92,7 +92,8 @@ pixi run pipeline -profile slurm,apptainer \
 pixi run test-workflow
 ```
 
-Results land in `results/`. On SLURM, launch from a filesystem the compute nodes share.
+Results land in `results/`. On SLURM, launch from a filesystem the compute nodes share;
+see `docs/HPC/RUNNING.md` and `docs/HPC/SLURM.md`.
 
 Each process's image is set in `conf/containers.config`. Running the Containers workflow
 from the GitHub Actions tab builds every `containers/<name>/Dockerfile` and publishes it
