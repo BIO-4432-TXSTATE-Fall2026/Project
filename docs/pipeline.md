@@ -71,9 +71,12 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 ### HMP reference and mock community genomes
 
-- [ ] Map `reference_genomes/` directory IDs to organisms
-- [ ] Sync `*.nuc.fsa` or `*.gbk` for target genera
-- [ ] Sync `HHS/HMMC/`
+- [x] Map `reference_genomes/` directory IDs to organisms
+      (`manifests/hmp-reference-genomes-list.json`)
+- [x] Sync `*.nuc.fsa` or `*.gbk` for target genera: 198 genomes, 760 MB
+      (`manifests/hmp-reference-genomes-target.json`)
+- [x] Sync `HHS/HMMC/`: 22 strain genomes and the strain sheet, 27 MB
+      (`manifests/hmp-mock-community.json`)
 
 ### HMP aligned reads
 

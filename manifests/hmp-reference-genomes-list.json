@@ -1,0 +1,8 @@
+{
+  "description": "HMP reference genome ID to organism and body site listing (list.json)",
+  "dataset": "hmp",
+  "prefix": "reference_genomes",
+  "include": [
+    "list.json"
+  ]
+}

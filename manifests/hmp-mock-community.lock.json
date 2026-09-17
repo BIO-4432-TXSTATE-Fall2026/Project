@@ -1,0 +1,262 @@
+{
+  "spec": "hmp-mock-community.json",
+  "dataset": "hmp",
+  "source": "s3://human-microbiome-project/HHS/HMMC/",
+  "files": [
+    {
+      "key": "HHS/HMMC/Acinetobacter_baumannii_ATCC_17978/17477.CP000521.nuc.fsa.bz2",
+      "size": 1145020,
+      "etag": "69c6cd3020d5cb7e4d27d2d9dae88947",
+      "last_modified": "2014-03-17T20:25:06Z",
+      "sha256": "33ee2999ff17d2984a0ce86744af39790a4bd8c12644dcd473c5b5361f889764",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Actinomyces_odontolyticus_ATCC_17982/18171.AAYI00000000-AAYI00000004.nuc.fsa.bz2",
+      "size": 675926,
+      "etag": "e528feeb12d862750ea757012dc0929f",
+      "last_modified": "2014-03-17T20:25:08Z",
+      "sha256": "4fa50262aca1fc85a30388147b800aefe0cd52a4deb182c4d0963eccb840838a",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Bacillus_cereus_ATCC_10987/74.AE017194.nuc.fsa.bz2",
+      "size": 1489747,
+      "etag": "d70521ea93c8e04d4661148f9249a2ae",
+      "last_modified": "2014-03-17T20:25:09Z",
+      "sha256": "af8d371ec8ff5afe3cf8482c0ee64ac18e174d287d0bac8ed144f841c7f24146",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Bacteroides_vulgatus_ATCC_8482/13378.CP000139.nuc.fsa.bz2",
+      "size": 1488249,
+      "etag": "02f781c8588acef0428bca16114e6947",
+      "last_modified": "2014-03-17T20:25:10Z",
+      "sha256": "4a0752b81fc5610ac31d10b1f0ac8edb532ba84e58bb69e40c5a28c458ad9709",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Candida_albicans_ATCC_MY-2876/10701.AACQ01000001-AACQ01000413.nuc.fsa.bz2",
+      "size": 7273110,
+      "etag": "44c0c1d5d242c6762ae9d1e9847408b0",
+      "last_modified": "2014-03-17T20:25:13Z",
+      "sha256": "9b6720de6857ef5284aa722b857d4209f6c3e30b5e667600a3af423173181a70",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Clostridium_beijerinckii_ATCC_51743/12637.CP000721.nuc.fsa.bz2",
+      "size": 1691607,
+      "etag": "76b1d94198d903e8410b54ef46f2f0fd",
+      "last_modified": "2014-03-17T20:25:15Z",
+      "sha256": "e880e84d5e2ecb517bed2c7c4e71430bc57825c7de377e80784519fa3e8de6a9",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Deinococcus_radiodurans_DSM_20539/57665.AE000513_AE001825-AE001827.nuc.fsa.bz2",
+      "size": 920039,
+      "etag": "cec60930c8f49e7867f8a59a045be8f6",
+      "last_modified": "2014-03-17T20:25:17Z",
+      "sha256": "f105ec71cc9bedb94a7b4c5417974355646a80f5f777d9686ad1a73cc5b7b330",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Enterococcus_faecalis_ATCC_47077/20843.CP002621.nuc.fsa.bz2",
+      "size": 785806,
+      "etag": "aa38f85f26fe25947ecb4d104bd35f72",
+      "last_modified": "2014-03-17T20:25:19Z",
+      "sha256": "0f553eabdca67d390f4d1b723fd4a9bc80473b1a5e3d788ab088ea470cf514aa",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Escherichia_coli_ATCC_700926/225.U00096.nuc.fsa.bz2",
+      "size": 1335187,
+      "etag": "6620ca7908a4d2aa710cea5e0e39b6f5",
+      "last_modified": "2014-03-17T20:25:21Z",
+      "sha256": "d036d78106387707eb1b9e1f00a3d13c9e55ec96ff9df3bd4189efa72dd4f259",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/HMPRP_sT1-Mock.pdf",
+      "size": 279008,
+      "etag": "a966c8ab43ec8e148e418ac4273a9bd5",
+      "last_modified": "2014-03-17T20:25:22Z",
+      "sha256": "78a17b3ffe97ae448798183ceb71c064e9c2a5b1a99a30d329b5251cf57aa5f6",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Helicobacter_pylori_ATCC_700392/233.AE000511.nuc.fsa.bz2",
+      "size": 472384,
+      "etag": "c0d15adcdce5dbad041216a4a48ee4e1",
+      "last_modified": "2014-03-17T20:25:23Z",
+      "sha256": "2af6e95c04d13fea30ba6c4661d9ffef33bebf3b7a47725a4a6b47e0dce6f505",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Lactobacillus_gasseri_DSM_20243/84.CP000413.nuc.fsa.bz2",
+      "size": 539955,
+      "etag": "82ab21b9dba0e3a770643210e5bcdc71",
+      "last_modified": "2014-03-17T20:25:24Z",
+      "sha256": "4608ba94a5af8200b860ecb0f3a6b3dfc9de01ab58b3583639bbc7629ed66f73",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Listeria_monocytogenes_ATCC_BAA-679/276.AL591824.nuc.fsa.bz2",
+      "size": 845863,
+      "etag": "49c4d771a48d2b5c3bc2de772aae98f5",
+      "last_modified": "2014-03-17T20:25:26Z",
+      "sha256": "194daa495e2c6a6fbd12c1bc3f37335bb98433a8a6c1e3f7956f911a59bf8973",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Methanobrevibacter_smithii_ATCC_35061/18653.CP000678.nuc.fsa.bz2",
+      "size": 521108,
+      "etag": "a13f02107864047e5190d95c53ca3256",
+      "last_modified": "2014-03-17T20:26:13Z",
+      "sha256": "c2c93e844df871f92cc7c06936cdc44ef020d915c04d0da137b764543f2afa4a",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Neisseria_meningitidis_ATCC_BAA-335/251.AE002098.nuc.fsa.bz2",
+      "size": 635597,
+      "etag": "471d0d3848ef9c75d80bd5d2acd01c16",
+      "last_modified": "2014-03-17T20:26:15Z",
+      "sha256": "abb9e550039cc81a237c3f8f3916e52a8f77fc17b0ad693ca34cee21ae9ac613",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Propionibacterium_acnes_DSM16379/12460.AE017283.nuc.fsa.bz2",
+      "size": 735911,
+      "etag": "6b018f261e760de77664bb1528220747",
+      "last_modified": "2014-03-17T20:26:16Z",
+      "sha256": "bf3a4e3d7b21f5eebbfa954dab7539c42f4e687b0a9d530a214824930828314c",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Pseudomonas_aeruginosa_ATCC_47085/331.AE017283.nuc.fsa.bz2",
+      "size": 1734026,
+      "etag": "c5b06d1f1d3a8af4e8b43144bce48df6",
+      "last_modified": "2014-03-17T20:26:18Z",
+      "sha256": "42c5d6f6aacdc08a1f07f2ff190e3d2b55e6dd3b2f9b8912fd30e7ed962a104c",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Rhodobacter_sphaeroides_ATCC_17023/56.DQ232586-DQ232587.CP000143-CP000147.nuc.fsa.bz2",
+      "size": 1272136,
+      "etag": "fc4a522aa56b5ea227d4292585cf151f",
+      "last_modified": "2014-03-17T20:26:20Z",
+      "sha256": "c08744312bb746a5207b564f4b8a89dcda7bda5931b490f7e2bd64b0eb1b9618",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Staphylococcus_aureus_ATCC_BAA-1718/19921.AASB02000001-AASB02000256.nuc.fsa.bz2",
+      "size": 804702,
+      "etag": "ec6117ad1232bb372d66f09e3694a5ef",
+      "last_modified": "2014-03-17T20:26:22Z",
+      "sha256": "e549b499b58d45581044136bd74cd33a20d26fc1b917dbaf5bd064a79bde0386",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Staphylococcus_epidermidis_ATCC_12228/279.AE015929.nuc.fsa.bz2",
+      "size": 710563,
+      "etag": "1b24e3c454b67396df807bc920fefda8",
+      "last_modified": "2014-03-17T20:26:23Z",
+      "sha256": "92222f34e66e89ab3fb8cb61be02f425be375bc67263699222bbd648821f8de7",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Streptococcus_agalactiae_ATCC_BAA-611/330.AE009948.nuc.fsa.bz2",
+      "size": 617019,
+      "etag": "e85f75b5ac3511f8bc2ee6ffd46f2b2e",
+      "last_modified": "2014-03-17T20:26:26Z",
+      "sha256": "c7e00f2977058f8f87634de58fa942ecab9766ae3960f61e42ba5cc2eb3fb341",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Streptococcus_mutans_ATCC_700610/333.AE014133.nuc.fsa.bz2",
+      "size": 583346,
+      "etag": "c938e2bc9ff8f117df00bcd845ca5175",
+      "last_modified": "2014-03-17T20:26:28Z",
+      "sha256": "cbb5f5ad275cb52ccd01a6a6132b151b1cf5d95c4e2a37596146367a2a185100",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    },
+    {
+      "key": "HHS/HMMC/Streptococcus_pneumoniae_ATCC_BAA-334/277.AE005672.nuc.fsa.bz2",
+      "size": 617110,
+      "etag": "ab7b12da972ee7c72ffdff0412a9d703",
+      "last_modified": "2014-03-17T20:26:30Z",
+      "sha256": "475a467afcc119acafe63aa93a867fc43ccf23d7b20ebd7c893ca76e5f781cb0",
+      "downloaded_at": "2026-09-17T16:46:48.980817Z"
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-09-17T16:46:48.980817Z",
+      "spec_sha256": "a3095eab4e705af29139c86540bdadb91e618b19474f0c2bca639ec390ca1e7d",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "human-microbiome-project",
+          "region": "us-west-2",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 23,
+      "bytes": 27173419,
+      "added": [
+        "HHS/HMMC/Acinetobacter_baumannii_ATCC_17978/17477.CP000521.nuc.fsa.bz2",
+        "HHS/HMMC/Actinomyces_odontolyticus_ATCC_17982/18171.AAYI00000000-AAYI00000004.nuc.fsa.bz2",
+        "HHS/HMMC/Bacillus_cereus_ATCC_10987/74.AE017194.nuc.fsa.bz2",
+        "HHS/HMMC/Bacteroides_vulgatus_ATCC_8482/13378.CP000139.nuc.fsa.bz2",
+        "HHS/HMMC/Candida_albicans_ATCC_MY-2876/10701.AACQ01000001-AACQ01000413.nuc.fsa.bz2",
+        "HHS/HMMC/Clostridium_beijerinckii_ATCC_51743/12637.CP000721.nuc.fsa.bz2",
+        "HHS/HMMC/Deinococcus_radiodurans_DSM_20539/57665.AE000513_AE001825-AE001827.nuc.fsa.bz2",
+        "HHS/HMMC/Enterococcus_faecalis_ATCC_47077/20843.CP002621.nuc.fsa.bz2",
+        "HHS/HMMC/Escherichia_coli_ATCC_700926/225.U00096.nuc.fsa.bz2",
+        "HHS/HMMC/HMPRP_sT1-Mock.pdf",
+        "HHS/HMMC/Helicobacter_pylori_ATCC_700392/233.AE000511.nuc.fsa.bz2",
+        "HHS/HMMC/Lactobacillus_gasseri_DSM_20243/84.CP000413.nuc.fsa.bz2",
+        "HHS/HMMC/Listeria_monocytogenes_ATCC_BAA-679/276.AL591824.nuc.fsa.bz2",
+        "HHS/HMMC/Methanobrevibacter_smithii_ATCC_35061/18653.CP000678.nuc.fsa.bz2",
+        "HHS/HMMC/Neisseria_meningitidis_ATCC_BAA-335/251.AE002098.nuc.fsa.bz2",
+        "HHS/HMMC/Propionibacterium_acnes_DSM16379/12460.AE017283.nuc.fsa.bz2",
+        "HHS/HMMC/Pseudomonas_aeruginosa_ATCC_47085/331.AE017283.nuc.fsa.bz2",
+        "HHS/HMMC/Rhodobacter_sphaeroides_ATCC_17023/56.DQ232586-DQ232587.CP000143-CP000147.nuc.fsa.bz2",
+        "HHS/HMMC/Staphylococcus_aureus_ATCC_BAA-1718/19921.AASB02000001-AASB02000256.nuc.fsa.bz2",
+        "HHS/HMMC/Staphylococcus_epidermidis_ATCC_12228/279.AE015929.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_agalactiae_ATCC_BAA-611/330.AE009948.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_mutans_ATCC_700610/333.AE014133.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_pneumoniae_ATCC_BAA-334/277.AE005672.nuc.fsa.bz2"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": [
+        "HHS/HMMC/Acinetobacter_baumannii_ATCC_17978/17477.CP000521.nuc.fsa.bz2",
+        "HHS/HMMC/Actinomyces_odontolyticus_ATCC_17982/18171.AAYI00000000-AAYI00000004.nuc.fsa.bz2",
+        "HHS/HMMC/Bacillus_cereus_ATCC_10987/74.AE017194.nuc.fsa.bz2",
+        "HHS/HMMC/Bacteroides_vulgatus_ATCC_8482/13378.CP000139.nuc.fsa.bz2",
+        "HHS/HMMC/Candida_albicans_ATCC_MY-2876/10701.AACQ01000001-AACQ01000413.nuc.fsa.bz2",
+        "HHS/HMMC/Clostridium_beijerinckii_ATCC_51743/12637.CP000721.nuc.fsa.bz2",
+        "HHS/HMMC/Deinococcus_radiodurans_DSM_20539/57665.AE000513_AE001825-AE001827.nuc.fsa.bz2",
+        "HHS/HMMC/Enterococcus_faecalis_ATCC_47077/20843.CP002621.nuc.fsa.bz2",
+        "HHS/HMMC/Escherichia_coli_ATCC_700926/225.U00096.nuc.fsa.bz2",
+        "HHS/HMMC/HMPRP_sT1-Mock.pdf",
+        "HHS/HMMC/Helicobacter_pylori_ATCC_700392/233.AE000511.nuc.fsa.bz2",
+        "HHS/HMMC/Lactobacillus_gasseri_DSM_20243/84.CP000413.nuc.fsa.bz2",
+        "HHS/HMMC/Listeria_monocytogenes_ATCC_BAA-679/276.AL591824.nuc.fsa.bz2",
+        "HHS/HMMC/Methanobrevibacter_smithii_ATCC_35061/18653.CP000678.nuc.fsa.bz2",
+        "HHS/HMMC/Neisseria_meningitidis_ATCC_BAA-335/251.AE002098.nuc.fsa.bz2",
+        "HHS/HMMC/Propionibacterium_acnes_DSM16379/12460.AE017283.nuc.fsa.bz2",
+        "HHS/HMMC/Pseudomonas_aeruginosa_ATCC_47085/331.AE017283.nuc.fsa.bz2",
+        "HHS/HMMC/Rhodobacter_sphaeroides_ATCC_17023/56.DQ232586-DQ232587.CP000143-CP000147.nuc.fsa.bz2",
+        "HHS/HMMC/Staphylococcus_aureus_ATCC_BAA-1718/19921.AASB02000001-AASB02000256.nuc.fsa.bz2",
+        "HHS/HMMC/Staphylococcus_epidermidis_ATCC_12228/279.AE015929.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_agalactiae_ATCC_BAA-611/330.AE009948.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_mutans_ATCC_700610/333.AE014133.nuc.fsa.bz2",
+        "HHS/HMMC/Streptococcus_pneumoniae_ATCC_BAA-334/277.AE005672.nuc.fsa.bz2"
+      ]
+    }
+  ]
+}
