@@ -145,7 +145,7 @@ def test_sibling_prefixes_holding_the_same_filename_do_not_collide(tmp_path, mak
     dataset = Dataset(provider, ["wgs/stool/", "wgs/tongue_dorsum/"])
 
     assert dataset.root_prefix == "wgs/"
-    assert [dataset.local_path(obj, tmp_path) for obj in dataset.select()] == [
+    assert [dataset.local_path(obj.key, tmp_path) for obj in dataset.select()] == [
         tmp_path / "stool/SRS1.tar",
         tmp_path / "tongue_dorsum/SRS1.tar",
     ]
@@ -157,4 +157,4 @@ def test_a_single_prefix_still_mirrors_keys_below_that_prefix(tmp_path, make_pro
 
     [obj] = dataset.select()
     assert dataset.root_prefix == "HHS/HMQCP/"
-    assert dataset.local_path(obj, tmp_path) == tmp_path / "nested/otu.txt"
+    assert dataset.local_path(obj.key, tmp_path) == tmp_path / "nested/otu.txt"

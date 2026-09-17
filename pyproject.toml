@@ -50,9 +50,21 @@ r-snapshot = { cmd = "Rscript -e 'renv::snapshot(prompt = FALSE)'", cwd = "src/R
 r-base = "4.5.*"
 r-renv = ">=1.2.4,<2"
 
+# sra-tools (fasterq-dump) is only on bioconda, which has no Windows builds.
+[tool.pixi.feature.sra]
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.feature.sra.tasks]
+convert = "python -m hmp_project convert"
+
+[tool.pixi.feature.sra.dependencies]
+sra-tools = ">=3.4.1,<4"
+
 [tool.pixi.environments]
 default = { features = ["test", "lint"], solve-group = "default" }
 r = { features = ["r"] }
+sra = { features = ["sra"] }
 
 [tool.pixi.dependencies]
 python = ">=3.11"

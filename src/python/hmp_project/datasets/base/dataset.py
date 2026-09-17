@@ -70,11 +70,18 @@ class Dataset:
                     selected[obj.key] = obj
         return sorted(selected.values(), key=lambda obj: obj.key)
 
-    def local_path(self, obj: RemoteObject, root: Path) -> Path:
-        """Where ``obj`` is stored under ``root``, mirroring its key below the prefixes'
-        common parent.
+    def local_path(self, key: str, root: Path) -> Path:
+        """Where the object at ``key`` is stored under ``root``, mirroring the key below
+        ``root_prefix``.
         """
-        parts = [part for part in obj.key.removeprefix(self.root_prefix).split("/") if part]
+        parts = [part for part in key.removeprefix(self.root_prefix).split("/") if part]
         if not parts or any(part in (".", "..") for part in parts):
-            raise ValueError(f"refusing to map key {obj.key!r} to a local path")
+            raise ValueError(f"refusing to map key {key!r} to a local path")
         return root.joinpath(*parts)
+
+    def convert(self, path: Path, *, threads: int | None = None) -> list[Path]:
+        """Derive analysis-ready files beside the synced file at ``path`` and return their
+        paths. The synced file is kept, since ``sync`` checks it against the lock.
+        Datasets whose files are usable as downloaded do not override this.
+        """
+        raise ValueError(f"{type(self).__name__} files are used as downloaded; nothing to convert")

@@ -6,6 +6,7 @@ import argparse
 import re
 from pathlib import Path
 
+from hmp_project.convert import convert
 from hmp_project.datasets import DATASETS
 from hmp_project.manifest import Spec, write_spec
 from hmp_project.sync import sync
@@ -64,6 +65,17 @@ def _sync(args: argparse.Namespace) -> None:
         )
 
 
+def _convert(args: argparse.Namespace) -> None:
+    for path in args.specs:
+        spec = Spec.load(path)
+        try:
+            result = convert(spec, args.data_dir, threads=args.threads)
+        except (RuntimeError, ValueError) as error:
+            raise SystemExit(f"{spec.name}: {error}") from None
+        missing = f"; {len(result.missing)} not downloaded" if result.missing else ""
+        print(f"{spec.name}: {result.files} files converted to {len(result.outputs)}{missing}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="hmp_project")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -105,6 +117,16 @@ def main(argv: list[str] | None = None) -> int:
         help="record the remote listing in the lockfile without downloading files",
     )
     sync_parser.set_defaults(handler=_sync)
+
+    convert_parser = commands.add_parser(
+        "convert", help="derive analysis-ready files from a spec's synced files"
+    )
+    convert_parser.add_argument("specs", nargs="+", type=Path, metavar="SPEC")
+    convert_parser.add_argument("--data-dir", type=Path, default=Path("data"))
+    convert_parser.add_argument(
+        "--threads", type=int, help="worker threads; default: the converter's own"
+    )
+    convert_parser.set_defaults(handler=_convert)
 
     args = parser.parse_args(argv)
     args.handler(args)

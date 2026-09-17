@@ -62,7 +62,7 @@ def sync(
     records = []
     selected = dataset.select()
     for obj in selected:
-        dest = dataset.local_path(obj, root)
+        dest = dataset.local_path(obj.key, root)
         record = previous.get(obj.key)
         if record is None:
             result.added.append(obj.key)

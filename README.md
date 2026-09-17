@@ -55,9 +55,21 @@ hours:
 pixi run new salter --dataset sra --accession ERR1014220 --accession ERR1014221
 ```
 
-Each run lands in `data/<name>/<accession>/`. Those objects are `.sra` archives rather
-than FASTQ, so reads need `fasterq-dump` from sra-tools, which is not yet a project
-dependency. Find run accessions with the `sra-metadata` dataset first.
+Each run lands in `data/<name>/<accession>/`. Find run accessions with the
+`sra-metadata` dataset first.
+
+Those objects are `.sra` archives rather than FASTQ. `convert` extracts uncompressed
+FASTQ beside each synced archive with `fasterq-dump`, keeping the archive so `sync` still
+matches the lock, and skips runs already converted:
+
+```sh
+pixi run sync manifests/salter.json
+pixi run convert manifests/salter.json
+```
+
+`fasterq-dump` comes from sra-tools in the `sra` environment, which `pixi run convert`
+uses. It is not available on Windows. FASTQ is several times the archive's size, and
+conversion temporarily needs about that much free space again.
 
 Browse what HMP offers with
 `aws s3 ls --no-sign-request s3://human-microbiome-project/HHS/`.
