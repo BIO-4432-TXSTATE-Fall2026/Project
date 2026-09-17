@@ -1,7 +1,8 @@
 # Pipeline
 
 Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are in
-`docs/HMP_proposed.md`.
+`docs/HMP_proposed.md` and, with no TCGA controlled access,
+`docs/tcga_controlled_alternative.md`.
 
 ## 0. Proposal
 
@@ -9,6 +10,8 @@ Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are i
 - [ ] Write the abstract
 - [ ] Pin the inTRuder commit in the reference
 - [ ] Cite or drop Vogler et al. (2006) and Zepeda-Rivera et al. (2024)
+- [ ] Replace TCGA and Gihawi et al. (2023) validation in Table 1 and Section 3 with
+      Salter et al. (2014) and the spike-in benchmark; move TCGA to future work
 
 ## 1. Data loading tooling
 
@@ -19,22 +22,35 @@ Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are i
 - [x] `sra-metadata` dataset and per-spec region selection
 - [x] iHMP provider (HMP DACC portal)
 - [ ] ~~TCGA COAD/STAD provider (NCI GDC; needs dbGaP access)~~
+- [x] SRA runs dataset (`sra-pub-run-odp`, selected by run accession; `.sra` files still
+      need `fasterq-dump`)
+- [ ] NCBI genome provider for contaminant genera
 
 ## 2. Data acquisition
 
-- [ ] Sync `HHS/HMASM/WGS/subgingival_plaque` (pilot)
+### HMP (positive control; genuine-taxa side of H2)
+
+- [ ] Sync `HHS/HMASM/WGS/subgingival_plaque` (pilot; too few samples for entropy)
 - [ ] Verify HMP1 WGS read length
 - [ ] Sync `HHS/HMMC/` mock community genomes
 - [ ] Map `reference_genomes/` directory IDs to organisms
 - [ ] Sync `*.nuc.fsa` or `*.gbk` for target genera
 - [ ] Sync SRA metadata and map each `SRS` sample to its runs, center, and date (H2)
 - [ ] Sync `tongue_dorsum` and `stool` WGS
-- [ ] Collect Gihawi et al. (2023) retained and rejected taxon calls
-- [ ] Apply for dbGaP access and fetch TCGA COAD/STAD reads
+- [ ] Choose iHMP data from `hmpdcc` `ihmp/`, or drop iHMP from Table 1
+
+### Contaminant ground truth (replaces TCGA)
+
+- [ ] Fetch Salter et al. (2014) shotgun reads (`ERP006808`) with kit and dilution per run
+- [ ] Fetch reference genomes for contaminant genera (*S. bongori*, *Ralstonia*,
+      *Bradyrhizobium*)
+- [ ] Choose spike-in contaminant genera, informed by Gihawi et al. (2023) rejected taxa
+- [ ] Optional: fetch Zeller et al. (2014) CRC fecal metagenomes (`ERP005534`)
 
 ## 3. Reference cataloging
 
-- [ ] Run inTRuder on target-genus reference genomes to build the TR locus catalog
+- [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
+      TR locus catalog
 - [ ] Adapt PhasomeIt cataloging logic
 - [ ] Check catalog loci against the mock community genomes
 
@@ -54,12 +70,15 @@ Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are i
 
 ## 6. Classification and validation
 
+- [ ] Build the spike-in benchmark: clonal contaminant reads on HMP samples, one strain
+      per synthetic batch, titrated to tumor-like depths
 - [ ] Build TR diversity and batch features
 - [ ] Train a gradient boosting model with SHAP attribution
-- [ ] Test H1: entropy gap between biological signal and contaminants, including at low depth
-- [ ] Test H2: TR signatures cluster by center and batch for contaminants only
+- [ ] Test H1: entropy gap between biological signal and contaminants, including at low
+      depth (Salter et al. and spike-ins)
+- [ ] Test H2: contaminants cluster by kit (Salter et al.) and synthetic batch; genuine
+      HMP taxa do not cluster by center
 - [ ] Compare against decontam as the baseline
-- [ ] Evaluate on TCGA against Gihawi et al. (2023) labels
 
 ## 7. Open source
 
