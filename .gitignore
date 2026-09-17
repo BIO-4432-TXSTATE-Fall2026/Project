@@ -224,3 +224,11 @@ __marimo__/
 
 # Downloaded datasets; what was fetched is recorded in manifests/
 /data/
+
+# Nextflow and nf-test run state and outputs
+/work/
+/results/
+.nextflow/
+.nextflow.log*
+/.nf-test/
+.nf-test.log

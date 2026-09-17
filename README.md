@@ -19,6 +19,11 @@ pixi run -e r r-restore  # R packages from src/R/renv.lock (optional)
 | `src/R`                         | R code; packages are managed by renv.                     |
 | `manifests`                     | What was downloaded and when. Committed.                  |
 | `data`                          | Downloaded files. Not committed.                          |
+| `workflows`                     | Nextflow pipeline; entry point is `workflows/main.nf`.   |
+| `workflows/modules`             | Reusable Nextflow processes.                              |
+| `conf`                          | Nextflow configs and profiles, included by `nextflow.config`. |
+| `containers`                    | One `<name>/Dockerfile` per image, published to GHCR.     |
+| `tests/workflow`                | nf-test tests for the pipeline and modules.               |
 
 ## Downloading data
 
@@ -73,6 +78,26 @@ conversion temporarily needs about that much free space again.
 
 Browse what HMP offers with
 `aws s3 ls --no-sign-request s3://human-microbiome-project/HHS/`.
+
+## Pipeline
+
+The Nextflow pipeline is a template for now. Pixi's `nextflow` environment provides
+Nextflow, nf-test, and the JDK they run on:
+
+```sh
+pixi run pipeline --names Alice,Bob                       # local, no containers
+pixi run pipeline -profile docker                         # local, Docker
+pixi run pipeline -profile slurm,apptainer \
+  --slurm_queue <partition> --slurm_account <account>     # cluster
+pixi run test-workflow
+```
+
+Results land in `results/`. On SLURM, launch from a filesystem the compute nodes share.
+
+Each process's image is set in `conf/containers.config`. Running the Containers workflow
+from the GitHub Actions tab builds every `containers/<name>/Dockerfile` and publishes it
+as `ghcr.io/bio-4432-txstate-fall2026/project/<name>`; Apptainer pulls it from there. To
+build one locally, run `pixi run build-container <name>`.
 
 ## Development
 

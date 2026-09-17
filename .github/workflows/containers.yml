@@ -1,0 +1,43 @@
+name: Containers
+
+on:
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      names: ${{ steps.list.outputs.names }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: echo "names=$(ls containers | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: list
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        name: ${{ fromJSON(needs.list.outputs.names) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: containers/${{ matrix.name }}
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/bio-4432-txstate-fall2026/project/${{ matrix.name }}:latest
+            ghcr.io/bio-4432-txstate-fall2026/project/${{ matrix.name }}:sha-${{ github.sha }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}

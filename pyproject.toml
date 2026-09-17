@@ -61,10 +61,28 @@ convert = "python -m hmp_project convert"
 [tool.pixi.feature.sra.dependencies]
 sra-tools = ">=3.4.1,<4"
 
+# Nextflow and nf-test are on bioconda. Docker and Apptainer come from the host or
+# cluster, since sites configure them themselves.
+[tool.pixi.feature.nextflow]
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.feature.nextflow.tasks]
+pipeline = "nextflow run ."
+test-workflow = "nf-test test"
+build-container = { cmd = "docker build -t ghcr.io/bio-4432-txstate-fall2026/project/{{ name }}:latest containers/{{ name }}", args = ["name"] }
+
+[tool.pixi.feature.nextflow.dependencies]
+# Nextflow's launcher runs on this JDK through the JAVA_HOME the environment sets.
+openjdk = ">=25.0.2,<26"
+nextflow = ">=26.4.6,<27"
+nf-test = ">=0.9.5,<0.10"
+
 [tool.pixi.environments]
 default = { features = ["test", "lint"], solve-group = "default" }
 r = { features = ["r"] }
 sra = { features = ["sra"] }
+nextflow = { features = ["nextflow"], no-default-feature = true }
 
 [tool.pixi.dependencies]
 python = ">=3.11"

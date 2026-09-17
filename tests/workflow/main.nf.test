@@ -1,0 +1,20 @@
+nextflow_pipeline {
+
+    name "Pipeline"
+    script "workflows/main.nf"
+
+    test("publishes one greeting per name") {
+        when {
+            params {
+                names = 'Alice,Bob'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().size() == 2
+            assert path("${launchDir}/results/greetings/Alice.txt").text == "Hello, Alice!\n"
+            assert path("${launchDir}/results/greetings/Bob.txt").exists()
+        }
+    }
+}
