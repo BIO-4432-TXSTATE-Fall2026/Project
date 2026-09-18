@@ -9,8 +9,9 @@ from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
-from hmp_project.datasets import open_dataset
-from hmp_project.manifest import Spec, read_lock, sha256_file, write_lock
+from hmp_project.manifest.dataset import open_dataset
+from hmp_project.manifest.lock import read_lock, sha256_file, write_lock
+from hmp_project.manifest.spec import Spec
 from hmp_project.providers import Provider, RemoteObject
 
 

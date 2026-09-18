@@ -69,3 +69,23 @@ def test_new_requires_exactly_one_of_prefix_and_accession(tmp_path, extra):
     with pytest.raises(SystemExit, match="either --prefix or --accession"):
         main(argv)
     assert not (tmp_path / "demo.json").exists()
+
+
+def test_new_records_resolved_region(tmp_path):
+    argv = ["new", "sra", "--dataset=sra-metadata", "--region=east", "--prefix=sra/metadata"]
+
+    assert main([*argv, f"--manifests-dir={tmp_path}"]) == 0
+    assert json.loads((tmp_path / "sra.json").read_text()) == {
+        "dataset": "sra-metadata",
+        "region": "us-east-1",
+        "prefix": "sra/metadata",
+        "include": ["*"],
+    }
+
+
+def test_new_rejects_unavailable_region(tmp_path):
+    argv = ["new", "sra", "--dataset=sra-metadata", "--region=west", "--prefix=sra/metadata"]
+
+    with pytest.raises(SystemExit, match="sra-metadata: region 'west' is not available"):
+        main([*argv, f"--manifests-dir={tmp_path}"])
+    assert not (tmp_path / "sra.json").exists()

@@ -6,7 +6,7 @@ from datetime import UTC, datetime
 import pytest
 
 from hmp_project.manifest import Spec, sha256_file
-from hmp_project.sync import sync
+from hmp_project.manifest.sync import sync
 
 V13 = "HHS/HMQCP/otu_table_v13.txt.gz"
 V35 = "HHS/HMQCP/nested/otu_table_v35.txt.gz"

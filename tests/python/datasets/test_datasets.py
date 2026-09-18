@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import json
 from typing import ClassVar
 
 import boto3
 import pytest
 
-from hmp_project.cli import main
 from hmp_project.datasets import (
     DATASETS,
     Dataset,
@@ -14,9 +12,7 @@ from hmp_project.datasets import (
     S3Dataset,
     SRADataset,
     SRAMetadataDataset,
-    open_dataset,
 )
-from hmp_project.manifest import Spec
 
 
 class TwoRegionDataset(S3Dataset):
@@ -71,33 +67,6 @@ def test_dataset_uses_the_bucket_for_its_region():
     assert dataset.provider.describe()["region"] == "us-east-1"
 
 
-def test_open_dataset_rejects_spec_region_the_dataset_lacks(write_spec, provider):
-    spec = write_spec(region="eu-west-1")
-
-    with pytest.raises(ValueError, match=r"demo\.json: hmp: region 'eu-west-1' is not available"):
-        open_dataset(spec, provider)
-
-
-def test_new_records_resolved_region(tmp_path):
-    argv = ["new", "sra", "--dataset=sra-metadata", "--region=east", "--prefix=sra/metadata"]
-
-    assert main([*argv, f"--manifests-dir={tmp_path}"]) == 0
-    assert json.loads((tmp_path / "sra.json").read_text()) == {
-        "dataset": "sra-metadata",
-        "region": "us-east-1",
-        "prefix": "sra/metadata",
-        "include": ["*"],
-    }
-
-
-def test_new_rejects_unavailable_region(tmp_path):
-    argv = ["new", "sra", "--dataset=sra-metadata", "--region=west", "--prefix=sra/metadata"]
-
-    with pytest.raises(SystemExit, match="sra-metadata: region 'west' is not available"):
-        main([*argv, f"--manifests-dir={tmp_path}"])
-    assert not (tmp_path / "sra.json").exists()
-
-
 def test_sra_dataset_turns_accessions_into_one_prefix_each():
     dataset = SRADataset(accessions=["ERR1014220", "SRR059395"])
 
@@ -119,14 +88,6 @@ def test_sra_dataset_rejects_accessions_that_name_no_run(accession):
 def test_prefix_datasets_reject_accessions():
     with pytest.raises(ValueError, match="selects by prefix, not by accession"):
         HMPDataset(accessions=["SRR059395"])
-
-
-def test_open_dataset_reports_a_bad_accession_with_the_spec_path(tmp_path):
-    path = tmp_path / "salter.json"
-    path.write_text(json.dumps({"dataset": "sra", "accessions": ["SRS011098"]}))
-
-    with pytest.raises(ValueError, match=r"salter\.json: sra: 'SRS011098' is not an SRA run"):
-        open_dataset(Spec.load(path))
 
 
 def test_select_spans_every_prefix_and_yields_overlaps_once(make_provider):

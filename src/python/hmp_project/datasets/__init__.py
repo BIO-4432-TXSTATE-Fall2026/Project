@@ -1,4 +1,8 @@
-"""Datasets select what to fetch from a provider and where it lands locally."""
+"""Datasets select what to fetch from a provider and where it lands locally.
+
+Specs and locks are not this package's concern: building a dataset from a spec is
+:func:`hmp_project.manifest.dataset.open_dataset`.
+"""
 
 from __future__ import annotations
 
@@ -8,8 +12,6 @@ from hmp_project.datasets.hmpdcc import HMPDCCDataset
 from hmp_project.datasets.slacken import SlackenDataset
 from hmp_project.datasets.sra import SRADataset
 from hmp_project.datasets.sra_metadata import SRAMetadataDataset
-from hmp_project.manifest import Spec
-from hmp_project.providers import Provider
 
 DATASETS: dict[str, type[S3Dataset]] = {
     "hmp": HMPDataset,
@@ -18,29 +20,6 @@ DATASETS: dict[str, type[S3Dataset]] = {
     "sra": SRADataset,
     "sra-metadata": SRAMetadataDataset,
 }
-
-
-def open_dataset(spec: Spec, provider: Provider | None = None) -> Dataset:
-    """Build the dataset a spec names. ``provider`` overrides the dataset's default."""
-    try:
-        factory = DATASETS[spec.dataset]
-    except KeyError:
-        known = ", ".join(sorted(DATASETS))
-        message = f"{spec.path}: unknown dataset {spec.dataset!r} (known: {known})"
-        raise ValueError(message) from None
-    try:
-        region = factory.resolve_region(spec.region)
-        return factory(
-            spec.prefix,
-            accessions=spec.accessions,
-            region=region,
-            include=spec.include,
-            exclude=spec.exclude,
-            provider=provider,
-        )
-    except ValueError as error:
-        raise ValueError(f"{spec.path}: {spec.dataset}: {error}") from None
-
 
 __all__ = [
     "DATASETS",
@@ -51,5 +30,4 @@ __all__ = [
     "SRADataset",
     "SRAMetadataDataset",
     "SlackenDataset",
-    "open_dataset",
 ]

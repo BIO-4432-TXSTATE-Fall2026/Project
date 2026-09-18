@@ -15,6 +15,10 @@ packages = ["src/python/hmp_project"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/python"]
+# tests/python mirrors src/python/hmp_project, so basenames repeat across directories
+# (cli/test_convert.py and manifest/test_convert.py). importlib mode keeps them distinct
+# without __init__.py files in the test tree.
+addopts = "--import-mode=importlib"
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]

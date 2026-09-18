@@ -4,10 +4,10 @@ import json
 
 import pytest
 
-from hmp_project.datasets import SlackenDataset, open_dataset
+from hmp_project.datasets import SlackenDataset
 from hmp_project.datasets.slacken import LIBRARY, assembly_spans
-from hmp_project.manifest import Spec
-from hmp_project.sync import sync
+from hmp_project.manifest import Spec, open_dataset
+from hmp_project.manifest.sync import sync
 
 LINE_BASES = 4
 

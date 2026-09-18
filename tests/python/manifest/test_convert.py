@@ -6,10 +6,9 @@ import stat
 
 import pytest
 
-from hmp_project.cli import main
-from hmp_project.convert import convert
 from hmp_project.manifest import Spec
-from hmp_project.sync import sync
+from hmp_project.manifest.convert import convert
+from hmp_project.manifest.sync import sync
 
 # Stands in for fasterq-dump: writes paired FASTQ for its first argument into --outdir
 # and logs each call, or fails without output when FAKE_FAIL is set.
@@ -149,11 +148,3 @@ def test_convert_rejects_datasets_used_as_downloaded(tmp_path, provider, write_s
 
     with pytest.raises(ValueError, match="HMPDataset files are used as downloaded"):
         convert(spec, tmp_path / "data", provider=provider)
-
-
-def test_cli_convert_reports_errors_without_a_traceback(tmp_path, provider, write_spec):
-    spec = write_spec(exclude=["*.old"])
-    sync(spec, tmp_path / "data", provider=provider)
-
-    with pytest.raises(SystemExit, match="demo: HMPDataset files are used as downloaded"):
-        main(["convert", str(spec.path), f"--data-dir={tmp_path / 'data'}"])

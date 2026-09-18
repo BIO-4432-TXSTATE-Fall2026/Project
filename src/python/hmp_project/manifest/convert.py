@@ -5,8 +5,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from hmp_project.datasets import open_dataset
-from hmp_project.manifest import Spec, read_lock
+from hmp_project.manifest.dataset import open_dataset
+from hmp_project.manifest.lock import read_lock
+from hmp_project.manifest.spec import Spec
 from hmp_project.providers import Provider
 
 
