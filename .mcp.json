@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "roda-mcp": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "awslabs.roda-mcp-server@latest"
+      ],
+      "env": {}
+    }
+  }
+}
