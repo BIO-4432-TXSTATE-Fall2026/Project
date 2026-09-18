@@ -2,7 +2,8 @@
 
 Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are in
 `docs/HMP_proposed.md` and, with no TCGA controlled access,
-`docs/tcga_controlled_alternative.md`.
+`docs/tcga_controlled_alternative.md`. Data deferred to future comparisons is in
+`docs/comparisons.md`.
 
 ## 0. Proposal
 
@@ -23,7 +24,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 | HMP1 shotgun reads             | `s3://human-microbiome-project` `HHS/HMASM/WGS/`  | `hmp`          | Genuine taxa: baseline TR entropy (H1), negative side of H2           |
 | HMP reference genomes          | `s3://human-microbiome-project` `reference_genomes/` | `hmp`       | TR locus catalog for target genera                                    |
 | HMP mock community genomes     | `s3://human-microbiome-project` `HHS/HMMC/`       | `hmp`          | Known strains for checking catalog loci and allele calls              |
-| HMP aligned reads (maybe)      | `s3://human-microbiome-project` `HHS/HMSCP/`      | `hmp`          | Possible replacement for read anchoring, if soft-clipping allows      |
+| ~~HMP aligned reads~~          | `s3://human-microbiome-project` `HHS/HMSCP/`      | none           | Future comparison (`docs/comparisons.md`)                             |
 | SRA run metadata               | `s3://sra-pub-metadata-us-east-1`                 | `sra-metadata` | Map HMP samples to runs, center, and date (H2 batch labels)           |
 | iHMP                           | `s3://hmpdcc` `ihmp/`                             | `hmpdcc`       | Extra oral and gut data, or drop from Table 1                         |
 | Salter et al. (2014) reads     | ENA `ERP006808`, runs from `s3://sra-pub-run-odp` | `sra`          | Real contaminants with kit labels: contaminant side of H1, kit batches for H2 |
@@ -78,9 +79,11 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 - [x] Sync `HHS/HMMC/`: 22 strain genomes and the strain sheet, 27 MB
       (`manifests/hmp-mock-community.json`)
 
-### HMP aligned reads
+### ~~HMP aligned reads~~
 
-- [ ] Decide whether `HHS/HMSCP/` alignments are usable (soft-clipping bias)
+- [x] Decided against `HHS/HMSCP/`: the reads were low-complexity masked and stripped of
+      base qualities before a soft-clipping alignment to a 2010 reference database. Kept
+      as a future comparison in `docs/comparisons.md`
 
 ### SRA run metadata
 
