@@ -1,6 +1,6 @@
 # Downstream comparisons
 
-Data that cannot drive the pipeline in `docs/pipeline.md`, but is worth comparing
+Data that cannot drive the pipeline in `docs/todo.md`, but is worth comparing
 results against once allele calling works. Data choices are in `docs/HMP_proposed.md`.
 
 ## HMP aligned reads (`HHS/HMSCP/`)

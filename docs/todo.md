@@ -88,7 +88,15 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### SRA run metadata
 
 - [x] `sra-metadata` dataset
-- [ ] Sync and map each HMP `SRS` sample to its runs, center, and date
+- [x] Choose the frozen `sra/metadata_json/` snapshot over the daily Parquet table, and
+      record its listing (`manifests/sra-metadata-freeze.json`): 60 files, 2.3 GB, stable
+      since 2020-09-09, covering everything released to 2020-09-01
+- [x] `extract` command: reduce a synced catalog to the rows an accession list names,
+      into a committed TSV under `data/derived/` (`docs/data/README.md`)
+- [ ] Sync the freeze on a compute node, extract the 274 HMP `SRS` samples to
+      `data/derived/hmp-sra-runs.tsv`, then delete the catalog
+- [ ] Decide which runs count per sample: samples carry 454 amplicon runs alongside the
+      Illumina WGS ones, so batch labels need filtering by `platform`/`assay_type`
 
 ### iHMP
 
