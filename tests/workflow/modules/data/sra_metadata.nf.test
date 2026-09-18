@@ -1,0 +1,29 @@
+nextflow_process {
+
+    name "SRA_RUN_METADATA"
+    script "workflows/modules/data/sra_metadata.nf"
+    process "SRA_RUN_METADATA"
+
+    // Stubbed: the real script syncs a 2.3 GB catalog from S3. This checks the wiring,
+    // that every manifest the extract needs is staged and the table comes back named.
+    test("emits the named table") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/manifests/sra-metadata-freeze.json")
+                input[1] = file("${projectDir}/manifests/sra-metadata-freeze.lock.json")
+                input[2] = files("${projectDir}/manifests/hmp-{stool,subgingival-plaque,tongue-dorsum}.lock.json")
+                input[3] = 'hmp-sra-runs.tsv'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out[0][0].endsWith('hmp-sra-runs.tsv')
+            assert path(process.out[0][0]).text.startsWith('run\tsample\tstudy')
+        }
+    }
+}
