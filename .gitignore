@@ -26,7 +26,10 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
+# Anchored to the root: this is the file setuptools writes there. Unanchored, it also
+# matches any directory named manifest/ on a case-insensitive filesystem, which silently
+# ignored src/python/hmp_project/manifest/.
+/MANIFEST
 
 # PyInstaller
 #   Usually these files are written by a python script from a template
