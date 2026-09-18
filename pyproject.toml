@@ -30,6 +30,7 @@ hmp_project = { path = ".", editable = true }
 [tool.pixi.tasks]
 new = "python -m hmp_project new"
 sync = "python -m hmp_project sync"
+extract = "python -m hmp_project extract"
 
 [tool.pixi.feature.test.tasks]
 test = "pytest"

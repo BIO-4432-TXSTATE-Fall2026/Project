@@ -1,0 +1,8 @@
+{
+  "description": "NCBI SRA run metadata, the frozen 09_01_2020 JSON Lines snapshot. Covers everything released up to 2020-09-01: HMP1, Salter et al. (2014), Zeller et al. (2014).",
+  "dataset": "sra-metadata",
+  "prefix": "sra/metadata_json",
+  "include": [
+    "*.json.gz"
+  ]
+}

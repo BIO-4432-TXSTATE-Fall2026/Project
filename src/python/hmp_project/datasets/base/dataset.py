@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Container, Iterable, Iterator
 from fnmatch import fnmatchcase
 from pathlib import Path
+from typing import ClassVar
 
 from hmp_project.providers import Provider, RemoteObject
 
@@ -35,6 +36,9 @@ class Dataset:
     the prefixes' common parent rather than each prefix, so two prefixes holding the same
     filename stay distinct on disk; with a single prefix that parent is the prefix itself.
     """
+
+    #: Column order for :meth:`extract`, set by datasets that are metadata tables.
+    EXTRACT_COLUMNS: ClassVar[tuple[str, ...]] = ()
 
     def __init__(
         self,
@@ -95,3 +99,12 @@ class Dataset:
         Datasets whose files are usable as downloaded do not override this.
         """
         raise ValueError(f"{type(self).__name__} files are used as downloaded; nothing to convert")
+
+    def extract(self, path: Path, accessions: Container[str]) -> Iterator[dict[str, str]]:
+        """Yield the rows of the metadata table at ``path`` that ``accessions`` names, as
+        dicts keyed by :data:`EXTRACT_COLUMNS`.
+
+        Only datasets that are catalogs rather than payload override this. They own their
+        own row format, so nothing above them has to know it.
+        """
+        raise ValueError(f"{type(self).__name__} is not a metadata table; nothing to extract")
