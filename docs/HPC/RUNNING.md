@@ -54,6 +54,23 @@ pixi run pipeline -profile slurm,apptainer --slurm_queue shared --names Alice,Bo
 Add `--slurm_account <account>` if you have no default account. The template launches
 three `HELLO` jobs, visible in `squeue -u $USER`, and writes to `results/greetings/`.
 
+## Data compilation
+
+`--stage data` rebuilds the committed tables in `data/derived/` instead of running the
+analysis. Each table is one job that syncs its upstream catalog into the task directory,
+extracts the rows the project needs, and deletes the catalog:
+
+```sh
+pixi run pipeline --stage data -profile slurm --slurm_queue shared
+```
+
+The tasks run the project CLI from Pixi's default environment rather than a container, so
+run `pixi install` on a login node first. `work/` needs room for the largest catalog —
+2.3 GB for the SRA metadata freeze — while the job runs. A failed job leaves that catalog
+behind in its work directory; `nextflow clean` removes it.
+
+What the stage builds is in `docs/workflows/data/`.
+
 ## Longer runs
 
 A login node may kill long processes, and image pulls use its CPU. For real runs, submit

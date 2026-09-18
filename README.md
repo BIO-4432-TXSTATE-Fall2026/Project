@@ -95,6 +95,11 @@ pixi run test-workflow
 Results land in `results/`. On SLURM, launch from a filesystem the compute nodes share;
 see `docs/HPC/RUNNING.md` and `docs/HPC/SLURM.md`.
 
+A run does one stage, chosen with `--stage`: `pipeline`, the analysis, or `data`, which
+rebuilds the committed tables in `data/derived/` from their upstream catalogs. How the
+pipeline is put together is in `docs/workflows/`, and the data stage in
+`docs/workflows/data/`.
+
 Each process's image is set in `conf/containers.config`. Running the Containers workflow
 from the GitHub Actions tab builds every `containers/<name>/Dockerfile` and publishes it
 as `ghcr.io/bio-4432-txstate-fall2026/project/<name>`; Apptainer pulls it from there. To

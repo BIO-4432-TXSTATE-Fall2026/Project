@@ -59,6 +59,19 @@ than starting over. Do not leave it on cluster shared storage.
 Run on a compute node, not a login node — `docs/HPC/SLURM.md`. One core and a couple of
 gigabytes is enough; the work is dominated by the download.
 
+The pipeline's data stage is the usual way. It syncs, extracts, and deletes the catalog
+in one SLURM job, and publishes the table back into `data/derived/`:
+
+```sh
+pixi run pipeline --stage data -profile slurm --slurm_queue shared
+```
+
+One module per table, in `workflows/modules/data/`; `docs/workflows/data/` says how they
+work and how to add one. The stage is not part of a default `--stage pipeline` run: these
+tables are committed, so rebuilding one is a deliberate act.
+
+The same work by hand, which is what the module runs:
+
 ```sh
 pixi run sync manifests/sra-metadata-freeze.json
 pixi run extract manifests/sra-metadata-freeze.json \
