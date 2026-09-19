@@ -118,8 +118,9 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
       are only in the free-text sample alias, which `extract --profile salter` reads out
       into `data/derived/salter-runs.tsv` (`docs/data/derived/salter-runs.md`). A step
       number is not comparable across kits, and depth falls with dilution by construction
-- [ ] Build `data/derived/salter-runs.tsv` on the cluster: the extract needs the 2.3 GB
-      metadata freeze, so it belongs in a preprocess run, not on a laptop
+- [x] Build `data/derived/salter-runs.tsv` on the cluster: the extract needs the 2.3 GB
+      metadata freeze, so it belongs in a preprocess run, not on a laptop. 35 runs,
+      813 Mbases in total; 12 runs report 0 Mbases, most of them `CAMBIO` steps 3–10
 - [ ] Sync and convert the runs: 0.49 GB over all 35, paired 2×150
 
 ### Contaminant reference genomes

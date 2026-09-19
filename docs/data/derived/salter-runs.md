@@ -54,8 +54,9 @@ series; `CAMBIO_4` is early in a series that runs to 10. Treating `dilution` as 
 that means the same thing in every kit compares the most dilute PSP sample against a
 middling CAMBIO one. Within a kit it orders the series correctly, and that is all it does.
 
-**These runs are tiny, and that is the point.** 0.83 Gbp over all 35 runs, and `mbases`
-runs from 229 down to 0 as the series is diluted — 15 of the 35 runs report 0 or 1. The
+**These runs are tiny, and that is the point.** 0.81 Gbp over all 35 runs, and `mbases`
+runs from 229 down to 0 as the series is diluted — 17 of the 35 runs report 0 or 1, and
+12 of those report 0. The
 contaminant signal is what is left when the template runs out, so the shallow end of each
 series is the interesting end, not a set of failed runs to drop. It also means depth is
 confounded with dilution step by construction: any comparison across steps is also a
