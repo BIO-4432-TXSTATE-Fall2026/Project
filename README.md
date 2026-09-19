@@ -46,6 +46,7 @@ A name may contain `/` to group specs: `new contaminants/kit` writes
 those files have a null `sha256` until a real sync downloads them.
 
 Datasets are `hmp`, `hmpdcc` (iHMP and a per-run copy of HMP1 from the HMP DACC),
+`pmc` (PubMed Central open-access articles and their supplementary files),
 `sra` (NCBI SRA run data), and `sra-metadata` (SRA run metadata as Parquet). Each
 lists the AWS regions it is hosted in; `new --region` takes a region code or an
 unambiguous part of one, such as `east`, and rejects regions the dataset is not hosted in:
