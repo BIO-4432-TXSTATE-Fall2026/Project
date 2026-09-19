@@ -1,5 +1,6 @@
 // Push notifications, so a long SLURM run can be left alone: one when a phase starts,
-// one when it finishes, and one when the run ends. Silent unless `NTFY_TOPIC` is set.
+// one when it finishes, and one when the run ends, whether it succeeded or failed.
+// Silent unless a topic is set, in `.env` or in the environment.
 //
 // Everything lives here, including the run-end handler, because Nextflow's config can
 // register only `onComplete` and `onError` and cannot call into a module or a lib/ class:
@@ -9,6 +10,31 @@
 //
 // The handlers and the channel taps all run in the driver process, so only the node that
 // launched the run needs outbound HTTPS.
+
+include { dotenv } from './dotenv'
+
+// The topic to post to, or null to stay silent.
+//
+// ntfy has no authentication: the topic name is the only thing keeping strangers off the
+// channel, so it cannot be committed to a public repository and comes from `.env`.
+// `--ntfy_topic` and the `NTFY_TOPIC` environment variable both reach `params` through
+// `nextflow.config` and win over the file, so a one-off run or a SLURM job can override
+// what the clone is set up with.
+//
+// Unset and empty mean different things, which is why this is not an `?:`. Unset is "not
+// configured here, look in `.env`"; empty is an explicit "send nothing", which is how
+// `tests/nextflow.config` keeps a test run from pushing to a channel other people are
+// subscribed to.
+def ntfyTopic() {
+    return params.ntfy_topic != null ? params.ntfy_topic : dotenv('NTFY_TOPIC')
+}
+
+// Where to post: a self-hosted ntfy, or the public service. Resolved the same way as the
+// topic, so a setting means the same thing wherever it is written; the default is here
+// rather than in `nextflow.config` so that an unset `params` can fall through to `.env`.
+def ntfyServer() {
+    return params.ntfy_server ?: dotenv('NTFY_SERVER') ?: 'https://ntfy.sh'
+}
 
 // Post one notification. Silent unless a topic is set; a failure is logged, never thrown,
 // so a missed notification cannot change the run's outcome.
@@ -41,8 +67,8 @@ def ntfy(String server, String topic, String title, String body, String priority
 // well as a successful one, which is why there is no separate onError handler.
 def notifyRun() {
     def meta = workflow
-    def server = params.ntfy_server
-    def topic = params.ntfy_topic
+    def server = ntfyServer()
+    def topic = ntfyTopic()
     def stage = params.stage
 
     meta.onComplete {
@@ -71,8 +97,8 @@ def notifyRun() {
 // announce every one of them before any work began. A tap instead fires when data
 // actually reaches that point, which for a phase's input is when the phase begins.
 def announceStart(ch, String name) {
-    def server = params.ntfy_server
-    def topic = params.ntfy_topic
+    def server = ntfyServer()
+    def topic = ntfyTopic()
     def run = workflow.runName
     def project = workflow.manifest.name
 
@@ -95,8 +121,8 @@ def announceStart(ch, String name) {
 // `finish` strategy in `conf/base.config`, and the run-end notification above reports it
 // with the first line of the error, which names the process that failed.
 def announceDone(ch, String name) {
-    def server = params.ntfy_server
-    def topic = params.ntfy_topic
+    def server = ntfyServer()
+    def topic = ntfyTopic()
     def run = workflow.runName
     def project = workflow.manifest.name
 

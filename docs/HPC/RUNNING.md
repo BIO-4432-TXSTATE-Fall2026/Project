@@ -35,8 +35,16 @@ Optional environment variables for `~/.bashrc`:
 ```sh
 export PIXI_CACHE_DIR=/tmp/pixi-cache-$USER                 # avoids the network-filesystem cache warning
 export NXF_APPTAINER_CACHEDIR=$HOME/.apptainer-images       # keeps images when work/ is deleted
-export NTFY_TOPIC=<your-topic>                              # push a notification when a run ends
 ```
+
+Then make the clone's `.env`, which is where settings that must not be committed live:
+
+```sh
+cp .env.example .env     # then fill in NTFY_TOPIC to get notifications
+```
+
+`.env` is git-ignored, and every setting in it is optional — with none of them, a run
+behaves the same and says nothing. See [Notifications](#notifications).
 
 Images come from `ghcr.io/bio-4432-txstate-fall2026/project/<name>`. The Containers
 workflow in GitHub Actions publishes them. A pull fails with `unauthorized` if the package
@@ -100,14 +108,20 @@ with `Ctrl-b d`, and reattach with `tmux attach -t nf`.
 ## Notifications
 
 A run can push notifications to [ntfy.sh](https://ntfy.sh), so a head job need not be
-watched. Set `NTFY_TOPIC` to a topic name and subscribe to it in the ntfy phone or web
-app; `sbatch` passes the variable through to the head job. With no topic set, nothing is
-sent.
+watched. Put the topic in `.env` and subscribe to the same name in the ntfy phone or web
+app. With no topic set, nothing is sent.
 
 ```sh
-export NTFY_TOPIC=$(uuidgen)     # pick something unguessable, then subscribe to it
+cp .env.example .env             # then set NTFY_TOPIC in it
 pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shared
 ```
+
+The project's topic is not in the repository, for the reason below; ask whoever set it up,
+or `uuidgen` your own. `NTFY_TOPIC` in the environment and `--ntfy_topic` on the command
+line both override the file, and `sbatch` passes the variable through to the head job, so
+a one-off run can go somewhere else without editing anything. Setting the topic to the
+empty string is an explicit silence, which is how `tests/nextflow.config` keeps the test
+suite from pushing to a shared channel.
 
 Three kinds of message arrive:
 
@@ -124,9 +138,11 @@ report. A notification that cannot be sent is logged and ignored; it never chang
 run's exit status.
 
 Anyone who knows a topic name can read and post to it, so treat the name as the password
-it is — and note the messages carry the run name and launch directory. `NTFY_SERVER`
-points at a self-hosted instance instead. `workflows/modules/notify.nf` holds all of it;
-only the topic and server live in `nextflow.config`.
+it is — and note the messages carry the run name and launch directory. That is why the
+topic lives in the git-ignored `.env` and not in a tracked file: this repository is
+public, and a committed topic is a public one, permanently. `NTFY_SERVER` points at a
+self-hosted instance instead, and is read the same way. `workflows/modules/notify.nf`
+holds all of it, reading `.env` through `workflows/modules/dotenv.nf`.
 
 ## Resuming
 
