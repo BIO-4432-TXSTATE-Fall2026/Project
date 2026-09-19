@@ -1,6 +1,6 @@
 [project]
 authors = [{name = "Andrew Scouten", email = "andrewscouten@gmail.com"}]
-dependencies = ["boto3"]
+dependencies = ["boto3", "tqdm"]
 description = "Data loading for the BIO 4432 project"
 name = "hmp_project"
 requires-python = ">= 3.11"
@@ -92,3 +92,4 @@ nextflow = { features = ["nextflow"], no-default-feature = true }
 [tool.pixi.dependencies]
 python = ">=3.11"
 boto3 = ">=1.43.92,<2"
+tqdm = ">=4.70.1,<5"

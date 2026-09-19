@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import platform
+import sys
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from importlib.metadata import version
 from pathlib import Path
 from typing import Any
+
+from tqdm import tqdm
 
 from hmp_project.manifest.dataset import open_dataset
 from hmp_project.manifest.lock import read_lock, sha256_file, write_lock
@@ -37,6 +41,29 @@ def _matches(record: dict[str, Any], obj: RemoteObject) -> bool:
     )
 
 
+def _track(objects: list[RemoteObject], name: str, progress: bool) -> Iterable[RemoteObject]:
+    """Count the sync pass off against the listing, so a long run shows it is moving.
+
+    Under Nextflow the bar's real destination is the task's `.command.out`: a task runs
+    on a compute node and Nextflow forwards none of its output to the terminal, so this
+    is written to be read there, with `tail -f`. Hence stdout rather than tqdm's default
+    stderr, which Nextflow reserves for what it quotes back when a task fails.
+
+    A file is not a terminal, so the redraws pile up instead of overwriting. Widening the
+    interval keeps hours of syncing down to a readable handful of lines; a terminal, which
+    redraws in place and has someone watching, keeps tqdm's responsive default.
+    """
+    if not progress:
+        return objects
+    return tqdm(
+        objects,
+        desc=name,
+        unit="file",
+        file=sys.stdout,
+        mininterval=0.1 if sys.stdout.isatty() else 10.0,
+    )
+
+
 def sync(
     spec: Spec,
     data_dir: Path,
@@ -44,6 +71,7 @@ def sync(
     dry_run: bool = False,
     download: bool = True,
     provider: Provider | None = None,
+    progress: bool = True,
 ) -> SyncResult:
     """Download new, changed, or locally missing files into ``data_dir/<spec name>``.
 
@@ -51,7 +79,8 @@ def sync(
     fetched have a null ``sha256`` and ``downloaded_at``. Files that disappear
     upstream are dropped from the lock but left on disk. The lock gains a history
     entry only when a run adds, changes, removes, or downloads something, or the
-    spec itself changed.
+    spec itself changed. ``progress=False`` silences the progress bar for a caller
+    whose stdout is someone else's to write to.
     """
     dataset = open_dataset(spec, provider)
     lock = read_lock(spec.lock_path)
@@ -62,7 +91,7 @@ def sync(
     result = SyncResult()
     records = []
     selected = dataset.select()
-    for obj in selected:
+    for obj in _track(selected, spec.name, progress):
         dest = dataset.local_path(obj.key, root)
         record = previous.get(obj.key)
         if record is None:
