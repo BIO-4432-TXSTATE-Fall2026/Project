@@ -61,8 +61,12 @@ downloaded and the whole thing takes seconds:
 pixi run pipeline --stage preprocess -stub
 ```
 
-It writes a header-only `data/derived/hmp-sra-runs.tsv`, which is a placeholder, not a
-table — delete it before a real run. To check that SLURM and Apptainer are wired up, add
+It overwrites the committed tables in `data/derived/` with header-only placeholders —
+every table the stage builds, not just a new one — because the preprocessing stage
+publishes into the working tree. Put them back with
+`git checkout -- data/derived/` before a real run, or before committing anything; deleting
+them instead leaves committed files missing. To check that SLURM and Apptainer are wired
+up, add
 the profiles and `--slurm_account <account>` if you have no default account:
 
 ```sh

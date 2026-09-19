@@ -15,7 +15,8 @@ gives, so the file always matches what the code produces.
 
 | Table | Source | Page |
 | ----- | ------ | ---- |
-| `hmp-sra-runs.tsv` | SRA run metadata freeze | [`hmp-sra-runs.md`](hmp-sra-runs.md) |
+| `hmp-sra-runs.tsv` | SRA run metadata freeze | [`hmp-sra-runs.md`](derived/hmp-sra-runs.md) |
+| `salter-runs.tsv` | SRA run metadata freeze | [`salter-runs.md`](derived/salter-runs.md) |
 
 ## Sources
 
@@ -50,7 +51,15 @@ shotgun runs and a 2019 reanalysis besides. Joining on sample alone analyses all
 together, which would quietly corrupt any batch label built from them. Extracted tables
 keep `platform`, `instrument`, `assay_type`, and `study` so callers can filter; nothing
 upstream does it for you. The filter to use, and what each clause of it removes, is in
-[`hmp-sra-runs.md`](hmp-sra-runs.md).
+[`hmp-sra-runs.md`](derived/hmp-sra-runs.md).
+
+**A study's design is not in any column.** SRA has fields for the sample, the center, and
+the instrument, but nothing for what an experiment varied. Salter et al. put the
+extraction kit and the dilution step in a free-text sample alias, so reading them back is
+per-study work: `extract --profile salter` does it, and
+[`salter-runs.md`](derived/salter-runs.md) says what it makes of them. A study whose
+labels live somewhere else needs its own profile rather than a reinterpretation of this
+one.
 
 **The 2.3 GB is temporary.** Sync it, extract what you need, delete it. Re-syncing is how
 you rebuild, and `sync` checksums each shard so an interrupted download resumes rather
@@ -62,15 +71,16 @@ Run on a compute node, not a login node — `docs/HPC/SLURM.md`. One core and a 
 gigabytes is enough; the work is dominated by the download.
 
 The pipeline's preprocessing stage is the usual way. It syncs, extracts, and deletes the
-catalog in one SLURM job, and publishes the table back into `data/derived/`:
+catalog in one SLURM job, and publishes the tables back into `data/derived/`:
 
 ```sh
 pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shared
 ```
 
-One module per table, in `workflows/modules/preprocess/`; `docs/workflows/preprocess/`
-says how they work and how to add one. The stage is not what a run with no `--stage` does:
-these tables are committed, so rebuilding one is a deliberate act.
+The modules are in `workflows/modules/preprocess/`; `docs/workflows/preprocess/` says how
+they work and how to add one. Both tables here come out of one module, because they read
+the same catalog and a second module would download it twice. The stage is not what a run
+with no `--stage` does: these tables are committed, so rebuilding one is a deliberate act.
 
 The same work by hand, which is what the module runs:
 
@@ -78,12 +88,16 @@ The same work by hand, which is what the module runs:
 pixi run sync manifests/sra-metadata-freeze.json
 pixi run extract manifests/sra-metadata-freeze.json \
   --from-lock manifests/hmp-stool.lock.json \
-  --out data/derived/<table>.tsv
+  --out data/derived/hmp-sra-runs.tsv
+pixi run extract manifests/sra-metadata-freeze.json \
+  --accession ERP006808 --profile salter \
+  --out data/derived/salter-runs.tsv
 rm -rf data/sra-metadata-freeze     # the catalog is not worth keeping
 ```
 
 `--from-lock` takes the accessions out of a lockfile's keys, so the samples a spec already
 covers drive the extract without retyping a few hundred of them. `--accession` adds
 individual samples or studies, which is how the Salter and Zeller studies are selected.
+`--profile` adds the columns a study wrote into free text instead of into a field.
 `extract` leaves output newer than the lock alone unless given `--force`, so re-running it
 after a plain `sync` costs nothing.

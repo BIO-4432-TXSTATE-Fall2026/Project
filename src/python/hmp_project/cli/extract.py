@@ -29,6 +29,11 @@ def add_parser(commands: argparse._SubParsersAction) -> None:
         metavar="LOCK",
         help="repeatable; keep rows for every accession named in this lockfile's keys",
     )
+    parser.add_argument(
+        "--profile",
+        metavar="NAME",
+        help="add the columns a study encodes in free text, e.g. salter (kit, dilution)",
+    )
     parser.add_argument("--data-dir", type=Path, default=Path("data"))
     parser.add_argument("--out", type=Path, help="default: <data-dir>/derived/<spec>.tsv")
     parser.add_argument(
@@ -49,6 +54,7 @@ def run(args: argparse.Namespace) -> None:
             accessions=accessions,
             out=args.out,
             force=args.force,
+            profile=args.profile,
         )
     except ValueError as error:
         raise SystemExit(f"{spec.name}: {error}") from None

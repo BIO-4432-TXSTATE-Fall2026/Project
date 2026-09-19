@@ -49,6 +49,30 @@ ROWS = [
     },
 ]
 
+# Three Salter et al. (2014) runs, whose kit and dilution step are only in the sample
+# alias: one plain, one whose kit name itself contains the separator, and the negative
+# water control, which names neither.
+SALTER = [
+    {
+        "acc": acc,
+        "sample_acc": sample,
+        "sra_study": "ERP006808",
+        "center_name": "UBP-CNRS",
+        "releasedate": "2014-08-31",
+        "platform": "ILLUMINA",
+        "instrument": "Illumina MiSeq",
+        "librarylayout": "PAIRED",
+        "assay_type": "WGS",
+        "mbases": "0",
+        "jattr": json.dumps({"alias_sam": [alias]}),
+    }
+    for acc, sample, alias in [
+        ("ERR588923", "ERS534918", "CAMBIO_4"),
+        ("ERR588939", "ERS534934", "MP_BIO_10"),
+        ("ERR588954", "ERS534949", "Water"),
+    ]
+]
+
 
 def shard(rows):
     return gzip.compress(b"".join(json.dumps(row).encode() + b"\n" for row in rows))
@@ -60,7 +84,7 @@ def freeze(tmp_path, make_provider):
     provider = make_provider(
         {
             "sra/metadata_json/sra.metadata.000.json.gz": shard(ROWS[:2]),
-            "sra/metadata_json/sra.metadata.001.json.gz": shard(ROWS[2:]),
+            "sra/metadata_json/sra.metadata.001.json.gz": shard(ROWS[2:] + SALTER),
         }
     )
     path = tmp_path / "manifests" / "freeze.json"
@@ -107,6 +131,40 @@ def test_extract_matches_a_study_as_well_as_a_sample(tmp_path, freeze):
     result = extract(spec, tmp_path / "data", accessions={"SRP999999"}, provider=provider)
 
     assert [row["run"] for row in read_tsv(result.output)] == ["SRR999999"]
+
+
+def test_extract_profile_reads_the_kit_and_dilution_out_of_the_sample_alias(tmp_path, freeze):
+    spec, provider = freeze
+
+    result = extract(
+        spec, tmp_path / "data", accessions={"ERP006808"}, profile="salter", provider=provider
+    )
+
+    rows = read_tsv(result.output)
+    assert [(row["run"], row["alias"], row["kit"], row["dilution"]) for row in rows] == [
+        ("ERR588923", "CAMBIO_4", "CAMBIO", "4"),
+        # The separator is in the kit name too, so only the trailing number is the step.
+        ("ERR588939", "MP_BIO_10", "MP_BIO", "10"),
+        # The water control is a kitless, dilutionless row rather than a missing one.
+        ("ERR588954", "Water", "", ""),
+    ]
+
+
+def test_extract_adds_no_profile_columns_when_no_profile_is_named(tmp_path, freeze):
+    spec, provider = freeze
+
+    result = extract(spec, tmp_path / "data", accessions={"ERP006808"}, provider=provider)
+
+    assert all(column not in read_tsv(result.output)[0] for column in ("alias", "kit", "dilution"))
+
+
+def test_extract_rejects_an_unknown_profile(tmp_path, freeze):
+    spec, provider = freeze
+
+    with pytest.raises(ValueError, match="unknown extract profile 'zeller'"):
+        extract(
+            spec, tmp_path / "data", accessions={"ERP006808"}, profile="zeller", provider=provider
+        )
 
 
 def test_extract_reports_shards_that_were_never_downloaded(tmp_path, freeze):

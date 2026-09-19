@@ -23,16 +23,18 @@ long, and belongs on a compute node. One job per table, resources and retries fr
 
 | Process            | Builds                          | From                             |
 | ------------------ | ------------------------------- | -------------------------------- |
-| `SRA_RUN_METADATA` | `data/derived/hmp-sra-runs.tsv` | `manifests/sra-metadata-freeze.json` |
+| `SRA_RUN_METADATA` | `data/derived/hmp-sra-runs.tsv`, `data/derived/salter-runs.tsv` | `manifests/sra-metadata-freeze.json` |
 
 ### `SRA_RUN_METADATA`
 
-Sync, extract, delete — one task, in this order, because the middle step is the only
-reason to do the first:
+Sync, extract, extract, delete — one task, in this order, because the middle steps are the
+only reason to do the first:
 
 ```sh
 <cli> sync sra-metadata-freeze.json --data-dir .
 <cli> extract sra-metadata-freeze.json --data-dir . --from-lock ... --out hmp-sra-runs.tsv
+<cli> extract sra-metadata-freeze.json --data-dir . --accession ERP006808 \
+      --profile salter --out salter-runs.tsv
 rm -rf ./sra-metadata-freeze
 ```
 
@@ -42,10 +44,19 @@ and deleted there. Splitting sync and extract into two processes would mean park
 2.3 GB in `work/` between them; one task keeps it transient. A failed task leaves it
 behind until `nextflow clean`.
 
+**Two tables, one task, for the same reason.** The Salter table reads the same catalog, so
+a process of its own would download those 2.3 GB a second time to answer a different
+question about the same file. The two extracts are two passes over the local copy instead:
+the cost is a disk read, not another sync. This is the one place the stage departs from one
+process per table, and the shared download is why.
+
 Which samples to keep comes from lockfiles, not a list in the workflow:
 `params.hmp_sample_locks` globs the three HMP body-site locks, and `extract --from-lock`
 reads the accessions out of their keys. The specs that define what was synced also define
-what is extracted, so the two cannot drift.
+what is extracted, so the two cannot drift. The Salter rows are selected by study
+accession instead — nothing has been synced from `ERP006808` yet, so there is no lock to
+read them out of — and `--profile salter` adds the kit and dilution columns that the
+study wrote into a free-text sample alias rather than into any SRA field.
 
 ## Parameters
 
@@ -55,6 +66,8 @@ what is extracted, so the two cannot drift.
 | `sra_metadata_spec`  | `manifests/sra-metadata-freeze.json`          |
 | `hmp_sample_locks`   | the three `manifests/hmp-*.lock.json` body-site locks |
 | `hmp_sra_runs_table` | `hmp-sra-runs.tsv`                            |
+| `salter_study`       | `ERP006808`                                   |
+| `salter_runs_table`  | `salter-runs.tsv`                             |
 
 ## Two traps
 

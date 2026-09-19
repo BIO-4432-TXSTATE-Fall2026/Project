@@ -1,11 +1,29 @@
 from __future__ import annotations
 
-from collections.abc import Container, Iterable, Iterator
+from collections.abc import Callable, Container, Iterable, Iterator
+from dataclasses import dataclass
 from fnmatch import fnmatchcase
 from pathlib import Path
-from typing import ClassVar
+from typing import Any, ClassVar
 
 from hmp_project.providers import Provider, RemoteObject
+
+
+@dataclass(frozen=True)
+class Profile:
+    """Extra columns one study encodes in free text, and how to read them out of a row.
+
+    A catalog's generic fields do not carry a study's experimental design. Submitters put
+    it in a sample alias or description, in whatever shape they chose, so reading it back
+    is per-study work that no generic column can do. A profile keeps one study's shape in
+    one documented place, named on the command line by whoever extracts that study's rows,
+    rather than leaving every reader of the table to re-guess the convention.
+    """
+
+    #: Appended to the dataset's :data:`~Dataset.EXTRACT_COLUMNS`, in this order.
+    columns: tuple[str, ...]
+    #: A parsed catalog row to the values of :data:`columns`.
+    read: Callable[[dict[str, Any]], dict[str, str]]
 
 
 def _as_prefix(prefix: str) -> str:
@@ -39,6 +57,9 @@ class Dataset:
 
     #: Column order for :meth:`extract`, set by datasets that are metadata tables.
     EXTRACT_COLUMNS: ClassVar[tuple[str, ...]] = ()
+
+    #: The study-specific extras :meth:`extract` can add, by profile name.
+    EXTRACT_PROFILES: ClassVar[dict[str, Profile]] = {}
 
     def __init__(
         self,
@@ -100,9 +121,21 @@ class Dataset:
         """
         raise ValueError(f"{type(self).__name__} files are used as downloaded; nothing to convert")
 
-    def extract(self, path: Path, accessions: Container[str]) -> Iterator[dict[str, str]]:
+    def extract_profile(self, name: str | None) -> Profile | None:
+        """The :class:`Profile` called ``name``, or ``None`` for no profile."""
+        if name is None:
+            return None
+        profile = self.EXTRACT_PROFILES.get(name)
+        if profile is None:
+            known = ", ".join(sorted(self.EXTRACT_PROFILES)) or "none"
+            raise ValueError(f"unknown extract profile {name!r} (this dataset has: {known})")
+        return profile
+
+    def extract(
+        self, path: Path, accessions: Container[str], *, profile: Profile | None = None
+    ) -> Iterator[dict[str, str]]:
         """Yield the rows of the metadata table at ``path`` that ``accessions`` names, as
-        dicts keyed by :data:`EXTRACT_COLUMNS`.
+        dicts keyed by :data:`EXTRACT_COLUMNS`, plus ``profile``'s columns if it is given.
 
         Only datasets that are catalogs rather than payload override this. They own their
         own row format, so nothing above them has to know it.

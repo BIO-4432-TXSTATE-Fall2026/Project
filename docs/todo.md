@@ -97,10 +97,10 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
       `data/derived/hmp-sra-runs.tsv`, then delete the catalog: 916 runs, all 274 samples
 - [x] Decide which runs count per sample:
       `assay_type == 'WGS' and platform == 'ILLUMINA' and study == 'SRP002163'`, which is
-      568 runs over all 274 samples (`docs/data/hmp-sra-runs.md`). `assay_type` alone is
-      not enough — 69 WGS runs are LS454 — and `SRP175119` is a 2019 crAssphage reanalysis
-      of 22 samples that already have their original runs, so it is dropped rather than
-      counted as a fifth center
+      568 runs over all 274 samples (`docs/data/derived/hmp-sra-runs.md`). `assay_type`
+      alone is not enough — 69 WGS runs are LS454 — and `SRP175119` is a 2019 crAssphage
+      reanalysis of 22 samples that already have their original runs, so it is dropped
+      rather than counted as a fifth center
 - [ ] Pool runs per sample before using depth as a covariate: 259 of the 274 samples have
       more than one run
 
@@ -112,8 +112,15 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### Salter et al. (2014) reads
 
 - [x] `sra` dataset
-- [ ] Map `ERP006808` to run accessions with kit and dilution per run
-- [ ] Sync and convert the runs
+- [x] Map `ERP006808` to run accessions with kit and dilution per run: 35 MiSeq runs,
+      `ERR588920`–`ERR588954`, one per sample. Four kits — `CAMBIO`, `MP_BIO`, `QIAGEN`
+      (10 dilution steps each) and `PSP_PLUS` (4) — plus one water control. Kit and step
+      are only in the free-text sample alias, which `extract --profile salter` reads out
+      into `data/derived/salter-runs.tsv` (`docs/data/derived/salter-runs.md`). A step
+      number is not comparable across kits, and depth falls with dilution by construction
+- [ ] Build `data/derived/salter-runs.tsv` on the cluster: the extract needs the 2.3 GB
+      metadata freeze, so it belongs in a preprocess run, not on a laptop
+- [ ] Sync and convert the runs: 0.49 GB over all 35, paired 2×150
 
 ### Contaminant reference genomes
 
@@ -160,7 +167,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 - [ ] Test H2: contaminants cluster by kit (Salter et al.) and synthetic batch; genuine
       HMP taxa do not cluster by center. The HMP centers are unbalanced — WUGSC and BI are
       91% of the 568 runs, BCM 34 and JCVI 19 — so the two small centers carry little
-      weight (`docs/data/hmp-sra-runs.md`)
+      weight (`docs/data/derived/hmp-sra-runs.md`)
 - [ ] Compare against decontam as the baseline
 
 ## 6. Open source

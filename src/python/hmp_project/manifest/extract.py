@@ -57,9 +57,11 @@ def extract(
     accessions: set[str],
     out: Path | None = None,
     force: bool = False,
+    profile: str | None = None,
     provider: Provider | None = None,
 ) -> ExtractResult:
-    """Write the rows of ``spec``'s synced files that ``accessions`` names to ``out``.
+    """Write the rows of ``spec``'s synced files that ``accessions`` names to ``out``,
+    with the extra columns of the extraction ``profile`` if one is named.
 
     Works from the lock, like ``convert``, so it runs offline. Files the lock lists but
     that are not on disk are reported as missing rather than silently skipped, since a
@@ -72,6 +74,7 @@ def extract(
     if not accessions:
         raise ValueError("no accessions to look for; give --accession or --from-lock")
     dataset = open_dataset(spec, provider)
+    selected = dataset.extract_profile(profile)
     root = data_dir / spec.name
     out = out or default_output(spec, data_dir)
 
@@ -88,10 +91,10 @@ def extract(
         else:
             result.missing.append(record["key"])
 
-    columns = dataset.EXTRACT_COLUMNS
+    columns = dataset.EXTRACT_COLUMNS + (selected.columns if selected else ())
     rows: dict[tuple[str, ...], dict[str, str]] = {}
     for path in paths:
-        for row in dataset.extract(path, accessions):
+        for row in dataset.extract(path, accessions, profile=selected):
             # Keyed, so a run appearing twice cannot double-count a batch label.
             rows.setdefault(tuple(row[c] for c in columns), row)
         result.files += 1

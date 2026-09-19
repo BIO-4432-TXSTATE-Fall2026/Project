@@ -5,9 +5,9 @@ import json
 import re
 from collections.abc import Container, Iterator
 from pathlib import Path
-from typing import ClassVar
+from typing import Any, ClassVar
 
-from hmp_project.datasets.base import S3Dataset
+from hmp_project.datasets.base import Profile, S3Dataset
 
 # The identifying accessions of a row, searched without parsing it. Rows that match
 # neither are the overwhelming majority, and parsing all of them is the slow part.
@@ -30,6 +30,40 @@ FIELDS = {
     "assay_type": "assay_type",
     "mbases": "mbases",
 }
+
+# Salter et al. (2014) name each sample "<KIT>_<step>" — "CAMBIO_4", "MP_BIO_10" — so the
+# extraction kit and the dilution step are one split apart. Underscores are kept in the
+# kit, since the alias is what the negative control and the dilution runs have in common.
+SALTER_ALIAS = re.compile(r"(?P<kit>.+)_(?P<dilution>[0-9]+)")
+
+
+def _attribute(row: dict[str, Any], key: str) -> str:
+    """One sample attribute of ``row``, out of the ``jattr`` blob where SRA keeps whatever
+    the submitter sent alongside the fixed fields.
+
+    Values arrive as bare scalars or as one-element lists depending on the attribute, and
+    both mean the same thing here.
+    """
+    value = json.loads(row.get("jattr") or "{}").get(key)
+    if isinstance(value, list):
+        value = value[0] if value else None
+    return "" if value is None else str(value)
+
+
+def _salter(row: dict[str, Any]) -> dict[str, str]:
+    """The extraction kit and dilution step of a Salter et al. (2014) run.
+
+    ``alias`` is kept beside the two parsed columns so the split stays checkable in the
+    committed table rather than only in this function. The negative water control is
+    ``Water``, which names no kit and no step, so both come back empty.
+    """
+    alias = _attribute(row, "alias_sam")
+    match = SALTER_ALIAS.fullmatch(alias)
+    return {
+        "alias": alias,
+        "kit": match["kit"] if match else "",
+        "dilution": match["dilution"] if match else "",
+    }
 
 
 class SRAMetadataDataset(S3Dataset):
@@ -54,10 +88,15 @@ class SRAMetadataDataset(S3Dataset):
 
     BUCKETS: ClassVar[dict[str, str]] = {"us-east-1": "sra-pub-metadata-us-east-1"}
     EXTRACT_COLUMNS: ClassVar[tuple[str, ...]] = tuple(FIELDS.values())
+    EXTRACT_PROFILES: ClassVar[dict[str, Profile]] = {
+        "salter": Profile(("alias", "kit", "dilution"), _salter)
+    }
 
-    def extract(self, path: Path, accessions: Container[str]) -> Iterator[dict[str, str]]:
+    def extract(
+        self, path: Path, accessions: Container[str], *, profile: Profile | None = None
+    ) -> Iterator[dict[str, str]]:
         """Yield the rows of the JSON Lines file at ``path`` whose sample or study is in
-        ``accessions``.
+        ``accessions``, with ``profile``'s columns appended if it is given.
 
         A sample's rows are not all alike: an HMP sample carries its 16S amplicon runs
         alongside its WGS runs, so ``platform`` and ``assay_type`` are kept for callers to
@@ -72,4 +111,5 @@ class SRAMetadataDataset(S3Dataset):
                 ):
                     continue
                 row = json.loads(line)
-                yield {column: str(row.get(field) or "") for field, column in FIELDS.items()}
+                extracted = {column: str(row.get(field) or "") for field, column in FIELDS.items()}
+                yield extracted if profile is None else extracted | profile.read(row)
