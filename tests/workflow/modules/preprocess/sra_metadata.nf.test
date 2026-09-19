@@ -14,7 +14,7 @@ nextflow_process {
                 """
                 input[0] = file("${projectDir}/manifests/sra-metadata-freeze.json")
                 input[1] = file("${projectDir}/manifests/sra-metadata-freeze.lock.json")
-                input[2] = files("${projectDir}/manifests/hmp-{stool,subgingival-plaque,tongue-dorsum}.lock.json")
+                input[2] = files("${projectDir}/manifests/hmp/{stool,subgingival-plaque,tongue-dorsum}.lock.json")
                 input[3] = 'hmp-sra-runs.tsv'
                 input[4] = 'ERP006808'
                 input[5] = 'salter-runs.tsv'

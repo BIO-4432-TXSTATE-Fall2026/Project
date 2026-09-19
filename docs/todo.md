@@ -67,7 +67,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 ### HMP1 shotgun reads
 
-- [x] Full bucket listing (`manifests/hmp.lock.json`) and product choice
+- [x] Full bucket listing (`manifests/hmp/bucket.lock.json`) and product choice
       (`docs/data/HMP_pilot.md`)
 - [x] Record the `subgingival_plaque` listing with `sync --no-download` (pilot; too few
       samples for entropy). Reads are streamed from S3, not downloaded
@@ -79,11 +79,11 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### HMP reference and mock community genomes
 
 - [x] Map `reference_genomes/` directory IDs to organisms
-      (`manifests/hmp-reference-genomes-list.json`)
+      (`manifests/hmp/reference-genomes-list.json`)
 - [x] Sync `*.nuc.fsa` or `*.gbk` for target genera: 198 genomes, 760 MB
-      (`manifests/hmp-reference-genomes-target.json`)
+      (`manifests/hmp/reference-genomes-target.json`)
 - [x] Sync `HHS/HMMC/`: 22 strain genomes and the strain sheet, 27 MB
-      (`manifests/hmp-mock-community.json`)
+      (`manifests/hmp/mock-community.json`)
 
 ### ~~HMP aligned reads~~
 

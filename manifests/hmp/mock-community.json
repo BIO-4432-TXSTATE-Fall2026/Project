@@ -1,0 +1,9 @@
+{
+  "description": "HMP mock community strain genomes (nucleotide FASTA) and strain sheet",
+  "dataset": "hmp",
+  "prefix": "HHS/HMMC",
+  "include": [
+    "*/*.nuc.fsa.bz2",
+    "HMPRP_sT1-Mock.pdf"
+  ]
+}

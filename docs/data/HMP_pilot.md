@@ -4,7 +4,7 @@ Which parts of `s3://human-microbiome-project` fit the proposal in
 `docs/documents/proposal.pdf`, where HMP/iHMP is the positive control: high-depth
 oral and gut data establishing baseline TR entropy for taxa shared with tumor datasets.
 
-Sizes and counts come from the bucket listing in `manifests/hmp.lock.json`
+Sizes and counts come from the bucket listing in `manifests/hmp/bucket.lock.json`
 (`sync --no-download`, 2026-09-15). Genus counts come from the `ORGANISM` line of one
 GenBank header per `reference_genomes/` directory.
 
@@ -40,9 +40,10 @@ body site. 690 of 752 sequenced samples passed HMP QC and are included.
 - Pilot on `subgingival_plaque`: small, and enriched for Fusobacterium and Porphyromonas.
 - Then scale to `tongue_dorsum` and `stool` for depth and gut coverage.
 - Skip `buccal_mucosa`: most samples are shallow (median 0.7 GB).
-- HMP1 WGS reads are short: Illumina GAIIx trimmed to 60–100 bp (median 97–100 in the
-  first 100k reads of three `subgingival_plaque` samples), which caps the repeat lengths
-  a single read can span.
+- HMP1 WGS reads are short: Illumina GAIIx trimmed to 60–100 bp, which caps the repeat
+  lengths a single read can span.
+- Recorded, not downloaded, in `hmp/subgingival-plaque`, `hmp/tongue-dorsum`, and
+  `hmp/stool`; each has a page in `docs/manifests/hmp/`.
 
 ### 2. `reference_genomes/`: TR locus catalog
 
@@ -59,20 +60,11 @@ body site. 690 of 752 sequenced samples passed HMP QC and are included.
 
 - Only `*.nuc.fsa` or `*.gbk` files are needed. Most of the 129 GB is BLAST index
   files (`.nin`, `.nhr`, `.nsq`, …).
-- Directories are numeric IDs. The bucket's `reference_genomes/list.json`
-  (`manifests/hmp-reference-genomes-list.json`) maps 1,120 of them to organism, body site,
-  and file paths; every organism matches its directory's GenBank `ORGANISM` line. The 8
-  directories added later are not listed: `158721` (*S. infantis* ATCC 700779),
-  `169453`–`169456` (*K. pneumoniae*), `169467` and `169468` (*P. mirabilis*), and
-  `170040` (*Capnocytophaga* sp. oral taxon 412).
-- 22 genomes have only a `.gbk` and no `.nuc.fsa`, and `75129`'s `.gbk` is access
-  denied (its `.nuc.fsa` is readable).
-- The six genera above are synced in `manifests/hmp-reference-genomes-target.json`
-  (198 genomes, 316 files, 760 MB). 119 genomes have both a contig and a scaffold
-  `.nuc.fsa`; both are kept, so pick one per genome when cataloging. `.gbk` is used for
-  *V. dispar* `30491` (no FASTA) and *Fusobacterium* sp. `50399` (its `.nuc.fsa` is
-  empty). *P. nigrescens* `64737`'s contig FASTA is access denied, so only its scaffold
-  FASTA is synced.
+- Directories are numeric IDs, mapped to organisms by the bucket's `list.json`
+  (`docs/manifests/hmp/reference-genomes-list.md`). The six genera above are synced in
+  `hmp/reference-genomes-target` (198 genomes, 760 MB); which files, and the ones that
+  needed working around, are on its page
+  (`docs/manifests/hmp/reference-genomes-target.md`).
 
 ### 3. `HHS/HMMC/`: mock community genomes
 
@@ -80,14 +72,9 @@ Reference genomes (0.2 GB) for the HMP mock community strains, including three
 Streptococcus species. Useful as known-identity strains for checking allele calls.
 Only genomes are present; no mock community reads were found in the bucket.
 
-- Synced in `manifests/hmp-mock-community.json`: each strain's `*.nuc.fsa.bz2` (22
-  genomes, 27 MB) and the strain sheet `HMPRP_sT1-Mock.pdf`. The `hmmcref_all.*.tar.gz`
-  bundles duplicate the per-strain files and are skipped.
-- 21 bacteria and archaea plus *Candida albicans*. Of the target genera only
-  *Streptococcus* is present (*S. agalactiae*, *S. mutans*, *S. pneumoniae*).
-- Every FASTA's contents match its strain directory, although
-  `Pseudomonas_aeruginosa_ATCC_47085/331.AE017283.nuc.fsa.bz2` is named with
-  *P. acnes*'s accession; it holds *P. aeruginosa* PAO1 (`AE004091.2`).
+- Synced in `hmp/mock-community`: 22 strain genomes and the strain sheet, 27 MB. Of the
+  target genera only *Streptococcus* is present. Contents and a misnamed file are on its
+  page (`docs/manifests/hmp/mock-community.md`).
 
 ## Maybe
 

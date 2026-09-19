@@ -14,7 +14,7 @@ pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shar
 ## Shape
 
 916 rows, one per run, 13 columns. The samples come from the three body-site lockfiles
-(`manifests/hmp-{stool,subgingival-plaque,tongue-dorsum}.lock.json`) through
+(`manifests/hmp/{stool,subgingival-plaque,tongue-dorsum}.lock.json`) through
 `extract --from-lock`, so the table covers exactly the samples those specs synced: all
 274, with no sample missing and none that was not asked for.
 

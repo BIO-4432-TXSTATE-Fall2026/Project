@@ -19,7 +19,7 @@ reference database in 2011, with an abundance table and a read-count metric per 
 These are the same reads the project already uses, not a new cohort. The CLC command
 line in the BAM header names `SRS*.denovo_duplicates_marked.trimmed.{1,2,singleton}`,
 which are the `HHS/HMASM/WGS/` tarball contents. All 607 `HMASM/WGS/` samples in
-`manifests/hmp.lock.json` have an HMSCP BAM, including every sample recorded so far:
+`manifests/hmp/bucket.lock.json` have an HMSCP BAM, including every sample recorded so far:
 `subgingival_plaque` (7, 11 GB), `tongue_dorsum` (128, 518 GB), `stool` (139, 645 GB).
 
 ### Why it cannot replace read anchoring
@@ -42,7 +42,7 @@ Checked against `ReadMappingSOP.v1.txt.bz2` and the first 20,000 records of
   or fails the threshold. That biases allele calls toward the reference allele.
 - **A different reference, and no random access.** The database is a 2010 snapshot of
   188,039 sequences across 1,610 genera, not the `reference_genomes/` set synced in
-  `manifests/hmp-reference-genomes-target.json`, so its coordinates do not match the
+  `manifests/hmp/reference-genomes-target.json`, so its coordinates do not match the
   planned inTRuder catalog. The header is `SO:unsorted` despite the filename and the
   bucket holds no `.bai`, so reaching a locus means streaming all 1.8 TB and re-sorting.
 

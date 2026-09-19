@@ -64,7 +64,7 @@ study wrote into a free-text sample alias rather than into any SRA field.
 | -------------------- | --------------------------------------------- |
 | `cli`                | `python -m hmp_project`, as installed in the stage's image |
 | `sra_metadata_spec`  | `manifests/sra-metadata-freeze.json`          |
-| `hmp_sample_locks`   | the three `manifests/hmp-*.lock.json` body-site locks |
+| `hmp_sample_locks`   | the three `manifests/hmp/*.lock.json` body-site locks |
 | `hmp_sra_runs_table` | `hmp-sra-runs.tsv`                            |
 | `salter_study`       | `ERP006808`                                   |
 | `salter_runs_table`  | `salter-runs.tsv`                             |

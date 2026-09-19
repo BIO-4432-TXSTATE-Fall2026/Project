@@ -1,0 +1,8 @@
+{
+  "description": "HMP1 WGS reads, subgingival plaque (pilot); listing only, reads are streamed",
+  "dataset": "hmp",
+  "prefix": "HHS/HMASM/WGS/subgingival_plaque",
+  "include": [
+    "SRS*.tar.bz2"
+  ]
+}

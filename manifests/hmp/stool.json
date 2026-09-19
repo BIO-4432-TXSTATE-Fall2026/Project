@@ -1,0 +1,8 @@
+{
+  "description": "HMP1 WGS reads, stool; listing only, reads are streamed",
+  "dataset": "hmp",
+  "prefix": "HHS/HMASM/WGS/stool",
+  "include": [
+    "SRS*.tar.bz2"
+  ]
+}

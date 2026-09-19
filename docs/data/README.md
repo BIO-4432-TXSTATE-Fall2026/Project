@@ -87,7 +87,7 @@ The same work by hand, which is what the module runs:
 ```sh
 pixi run sync manifests/sra-metadata-freeze.json
 pixi run extract manifests/sra-metadata-freeze.json \
-  --from-lock manifests/hmp-stool.lock.json \
+  --from-lock manifests/hmp/stool.lock.json \
   --out data/derived/hmp-sra-runs.tsv
 pixi run extract manifests/sra-metadata-freeze.json \
   --accession ERP006808 --profile salter \

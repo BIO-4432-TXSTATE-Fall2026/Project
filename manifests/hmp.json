@@ -1,8 +1,0 @@
-{
-  "description": "Full listing of s3://human-microbiome-project",
-  "dataset": "hmp",
-  "prefix": "",
-  "include": [
-    "*"
-  ]
-}

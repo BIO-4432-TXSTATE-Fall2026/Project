@@ -30,10 +30,10 @@ pixi run -e r r-restore  # R packages from src/R/renv.lock (optional)
 Create a spec, then sync it:
 
 ```sh
-pixi run new hmp-hmqcp --dataset hmp --prefix HHS/HMQCP \
+pixi run new hmp/hmqcp --dataset hmp --prefix HHS/HMQCP \
   --include 'otu_table_psn_v*.txt.gz' --exclude '*.old'
-pixi run sync manifests/hmp-hmqcp.json --dry-run
-pixi run sync manifests/hmp-hmqcp.json
+pixi run sync manifests/hmp/hmqcp.json --dry-run
+pixi run sync manifests/hmp/hmqcp.json
 ```
 
 `manifests/<name>.json` records what to fetch. `manifests/<name>.lock.json` records each
