@@ -1,0 +1,39 @@
+{
+  "description": "Kit-contaminant genomes for the spike-in benchmark: complete RefSeq genomes for Bradyrhizobium, Burkholderia, Methylobacterium, Sphingomonas and Flavobacterium, six species each (Salter et al. 2014 Table 1)",
+  "dataset": "slacken",
+  "accessions": [
+    "GCF_000284275.1",
+    "GCF_000344805.1",
+    "GCF_001693385.1",
+    "GCF_001693515.2",
+    "GCF_002266435.3",
+    "GCF_004114915.1",
+    "GCF_000012945.1",
+    "GCF_001028665.1",
+    "GCF_000009485.1",
+    "GCF_000010545.1",
+    "GCF_001411495.1",
+    "GCF_000203915.1",
+    "GCF_000019725.1",
+    "GCF_000022085.1",
+    "GCF_000757795.1",
+    "GCF_001936175.1",
+    "GCF_003173715.1",
+    "GCF_003173735.1",
+    "GCF_000512205.2",
+    "GCF_000764535.1",
+    "GCF_000935025.1",
+    "GCF_001717955.1",
+    "GCF_001922385.1",
+    "GCF_002796605.1",
+    "GCF_000016645.1",
+    "GCF_000253275.1",
+    "GCF_000455605.1",
+    "GCF_001534645.1",
+    "GCF_001705175.1",
+    "GCF_001761465.1"
+  ],
+  "include": [
+    "*"
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "spec": "contaminants/salter-article.json",
+  "dataset": "pmc",
+  "source": "s3://pmc-oa-opendata/PMC4228153.1/",
+  "files": [
+    {
+      "key": "PMC4228153.1/12915_2014_87_Fig1_HTML.jpg",
+      "size": 136541,
+      "etag": "3ff7b5feb7c1d4c177ff47e3712d0756",
+      "last_modified": "2026-02-14T00:25:52Z",
+      "sha256": "32f5589cced01a734550e5043eb15f1488f916bd3f2920c76e0a47e8c3b6908c",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/12915_2014_87_Fig2_HTML.jpg",
+      "size": 29335,
+      "etag": "ef7dc570af7f18cc391a18a65b9238ba",
+      "last_modified": "2026-02-14T00:25:52Z",
+      "sha256": "185f6b25156b9aa63186f4be63cf1d00d290cb22de2d3ac82475dc023841afbc",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/12915_2014_87_Fig3_HTML.jpg",
+      "size": 123223,
+      "etag": "c536672871b5379cd2698f9f6033e591",
+      "last_modified": "2026-02-14T00:25:53Z",
+      "sha256": "df284cc8f5a6ceda81188fe201cdc75a557615e7c01f195f6f06ae5fa947949b",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/12915_2014_87_Fig4_HTML.jpg",
+      "size": 159093,
+      "etag": "9bc3f57007b0307213e51909f87967a5",
+      "last_modified": "2026-02-14T00:25:53Z",
+      "sha256": "9b08efd97a433baa8f80f7fb5529176c501f8d181353484c4d4b69c715ab6740",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/12915_2014_87_MOESM1_ESM.docx",
+      "size": 616508,
+      "etag": "57a2849bb057ca998f3ae5a34eda1e07",
+      "last_modified": "2026-02-14T00:25:52Z",
+      "sha256": "3e4d4107ac7edcd2f505eb8aced2e37e28fbeae53238c8c8048e04251e7fc884",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/PMC4228153.1.json",
+      "size": 1247,
+      "etag": "b10d4a88afde037a90a9fc373e0caa5c",
+      "last_modified": "2026-07-04T09:32:51Z",
+      "sha256": "ef7044c3860442c52c539a25a68964dc26b091eb51fd66b39ed2f73feede780d",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/PMC4228153.1.pdf",
+      "size": 2169631,
+      "etag": "ff173a67d39293363dddb3361f21e9ea",
+      "last_modified": "2026-02-14T00:25:53Z",
+      "sha256": "8047dbe3fc02318d91f4a07db58d0da923085f9a8d6bcc3757e2a4fbbb3d5992",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/PMC4228153.1.txt",
+      "size": 60485,
+      "etag": "ec8cd552ef8aae564caf880fdffb025d",
+      "last_modified": "2026-07-04T09:32:51Z",
+      "sha256": "66ad703c31b08c6cc86b42692509b7162aaee2c42ce6fcd1be879aae31f3d8f9",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    },
+    {
+      "key": "PMC4228153.1/PMC4228153.1.xml",
+      "size": 141047,
+      "etag": "de79ac1bff5c719a7df1b83cb477f5d0",
+      "last_modified": "2026-07-04T09:32:51Z",
+      "sha256": "aaa78c5e0fa8824c356c374070bc7442529dda0c785c8102e539cb8c68eb953d",
+      "downloaded_at": "2026-09-19T22:22:02.739417Z"
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-09-19T22:22:02.739417Z",
+      "spec_sha256": "0038cf6502370b1844edea6021e950ec492bd7512fa85dc3afbf5997774f33e1",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "pmc-oa-opendata",
+          "region": "us-east-1",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 9,
+      "bytes": 3437110,
+      "added": [
+        "PMC4228153.1/12915_2014_87_Fig1_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig2_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig3_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig4_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_MOESM1_ESM.docx",
+        "PMC4228153.1/PMC4228153.1.json",
+        "PMC4228153.1/PMC4228153.1.pdf",
+        "PMC4228153.1/PMC4228153.1.txt",
+        "PMC4228153.1/PMC4228153.1.xml"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": [
+        "PMC4228153.1/12915_2014_87_Fig1_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig2_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig3_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_Fig4_HTML.jpg",
+        "PMC4228153.1/12915_2014_87_MOESM1_ESM.docx",
+        "PMC4228153.1/PMC4228153.1.json",
+        "PMC4228153.1/PMC4228153.1.pdf",
+        "PMC4228153.1/PMC4228153.1.txt",
+        "PMC4228153.1/PMC4228153.1.xml"
+      ]
+    }
+  ]
+}

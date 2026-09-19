@@ -50,7 +50,7 @@ is whether within-taxon *sequence* variation carries the signal at finer resolut
 | SRA run metadata freeze (`sra/metadata_json/`, `09_01_2020`) | 60 files, 2.3 GB → 568 WGS/Illumina runs over all 274 HMP samples | H2's batch labels. Which center sequenced each HMP sample and when, and the only place Salter's kit and dilution can be recovered from (they live in free text) |
 | HMP reference genomes (`reference_genomes/`) | 198 genomes for target genera, 760 MB | The TR locus catalog that inTRuder builds — where to look |
 | HMP mock community (`HHS/HMMC/`) | 22 known strains, 27 MB | Ground truth. Checks the catalog and the allele caller before either is trusted on real samples |
-| Contaminant genomes and spike-ins (planned) | not yet chosen | The controlled benchmark: clonal contaminant reads laid onto HMP samples, one strain per synthetic batch, titrated to tumor-like depth |
+| Contaminant genomes and spike-ins | 30 genomes: 5 kit genera, 6 species each (`docs/manifests/contaminants/kit.md`) | The controlled benchmark: clonal contaminant reads laid onto HMP samples, one strain per synthetic batch, titrated to tumor-like depth |
 
 Per-dataset provenance, exact prefixes, and the manifest that fetches each one are in the
 Table 1 of `docs/todo.md`.

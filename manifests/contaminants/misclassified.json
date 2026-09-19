@@ -1,0 +1,19 @@
+{
+  "description": "Complete RefSeq genomes for the genera Gihawi et al. (2023) attribute to human-read misclassification: Streptococcus, Mycobacterium and Staphylococcus, three species each, and Waddlia chondrophila",
+  "dataset": "slacken",
+  "accessions": [
+    "GCF_000026745.1",
+    "GCF_000221985.1",
+    "GCF_001412635.1",
+    "GCF_000195955.2",
+    "GCF_000157895.3",
+    "GCF_000253375.1",
+    "GCF_000013425.1",
+    "GCF_000236925.1",
+    "GCF_000709415.1",
+    "GCF_000092785.1"
+  ],
+  "include": [
+    "*"
+  ]
+}

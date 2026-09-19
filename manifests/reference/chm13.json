@@ -1,0 +1,8 @@
+{
+  "description": "T2T-CHM13 v2.0 analysis set: the complete human reference used to screen TR catalog loci and reference genomes for human sequence",
+  "dataset": "human-pangenomics",
+  "prefix": "T2T/CHM13/assemblies/analysis_set",
+  "include": [
+    "chm13v2.0.fa.gz*"
+  ]
+}

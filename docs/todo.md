@@ -28,7 +28,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 | SRA run metadata               | `s3://sra-pub-metadata-us-east-1`                 | `sra-metadata` | Map HMP samples to runs, center, and date (H2 batch labels)           |
 | iHMP                           | `s3://hmpdcc` `ihmp/`                             | `hmpdcc`       | Extra oral and gut data, or drop from Table 1                         |
 | Salter et al. (2014) reads     | ENA `ERP006808`, runs from `s3://sra-pub-run-odp` | `sra`          | Real contaminants with kit labels: contaminant side of H1, kit batches for H2 |
-| Contaminant reference genomes  | NCBI assemblies (S3 mirror if one exists)         | none yet       | TR locus catalog for contaminant genera; source of spike-in reads     |
+| Contaminant reference genomes  | `s3://slacken` `index/rspc-224/library/bacteria/` | `slacken`      | TR locus catalog for contaminant genera; source of spike-in reads     |
 | Gihawi et al. (2023) supplement | `s3://pmc-oa-opendata` `PMC10653788.1/`          | `pmc`          | Known false-positive taxa: labels for modeling decisions, not reads   |
 | Zeller et al. (2014) reads (optional) | ENA `ERP005534`, runs from `s3://sra-pub-run-odp` | `sra`   | Cancer-associated taxa across patients; weak evidence for H2          |
 | ~~TCGA COAD/STAD~~             | NCI GDC; needs dbGaP access                       | none           | Future work                                                           |
@@ -45,8 +45,10 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
   [Salter et al. 2014, BMC Biology](https://link.springer.com/article/10.1186/s12915-014-0087-z);
   [ENA `ERP006808`](https://www.ebi.ac.uk/ena/browser/view/ERP006808);
   [NCBI SRA, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-sra/)
-- **Contaminant reference genomes:** [NCBI Datasets genomes](https://www.ncbi.nlm.nih.gov/datasets/genome/);
-  [NCBI assembly FTP](https://ftp.ncbi.nlm.nih.gov/genomes/all/)
+- **Contaminant reference genomes:** RefSeq release 224 via
+  [Slacken metagenomic reference libraries, Registry of Open Data on AWS](https://registry.opendata.aws/slacken/)
+- **Human reference (screen):** [Nurk et al. 2022, Science](https://doi.org/10.1126/science.abj6987);
+  [Human Pangenome Reference Consortium, Registry of Open Data on AWS](https://registry.opendata.aws/hpgp-data/)
 - **Gihawi et al. (2023) supplement:**
   [Gihawi et al. 2023, mBio](https://doi.org/10.1128/mbio.01607-23);
   [PMC Article Datasets, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-pmc/)
@@ -132,25 +134,35 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### Contaminant reference genomes
 
 Grouped under `manifests/contaminants/`, one page each in `docs/manifests/contaminants/`.
+The human reference they are screened against is `manifests/reference/chm13.json`.
 
 - [x] `pmc` dataset; sync the Gihawi et al. (2023) supplement
       (`manifests/contaminants/gihawi-supplement.json`). Its rejected taxa are human-read
       misclassification, normalization artifacts, and implausible extremophiles — known
       false positives, not kit contaminants, so they label rather than supply spike-ins
-- [ ] Choose spike-in contaminant genera (`contaminants/kit`) from Salter et al. (2014)
-      Table 1, excluding human-associated genera. Candidates: *Bradyrhizobium* (`PSP`
-      kit), *Burkholderia* (FastDNA kit), *Ralstonia* (HMP has two gut isolates; screen
-      stool for background first), *Methylobacterium*, *Sphingomonas*. All high-GC
-      Proteobacteria, so GC must not separate them from HMP taxa by itself
-- [ ] Fetch misclassified genera (`contaminants/misclassified`: *Streptococcus*,
-      *Mycobacterium*, *Staphylococcus*, *Waddlia*) and screen them and the TR catalog
-      against human CHM13
+- [x] Sync the Salter et al. (2014) article for Table 1 and the per-kit shotgun profiles
+      (`manifests/contaminants/salter-article.json`)
+- [x] Choose spike-in contaminant genera and write `contaminants/kit`: *Bradyrhizobium*
+      (`PSP` kit), *Burkholderia* (FastDNA kit), *Methylobacterium*, *Sphingomonas*, and
+      low-GC *Flavobacterium* so GC alone cannot separate them from HMP targets. Six
+      complete genomes each, one per species, excluding every genus with an HMP reference
+      genome. *Ralstonia* only if HMP stool shows no background
+      (`docs/manifests/contaminants/kit.md`)
+- [x] Genome source: the existing `slacken` dataset cuts complete RefSeq genomes out of
+      the release 224 library by byte range, so no NCBI dataset is needed
+- [x] Write `contaminants/misclassified`: three complete genomes each for
+      *Streptococcus*, *Mycobacterium* and *Staphylococcus*, plus *Waddlia chondrophila*
+- [x] Write `reference/chm13` and a `human-pangenomics` dataset: T2T-CHM13 v2.0, the
+      screen for TR loci that also occur in human (`docs/manifests/reference/chm13.md`)
+- [ ] Sync `contaminants/kit`, `contaminants/misclassified` and `reference/chm13` on a
+      compute node: 192 MB, 32 MB and 982 MB, plus 725 MB of slacken index files on the
+      first slacken sync
+- [ ] Screen the misclassified genomes and the TR catalog against CHM13
 - [ ] Extract false-positive labels from the supplement into `data/derived/`: the
       misclassified group from Tables S1–S7; normalization artifacts and extremophiles
       are only named in the paper's text
-- [ ] Find an NCBI assembly source and add a dataset (or provider) for it
-- [ ] Fetch genomes for *S. bongori*, *Ralstonia*, *Bradyrhizobium*, and the chosen
-      spike-in genera, with several strains per genus
+- [ ] Fetch *S. bongori* genomes, the true organism of the Salter dilution series, and
+      *Ralstonia* if the stool screen clears it
 
 ### Zeller et al. (2014) reads (optional)
 

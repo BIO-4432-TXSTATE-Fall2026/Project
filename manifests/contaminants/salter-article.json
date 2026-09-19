@@ -1,0 +1,8 @@
+{
+  "description": "Salter et al. (2014) article and supplement: Table 1 (contaminant genera in blank controls), the four-kit shotgun dilution series, and Additional file 1 (Tables S1a/S1b accessions and read counts, Table S2)",
+  "dataset": "pmc",
+  "prefix": "PMC4228153.1",
+  "include": [
+    "*"
+  ]
+}
