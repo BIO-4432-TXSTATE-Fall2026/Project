@@ -9,6 +9,7 @@ from __future__ import annotations
 from hmp_project.datasets.base import Dataset, S3Dataset
 from hmp_project.datasets.hmp import HMPDataset
 from hmp_project.datasets.hmpdcc import HMPDCCDataset
+from hmp_project.datasets.human_pangenomics import HumanPangenomicsDataset
 from hmp_project.datasets.pmc import PMCDataset
 from hmp_project.datasets.slacken import SlackenDataset
 from hmp_project.datasets.sra import SRADataset
@@ -17,6 +18,7 @@ from hmp_project.datasets.sra_metadata import SRAMetadataDataset
 DATASETS: dict[str, type[S3Dataset]] = {
     "hmp": HMPDataset,
     "hmpdcc": HMPDCCDataset,
+    "human-pangenomics": HumanPangenomicsDataset,
     "pmc": PMCDataset,
     "slacken": SlackenDataset,
     "sra": SRADataset,
@@ -28,6 +30,7 @@ __all__ = [
     "Dataset",
     "HMPDCCDataset",
     "HMPDataset",
+    "HumanPangenomicsDataset",
     "PMCDataset",
     "S3Dataset",
     "SRADataset",
