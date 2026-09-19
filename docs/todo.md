@@ -1,8 +1,8 @@
 # Pipeline
 
-Steps for the project in `docs/proposal.pdf`, in rough order. Data choices are in
-`docs/HMP_proposed.md` and, with no TCGA controlled access,
-`docs/tcga_controlled_alternative.md`. Data deferred to future comparisons is in
+Steps for the project in `docs/documents/proposal.pdf`, in rough order. Data choices are in
+`docs/data/HMP_pilot.md` and, with no TCGA controlled access,
+`docs/data/tcga_alternatives.md`. Data deferred to future comparisons is in
 `docs/comparisons.md`.
 
 ## 0. Proposal
@@ -62,7 +62,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### HMP1 shotgun reads
 
 - [x] Full bucket listing (`manifests/hmp.lock.json`) and product choice
-      (`docs/HMP_proposed.md`)
+      (`docs/data/HMP_pilot.md`)
 - [x] Record the `subgingival_plaque` listing with `sync --no-download` (pilot; too few
       samples for entropy). Reads are streamed from S3, not downloaded
 - [x] Verify read length: Illumina GAIIx, trimmed to 60–100 bp (median 97–100); each

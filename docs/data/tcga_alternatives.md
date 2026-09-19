@@ -1,7 +1,7 @@
 # Alternatives if TCGA controlled access is unavailable
 
-What the project in `docs/proposal.pdf` can use if dbGaP access to TCGA COAD/STAD
-raw reads does not come through. HMP data choices are in `docs/HMP_proposed.md`.
+What the project in `docs/documents/proposal.pdf` can use if dbGaP access to TCGA COAD/STAD
+raw reads does not come through. HMP data choices are in `docs/data/HMP_pilot.md`.
 
 ## What TCGA provided
 

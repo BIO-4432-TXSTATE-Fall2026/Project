@@ -1,7 +1,7 @@
 # Downstream comparisons
 
 Data that cannot drive the pipeline in `docs/todo.md`, but is worth comparing
-results against once allele calling works. Data choices are in `docs/HMP_proposed.md`.
+results against once allele calling works. Data choices are in `docs/data/HMP_pilot.md`.
 
 ## HMP aligned reads (`HHS/HMSCP/`)
 
@@ -74,4 +74,4 @@ aws s3 cp --no-sign-request \
 ## Elsewhere
 
 TCGA COAD/STAD and the Gihawi et al. (2023) labels are the project's other deferred
-comparison; see `docs/tcga_controlled_alternative.md`.
+comparison; see `docs/data/tcga_alternatives.md`.
