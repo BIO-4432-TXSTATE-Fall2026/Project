@@ -29,6 +29,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 | iHMP                           | `s3://hmpdcc` `ihmp/`                             | `hmpdcc`       | Extra oral and gut data, or drop from Table 1                         |
 | Salter et al. (2014) reads     | ENA `ERP006808`, runs from `s3://sra-pub-run-odp` | `sra`          | Real contaminants with kit labels: contaminant side of H1, kit batches for H2 |
 | Contaminant reference genomes  | NCBI assemblies (S3 mirror if one exists)         | none yet       | TR locus catalog for contaminant genera; source of spike-in reads     |
+| Gihawi et al. (2023) supplement | `s3://pmc-oa-opendata` `PMC10653788.1/`          | `pmc`          | Known false-positive taxa: labels for modeling decisions, not reads   |
 | Zeller et al. (2014) reads (optional) | ENA `ERP005534`, runs from `s3://sra-pub-run-odp` | `sra`   | Cancer-associated taxa across patients; weak evidence for H2          |
 | ~~TCGA COAD/STAD~~             | NCI GDC; needs dbGaP access                       | none           | Future work                                                           |
 
@@ -46,6 +47,9 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
   [NCBI SRA, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-sra/)
 - **Contaminant reference genomes:** [NCBI Datasets genomes](https://www.ncbi.nlm.nih.gov/datasets/genome/);
   [NCBI assembly FTP](https://ftp.ncbi.nlm.nih.gov/genomes/all/)
+- **Gihawi et al. (2023) supplement:**
+  [Gihawi et al. 2023, mBio](https://doi.org/10.1128/mbio.01607-23);
+  [PMC Article Datasets, Registry of Open Data on AWS](https://registry.opendata.aws/ncbi-pmc/)
 - **Zeller et al. (2014) reads:** [Zeller et al. 2014 data reuse](https://pmc.ncbi.nlm.nih.gov/articles/PMC4865240/);
   [Wirbel et al. 2019, Nature Medicine](https://www.nature.com/articles/s41591-019-0406-6);
   [ENA `ERP005534`](https://www.ebi.ac.uk/ena/browser/view/ERP005534)
@@ -58,6 +62,8 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 - [x] `sync --no-download` to record listings without fetching
 - [x] Selection by accession and per-spec region
 - [x] `convert` for `.sra` runs with `fasterq-dump`
+- [x] Specs in subdirectories of `manifests/`, with pages mirrored under
+      `docs/manifests/`
 
 ### HMP1 shotgun reads
 
@@ -125,7 +131,23 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 ### Contaminant reference genomes
 
-- [ ] Choose spike-in contaminant genera, informed by Gihawi et al. (2023) rejected taxa
+Grouped under `manifests/contaminants/`, one page each in `docs/manifests/contaminants/`.
+
+- [x] `pmc` dataset; sync the Gihawi et al. (2023) supplement
+      (`manifests/contaminants/gihawi-supplement.json`). Its rejected taxa are human-read
+      misclassification, normalization artifacts, and implausible extremophiles — known
+      false positives, not kit contaminants, so they label rather than supply spike-ins
+- [ ] Choose spike-in contaminant genera (`contaminants/kit`) from Salter et al. (2014)
+      Table 1, excluding human-associated genera. Candidates: *Bradyrhizobium* (`PSP`
+      kit), *Burkholderia* (FastDNA kit), *Ralstonia* (HMP has two gut isolates; screen
+      stool for background first), *Methylobacterium*, *Sphingomonas*. All high-GC
+      Proteobacteria, so GC must not separate them from HMP taxa by itself
+- [ ] Fetch misclassified genera (`contaminants/misclassified`: *Streptococcus*,
+      *Mycobacterium*, *Staphylococcus*, *Waddlia*) and screen them and the TR catalog
+      against human CHM13
+- [ ] Extract false-positive labels from the supplement into `data/derived/`: the
+      misclassified group from Tables S1–S7; normalization artifacts and extremophiles
+      are only named in the paper's text
 - [ ] Find an NCBI assembly source and add a dataset (or provider) for it
 - [ ] Fetch genomes for *S. bongori*, *Ralstonia*, *Bradyrhizobium*, and the chosen
       spike-in genera, with several strains per genus

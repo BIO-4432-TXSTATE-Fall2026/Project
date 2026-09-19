@@ -1,0 +1,94 @@
+{
+  "spec": "contaminants/gihawi-supplement.json",
+  "dataset": "pmc",
+  "source": "s3://pmc-oa-opendata/PMC10653788.1/",
+  "files": [
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0001.txt",
+      "size": 429372,
+      "etag": "4f10539aab5a38d58f8f4c6b79f3e8e2",
+      "last_modified": "2026-02-23T02:04:14Z",
+      "sha256": "e64ff9af9d417b7a97c0ba0718257797ca0f7c316861973b512ff7937745471b",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0002.txt",
+      "size": 42941,
+      "etag": "b649033c4832c8d92ae72852175c6474",
+      "last_modified": "2026-02-23T02:04:12Z",
+      "sha256": "edf26ae746d7ee9dec4b2f8155e07bbf6526216ca642f7c480ff635779f7a0c5",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0003.docx",
+      "size": 101548,
+      "etag": "1a29154d35cf1e63bb8153ce6ef06c3f",
+      "last_modified": "2026-02-23T02:04:15Z",
+      "sha256": "6a0a67d7928b5d8869c2b0be4245c30204ba0ba7673615f5e56d956a071fc0c8",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0004.xlsx",
+      "size": 495615,
+      "etag": "3d1bda4e2ec059fbecff7c059d765065",
+      "last_modified": "2026-02-23T02:04:10Z",
+      "sha256": "5cc8fce7add52616d9279ca63635d9ca3ab7a21cb7692b461d2c66c0ce22f905",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0005.xlsx",
+      "size": 1725357,
+      "etag": "049d327bfc43599906c900919fd5712c",
+      "last_modified": "2026-02-23T02:04:16Z",
+      "sha256": "aff68ddec48364711d1f80b35aa03f83323211e2740383de89fc5498e210e9ed",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0006.xlsx",
+      "size": 914015,
+      "etag": "2b15e387f40b251389a022a8da41888a",
+      "last_modified": "2026-02-23T02:04:12Z",
+      "sha256": "8a6059c0f3d8b9e03e6a5ee09fafeb1ee2bf6a22ce2e4518b1791857ec8f67c4",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    },
+    {
+      "key": "PMC10653788.1/mbio.01607-23-s0007.xlsx",
+      "size": 103941,
+      "etag": "7ec29f919ccfc30b21d5926debe24381",
+      "last_modified": "2026-02-23T02:04:12Z",
+      "sha256": "bd8dd84a1e518cfb76300d628589e567f840ff0bbe9a998547dae26a615b3c28",
+      "downloaded_at": "2026-09-19T16:14:42.495670Z"
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-09-19T16:14:42.495670Z",
+      "spec_sha256": "284c2c4013c1b928ed7e081435ba2d727248bf99c8e3f82586a039437d95ebc7",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "pmc-oa-opendata",
+          "region": "us-east-1",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 7,
+      "bytes": 3812789,
+      "added": [
+        "PMC10653788.1/mbio.01607-23-s0001.txt",
+        "PMC10653788.1/mbio.01607-23-s0002.txt",
+        "PMC10653788.1/mbio.01607-23-s0003.docx",
+        "PMC10653788.1/mbio.01607-23-s0004.xlsx",
+        "PMC10653788.1/mbio.01607-23-s0005.xlsx",
+        "PMC10653788.1/mbio.01607-23-s0006.xlsx",
+        "PMC10653788.1/mbio.01607-23-s0007.xlsx"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": []
+    }
+  ]
+}

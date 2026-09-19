@@ -1,0 +1,8 @@
+{
+  "description": "Gihawi et al. (2023) supplementary files: Kraken database species and genera, Tables S1-S7 (top-20 genera, Poore et al. vs re-analysis), S8-S10 (re-analysis counts: BLCA, HNSC, BRCA), S11 (Poore et al. top classifier features)",
+  "dataset": "pmc",
+  "prefix": "PMC10653788.1",
+  "include": [
+    "mbio.01607-23-s*"
+  ]
+}
