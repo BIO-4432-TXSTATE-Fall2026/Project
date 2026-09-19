@@ -15,7 +15,7 @@ gives, so the file always matches what the code produces.
 
 | Table | Source | Page |
 | ----- | ------ | ---- |
-| _(none built yet)_ | | |
+| `hmp-sra-runs.tsv` | SRA run metadata freeze | [`hmp-sra-runs.md`](hmp-sra-runs.md) |
 
 ## Sources
 
@@ -45,10 +45,12 @@ snapshot never changes, you pay it once and keep the result.
 #### Two traps
 
 **A sample's runs are not all alike.** HMP samples carry their 16S amplicon runs
-alongside their Illumina WGS runs, under the same `SRS` accession. Joining on sample alone
-pulls in 454 amplicon runs that are not the WGS data this project analyses, which would
-quietly corrupt any batch label built from them. Extracted tables keep `platform`,
-`instrument`, and `assay_type` so callers can filter; nothing upstream does it for you.
+alongside their Illumina WGS runs, under the same `SRS` accession, and a few carry 454
+shotgun runs and a 2019 reanalysis besides. Joining on sample alone analyses all of them
+together, which would quietly corrupt any batch label built from them. Extracted tables
+keep `platform`, `instrument`, `assay_type`, and `study` so callers can filter; nothing
+upstream does it for you. The filter to use, and what each clause of it removes, is in
+[`hmp-sra-runs.md`](hmp-sra-runs.md).
 
 **The 2.3 GB is temporary.** Sync it, extract what you need, delete it. Re-syncing is how
 you rebuild, and `sync` checksums each shard so an interrupted download resumes rather

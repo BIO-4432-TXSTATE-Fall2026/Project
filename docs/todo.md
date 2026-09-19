@@ -93,10 +93,16 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
       since 2020-09-09, covering everything released to 2020-09-01
 - [x] `extract` command: reduce a synced catalog to the rows an accession list names,
       into a committed TSV under `data/derived/` (`docs/data/README.md`)
-- [ ] Sync the freeze on a compute node, extract the 274 HMP `SRS` samples to
-      `data/derived/hmp-sra-runs.tsv`, then delete the catalog
-- [ ] Decide which runs count per sample: samples carry 454 amplicon runs alongside the
-      Illumina WGS ones, so batch labels need filtering by `platform`/`assay_type`
+- [x] Sync the freeze on a compute node, extract the 274 HMP `SRS` samples to
+      `data/derived/hmp-sra-runs.tsv`, then delete the catalog: 916 runs, all 274 samples
+- [x] Decide which runs count per sample:
+      `assay_type == 'WGS' and platform == 'ILLUMINA' and study == 'SRP002163'`, which is
+      568 runs over all 274 samples (`docs/data/hmp-sra-runs.md`). `assay_type` alone is
+      not enough — 69 WGS runs are LS454 — and `SRP175119` is a 2019 crAssphage reanalysis
+      of 22 samples that already have their original runs, so it is dropped rather than
+      counted as a fifth center
+- [ ] Pool runs per sample before using depth as a covariate: 259 of the 274 samples have
+      more than one run
 
 ### iHMP
 
@@ -152,7 +158,9 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 - [ ] Test H1: entropy gap between biological signal and contaminants, including at low
       depth (Salter et al. and spike-ins)
 - [ ] Test H2: contaminants cluster by kit (Salter et al.) and synthetic batch; genuine
-      HMP taxa do not cluster by center
+      HMP taxa do not cluster by center. The HMP centers are unbalanced — WUGSC and BI are
+      91% of the 568 runs, BCM 34 and JCVI 19 — so the two small centers carry little
+      weight (`docs/data/hmp-sra-runs.md`)
 - [ ] Compare against decontam as the baseline
 
 ## 6. Open source
