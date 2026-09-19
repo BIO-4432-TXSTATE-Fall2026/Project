@@ -134,6 +134,25 @@ def test_include_filters_relative_to_prefix(tmp_path, provider, write_spec):
     assert provider.downloads == [V35]
 
 
+def test_nested_spec_syncs_to_a_mirrored_data_directory(tmp_path, provider, write_spec):
+    spec = write_spec("contaminants/kit", include=["nested/*"])
+
+    sync(spec, tmp_path / "data", provider=provider)
+
+    assert spec.name == "contaminants/kit"
+    assert spec.lock_path == tmp_path / "manifests/contaminants/kit.lock.json"
+    assert (tmp_path / "data/contaminants/kit/nested/otu_table_v35.txt.gz").read_bytes() == b"v35"
+    assert lock_of(spec)["spec"] == "contaminants/kit.json"
+
+
+def test_spec_outside_a_manifests_directory_is_named_by_its_stem(tmp_path):
+    path = tmp_path / "work" / "kit.json"
+    path.parent.mkdir()
+    path.write_text(json.dumps({"dataset": "hmp", "prefix": "x"}))
+
+    assert Spec.load(path).name == "kit"
+
+
 def test_spec_rejects_unknown_fields_and_lockfiles(tmp_path, write_spec):
     spec = write_spec()
     with pytest.raises(ValueError, match="lockfile"):

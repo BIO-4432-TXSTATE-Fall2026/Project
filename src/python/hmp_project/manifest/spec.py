@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 LOCK_SUFFIX = ".lock.json"
+MANIFESTS_DIR = "manifests"
 SPEC_FIELDS = {"description", "dataset", "region", "prefix", "accessions", "include", "exclude"}
 
 
@@ -48,11 +49,19 @@ class Spec:
 
     @property
     def name(self) -> str:
+        """The spec's path under the nearest ``manifests/`` directory, without ``.json``,
+        so ``manifests/contaminants/kit.json`` is ``contaminants/kit``. A spec outside one,
+        such as a copy staged into a pipeline work directory, is named by its stem.
+        """
+        parts = self.path.with_suffix("").parts
+        for i in range(len(parts) - 2, -1, -1):
+            if parts[i] == MANIFESTS_DIR:
+                return "/".join(parts[i + 1 :])
         return self.path.stem
 
     @property
     def lock_path(self) -> Path:
-        return self.path.with_name(f"{self.name}{LOCK_SUFFIX}")
+        return self.path.with_name(f"{self.path.stem}{LOCK_SUFFIX}")
 
 
 def write_spec(

@@ -9,12 +9,15 @@ from pathlib import Path
 from hmp_project.datasets import DATASETS
 from hmp_project.manifest import write_spec
 
-NAME = re.compile(r"[a-z0-9][a-z0-9._-]*")
+SEGMENT = r"[a-z0-9][a-z0-9._-]*"
+NAME = re.compile(rf"{SEGMENT}(/{SEGMENT})*")
 
 
 def add_parser(commands: argparse._SubParsersAction) -> None:
     parser = commands.add_parser("new", help="create a dataset spec in the manifests directory")
-    parser.add_argument("name", help="spec name; becomes <manifests-dir>/<name>.json")
+    parser.add_argument(
+        "name", help="spec name, / for subdirectories; becomes <manifests-dir>/<name>.json"
+    )
     parser.add_argument("--dataset", required=True, choices=sorted(DATASETS))
     parser.add_argument(
         "--region",
@@ -39,7 +42,9 @@ def add_parser(commands: argparse._SubParsersAction) -> None:
 
 def run(args: argparse.Namespace) -> None:
     if not NAME.fullmatch(args.name) or args.name.endswith(".lock"):
-        raise SystemExit(f"invalid spec name {args.name!r}: use lowercase letters, digits, . _ -")
+        raise SystemExit(
+            f"invalid spec name {args.name!r}: use lowercase letters, digits, . _ - and /"
+        )
     if (args.prefix is None) == (not args.accession):
         raise SystemExit("give either --prefix or --accession, not both")
     path = args.manifests_dir / f"{args.name}.json"

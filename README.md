@@ -39,6 +39,8 @@ pixi run sync manifests/hmp-hmqcp.json
 `manifests/<name>.json` records what to fetch. `manifests/<name>.lock.json` records each
 file's size, ETag, upstream timestamp, and sha256, plus a history entry for every sync
 that added, changed, removed, or downloaded something. Files land in `data/<name>/`.
+A name may contain `/` to group specs: `new contaminants/kit` writes
+`manifests/contaminants/kit.json`, and its files land in `data/contaminants/kit/`.
 
 `sync --no-download` records the remote listing in the lock without fetching anything;
 those files have a null `sha256` until a real sync downloads them.

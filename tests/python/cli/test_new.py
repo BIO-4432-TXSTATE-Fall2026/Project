@@ -30,10 +30,20 @@ def test_new_writes_spec_and_refuses_overwrite(tmp_path):
         main(argv)
 
 
-@pytest.mark.parametrize("name", ["Bad Name", "../escape", "demo.lock"])
+@pytest.mark.parametrize(
+    "name", ["Bad Name", "../escape", "demo.lock", "a//b", "a/../b", "a/b.lock", "a/"]
+)
 def test_new_rejects_bad_names(tmp_path, name):
     with pytest.raises(SystemExit, match="invalid spec name"):
         main(["new", name, "--dataset=hmp", "--prefix=x", f"--manifests-dir={tmp_path}"])
+
+
+def test_new_writes_a_nested_spec(tmp_path):
+    manifests = tmp_path / "manifests"
+    argv = ["new", "contaminants/kit", "--dataset=hmp", "--prefix=x"]
+
+    assert main([*argv, f"--manifests-dir={manifests}"]) == 0
+    assert json.loads((manifests / "contaminants/kit.json").read_text())["prefix"] == "x"
 
 
 def test_new_writes_an_accession_spec(tmp_path):

@@ -162,7 +162,7 @@ def sync(
     write_lock(
         spec.lock_path,
         {
-            "spec": spec.path.name,
+            "spec": f"{spec.name}.json",
             "dataset": spec.dataset,
             "source": dataset.provider.uri(dataset.root_prefix),
             "files": records,
