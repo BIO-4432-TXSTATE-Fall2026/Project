@@ -83,11 +83,22 @@ openjdk = ">=25.0.2,<26"
 nextflow = ">=26.4.6,<27"
 nf-test = ">=0.9.5,<0.10"
 
+# The inTRuder fork in submodules/inTRuder, for the TR locus catalog: pytrf for repeat
+# finding and intruder.trcore for motif equivalence. Its own pipeline targets long-read
+# SV calls, so nothing here runs its workflows. Its dependencies include pysam and
+# cyvcf2, which have no Windows wheels, so this feature drops win-64.
+[tool.pixi.feature.catalog]
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.feature.catalog.pypi-dependencies]
+intruder = { path = "submodules/inTRuder", editable = true }
+
 [tool.pixi.environments]
 default = { features = ["test", "lint"], solve-group = "default" }
 r = { features = ["r"] }
 sra = { features = ["sra"] }
 nextflow = { features = ["nextflow"], no-default-feature = true }
+catalog = { features = ["catalog"] }
 
 [tool.pixi.dependencies]
 python = ">=3.11"

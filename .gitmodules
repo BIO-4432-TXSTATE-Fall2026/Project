@@ -1,0 +1,3 @@
+[submodule "submodules/inTRuder"]
+	path = submodules/inTRuder
+	url = https://github.com/andrewscouten/inTRuder.git
