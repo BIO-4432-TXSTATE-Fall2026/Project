@@ -75,7 +75,7 @@ platforms = ["osx-arm64", "osx-64", "linux-64"]
 [tool.pixi.feature.nextflow.tasks]
 pipeline = "nextflow run ."
 test-workflow = "nf-test test"
-build-container = { cmd = "docker build -t ghcr.io/bio-4432-txstate-fall2026/project/{{ name }}:latest containers/{{ name }}", args = ["name"] }
+build-container = { cmd = "docker build -t ghcr.io/bio-4432-txstate-fall2026/project/{{ name }}:latest -f containers/{{ name }}.Dockerfile .", args = ["name"] }
 
 [tool.pixi.feature.nextflow.dependencies]
 # Nextflow's launcher runs on this JDK through the JAVA_HOME the environment sets.

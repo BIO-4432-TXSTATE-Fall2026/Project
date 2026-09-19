@@ -11,7 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: list
-        run: echo "names=$(ls containers | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "names=$(ls containers/*.Dockerfile \
+            | xargs -n1 basename \
+            | sed 's/\.Dockerfile$//' \
+            | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
 
   build:
     needs: list
@@ -33,7 +37,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: containers/${{ matrix.name }}
+          # The repository root is the build context: an image installs the project from
+          # src/, so the Dockerfile is named rather than implied by the context.
+          context: .
+          file: containers/${{ matrix.name }}.Dockerfile
           platforms: linux/amd64
           push: true
           tags: |

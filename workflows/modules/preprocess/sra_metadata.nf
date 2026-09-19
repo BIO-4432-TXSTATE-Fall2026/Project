@@ -1,8 +1,8 @@
-// Data compilation: build a committed table under data/derived/ from a synced catalog.
+// Preprocessing: build a committed table under data/derived/ from a synced catalog.
 // See docs/data/README.md for why the catalog is fetched whole and then thrown away.
 process SRA_RUN_METADATA {
     tag "${spec.simpleName}"
-    label 'data'
+    label 'preprocess'
 
     // sync rewrites the spec's lockfile. Copy the staged manifests rather than symlink
     // them, so the task writes its own copies and never the ones in the clone.

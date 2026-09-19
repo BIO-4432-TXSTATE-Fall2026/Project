@@ -68,7 +68,7 @@ Jobs start in the submitting directory and inherit its environment, `PATH` inclu
 scancel <jobid>                      # one job
 scancel -u $USER                     # all of your jobs
 scancel -u $USER -t PENDING          # only jobs still waiting
-scancel -u $USER --name nf-HELLO     # jobs with this exact name
+scancel -u $USER --name nf-SRA_RUN_METADATA   # jobs with this exact name
 ```
 
 ## Current jobs

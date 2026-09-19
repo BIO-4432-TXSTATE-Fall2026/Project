@@ -81,29 +81,28 @@ Browse what HMP offers with
 
 ## Pipeline
 
-The Nextflow pipeline is a template for now. Pixi's `nextflow` environment provides
-Nextflow, nf-test, and the JDK they run on:
+Pixi's `nextflow` environment provides Nextflow, nf-test, and the JDK they run on:
 
 ```sh
-pixi run pipeline --names Alice,Bob                       # local, no containers
-pixi run pipeline -profile docker                         # local, Docker
-pixi run pipeline -profile slurm,apptainer \
-  --slurm_queue <partition> --slurm_account <account>     # cluster
+pixi run pipeline --stage preprocess -profile docker       # local, Docker
+pixi run pipeline --stage preprocess -profile slurm,apptainer \
+  --slurm_queue <partition> --slurm_account <account>      # cluster
 pixi run test-workflow
 ```
 
-Results land in `results/`. On SLURM, launch from a filesystem the compute nodes share;
-see `docs/HPC/RUNNING.md` and `docs/HPC/SLURM.md`.
+On SLURM, launch from a filesystem the compute nodes share; see `docs/HPC/RUNNING.md` and
+`docs/HPC/SLURM.md`.
 
-A run does one stage, chosen with `--stage`: `pipeline`, the analysis, or `data`, which
-rebuilds the committed tables in `data/derived/` from their upstream catalogs. How the
-pipeline is put together is in `docs/workflows/`, and the data stage in
-`docs/workflows/data/`.
+A run does one stage, chosen with `--stage`. `preprocess` rebuilds the committed tables in
+`data/derived/` from their upstream catalogs; `pipeline`, the analysis, has nothing behind
+it yet and stops if asked for. How the pipeline is put together is in `docs/workflows/`,
+and preprocessing in `docs/workflows/preprocess/`.
 
-Each process's image is set in `conf/containers.config`. Running the Containers workflow
-from the GitHub Actions tab builds every `containers/<name>/Dockerfile` and publishes it
-as `ghcr.io/bio-4432-txstate-fall2026/project/<name>`; Apptainer pulls it from there. To
-build one locally, run `pixi run build-container <name>`.
+Each stage has one image, mapped to its label in `conf/containers.config`. Running the
+Containers workflow from the GitHub Actions tab builds every
+`containers/<stage>.Dockerfile` and publishes it as
+`ghcr.io/bio-4432-txstate-fall2026/project/<stage>`; Apptainer pulls it from there. To
+build one locally, run `pixi run build-container <stage>`.
 
 ## Development
 

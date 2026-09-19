@@ -3,18 +3,32 @@ nextflow_pipeline {
     name "Pipeline"
     script "workflows/main.nf"
 
-    test("publishes one greeting per name") {
+    // Only the stage branching is tested here. A run of the preprocessing stage itself is
+    // covered by the process test, which is stubbed: the stage publishes into the working
+    // tree through `outputDir`, which is not somewhere a test should write.
+    test("stops when the stage does not exist") {
         when {
             params {
-                names = 'Alice,Bob'
+                stage = 'nonsense'
             }
         }
 
         then {
-            assert workflow.success
-            assert workflow.trace.succeeded().size() == 2
-            assert path("${launchDir}/results/greetings/Alice.txt").text == "Hello, Alice!\n"
-            assert path("${launchDir}/results/greetings/Bob.txt").exists()
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("unknown --stage 'nonsense'") }
+        }
+    }
+
+    test("stops when the analysis stage is asked for") {
+        when {
+            params {
+                stage = 'pipeline'
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains('has no analysis yet') }
         }
     }
 }

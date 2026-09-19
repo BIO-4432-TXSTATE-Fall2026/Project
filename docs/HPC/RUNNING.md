@@ -35,6 +35,7 @@ Optional environment variables for `~/.bashrc`:
 ```sh
 export PIXI_CACHE_DIR=/tmp/pixi-cache-$USER                 # avoids the network-filesystem cache warning
 export NXF_APPTAINER_CACHEDIR=$HOME/.apptainer-images       # keeps images when work/ is deleted
+export NTFY_TOPIC=<your-topic>                              # push a notification when a run ends
 ```
 
 Images come from `ghcr.io/bio-4432-txstate-fall2026/project/<name>`. The Containers
@@ -45,31 +46,39 @@ has the `read:packages` scope.
 
 ## Test run
 
-From the clone:
+From the clone. `-stub` runs each task's stub instead of its real script, so nothing is
+downloaded and the whole thing takes seconds:
 
 ```sh
-pixi run pipeline -profile slurm,apptainer --slurm_queue shared --names Alice,Bob,Carol
+pixi run pipeline --stage preprocess -stub
 ```
 
-Add `--slurm_account <account>` if you have no default account. The template launches
-three `HELLO` jobs, visible in `squeue -u $USER`, and writes to `results/greetings/`.
-
-## Data compilation
-
-`--stage data` rebuilds the committed tables in `data/derived/` instead of running the
-analysis. Each table is one job that syncs its upstream catalog into the task directory,
-extracts the rows the project needs, and deletes the catalog:
+It writes a header-only `data/derived/hmp-sra-runs.tsv`, which is a placeholder, not a
+table — delete it before a real run. To check that SLURM and Apptainer are wired up, add
+the profiles and `--slurm_account <account>` if you have no default account:
 
 ```sh
-pixi run pipeline --stage data -profile slurm --slurm_queue shared
+pixi run pipeline --stage preprocess -stub -profile slurm,apptainer --slurm_queue shared
 ```
 
-The tasks run the project CLI from Pixi's default environment rather than a container, so
-run `pixi install` on a login node first. `work/` needs room for the largest catalog —
-2.3 GB for the SRA metadata freeze — while the job runs. A failed job leaves that catalog
-behind in its work directory; `nextflow clean` removes it.
+The job is visible in `squeue -u $USER` while it runs.
 
-What the stage builds is in `docs/workflows/data/`.
+## Preprocessing
+
+`--stage preprocess` rebuilds the committed tables in `data/derived/`. Each table is one
+job that syncs its upstream catalog into the task directory, extracts the rows the project
+needs, and deletes the catalog:
+
+```sh
+pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shared
+```
+
+A container profile is required: the tasks run the project CLI out of the stage's image,
+so nothing needs installing on the compute nodes. `work/` needs room for the largest
+catalog — 2.3 GB for the SRA metadata freeze — while the job runs. A failed job leaves
+that catalog behind in its work directory; `nextflow clean` removes it.
+
+What the stage builds is in `docs/workflows/preprocess/`.
 
 ## Longer runs
 
@@ -78,7 +87,8 @@ Nextflow itself as a small job that submits the task jobs:
 
 ```sh
 sbatch -p shared -c 1 --mem=4G -t 2-00:00:00 -J nf-head -o nf-head-%j.log \
-  --wrap "pixi run pipeline -profile slurm,apptainer --slurm_queue shared -ansi-log false -resume"
+  --wrap "pixi run pipeline --stage preprocess -profile slurm,apptainer \
+          --slurm_queue shared -ansi-log false -resume"
 ```
 
 Give the head job a time limit longer than the whole pipeline. `-ansi-log false` keeps
@@ -87,12 +97,43 @@ the log readable as a file. Follow it with `tail -f nf-head-<jobid>.log`.
 For a short run from the login node instead, start it inside `tmux new -s nf`, detach
 with `Ctrl-b d`, and reattach with `tmux attach -t nf`.
 
+## Notifications
+
+A run can push notifications to [ntfy.sh](https://ntfy.sh), so a head job need not be
+watched. Set `NTFY_TOPIC` to a topic name and subscribe to it in the ntfy phone or web
+app; `sbatch` passes the variable through to the head job. With no topic set, nothing is
+sent.
+
+```sh
+export NTFY_TOPIC=$(uuidgen)     # pick something unguessable, then subscribe to it
+pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shared
+```
+
+Three kinds of message arrive:
+
+| When                    | Says                                                     |
+| ----------------------- | -------------------------------------------------------- |
+| A phase starts          | `<project>: <phase> started`                              |
+| A phase's last task ends| `<project>: <phase> finished`, with the number of outputs |
+| The run ends            | `<project>: run complete` or `run failed`                 |
+
+The run-end message carries the stage, the duration, the task counts, and the first line
+of the error if it failed — which names the process that failed. There is no per-phase
+failure message: a failed task ends the whole run, so the run-end message is the failure
+report. A notification that cannot be sent is logged and ignored; it never changes the
+run's exit status.
+
+Anyone who knows a topic name can read and post to it, so treat the name as the password
+it is — and note the messages carry the run name and launch directory. `NTFY_SERVER`
+points at a self-hosted instance instead. `workflows/modules/notify.nf` holds all of it;
+only the topic and server live in `nextflow.config`.
+
 ## Resuming
 
 Add `-resume` to rerun only tasks that failed or changed:
 
 ```sh
-pixi run pipeline -profile slurm,apptainer --slurm_queue shared -resume
+pixi run pipeline --stage preprocess -profile slurm,apptainer --slurm_queue shared -resume
 ```
 
 Launch from the same directory as the earlier run, since the cache lives in `.nextflow/`
