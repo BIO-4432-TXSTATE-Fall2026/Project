@@ -157,7 +157,9 @@ The human reference they are screened against is `manifests/reference/chm13.json
 - [ ] Sync `contaminants/kit`, `contaminants/misclassified` and `reference/chm13` on a
       compute node: 192 MB, 32 MB and 982 MB, plus 725 MB of slacken index files on the
       first slacken sync
-- [ ] Screen the misclassified genomes and the TR catalog against CHM13
+- [ ] Screen the misclassified genomes and the TR catalog against CHM13. This is a motif
+      screen, not a coordinate one — a bacterial contig and CHM13 share no coordinate
+      system — so it needs the motif-keyed query in §2
 - [ ] Extract false-positive labels from the supplement into `data/derived/`: the
       misclassified group from Tables S1–S7; normalization artifacts and extremophiles
       are only named in the paper's text
@@ -170,10 +172,123 @@ The human reference they are screened against is `manifests/reference/chm13.json
 
 ## 2. Reference cataloging
 
+### inTRuder fork changes
+
+The fork targets human long-read SV calls. Its only TR finder reads insertion sequences
+out of a VCF, and nothing in it opens a FASTA, so it cannot yet catalog loci in a
+bacterial reference genome.
+
+The dividing line worth building on is not human versus microbe. It is where the
+sequence came from — a reference contig, or sequence a sample carries that the reference
+does not — which is exactly what `trcore.io` already names `Genomic` and `Inserted`. A
+human SV run and a microbial genome run differ in the reader and the parameter profile;
+everything after the finder should be the same code.
+
+#### Reading sequence
+
+- [x] `trcore/io`: `SeqRecord` holds a named sequence and the `Genomic`/`Inserted` origin
+      its offsets are measured against, with FASTA (pyfastx) and VCF-insertion (cyvcf2)
+      adapters behind it. Both dependencies are optional extras imported inside the
+      readers, so `import trcore.io` stays pure-stdlib, and `Inserted.locate` returns
+      `None` rather than a coordinate that indexes nothing
+- [ ] Commit `trcore/io` and `tests/python/trcore/io` — both are still untracked in the
+      submodule — then bump the submodule pin here
+- [ ] A FASTA genome scanner beside `pipeline/trf/sv_trfcaller.py`, feeding the same
+      `pytrf.ATRFinder` from `trcore.io` records instead of VCF ALT sequences
+- [ ] Route `sv_trfcaller.py` through `trcore.io.read_insertions` as well, so the two
+      entry points share one record type instead of one of them parsing cyvcf2 inline
+- [ ] Catalog output schema: `genome, contig, start, end, motif, purity, rep_units`, with
+      no sample, depth or insertion columns, plus BED export for the read filter (§3) and
+      the CHM13 screen
+- [ ] A bacterial TR parameter profile. The defaults (`max_motif=500`,
+      `max_rep_length=10000`) are sized for long reads, and the `--min_sv_length` /
+      `--max_sv_length` gates mean nothing off a FASTA
+
+#### `pipeline/novelty`
+
+`pipeline/novelty` is the module closest to what this project needs, and it is more
+general than its name: it indexes a reference TR catalogue, then classifies a query
+locus + motif as `known`, `novel_motif`, `novel_locus` or `unscreened`. Reusable as-is:
+
+- The normalised catalogue schema (`chrom, start, end, motif` plus optional annotations)
+  and the `bed` platform, so the §2 locus catalog can be screened without a new reader
+- `RepeatCatalog`, a column-wise numpy interval index with motif interning and an
+  on-disk cache — 1.05M hg38 rows, so 198 bacterial genomes are not a size problem
+- `trcore.motifs`: canonical motifs under rotation and reverse complement, plus the
+  edit-distance and tiling tolerances. Needed anywhere "the same repeat" has to mean
+  something across genomes, which is most of §2 and all of §4
+- `UNSCREENED`, which keeps "no catalogue row here" apart from "no repeat here" — the
+  distinction the CHM13 screen turns on
+- `novelty.search`: an Optuna grid or TPE sweep over the screen thresholds, with an
+  `agreement` objective (cross-catalogue Jaccard on the novel sets) that needs no ground
+  truth. The project has no labelled loci, so this is how the §2 merge and tolerance
+  thresholds get chosen rather than guessed
+
+What it cannot do yet:
+
+- [ ] **A motif-keyed screen.** Every entry point (`screen`, `screen_frame`,
+      `overlapping`) is keyed on `(chrom, point)`. The CHM13 screen asks whether a
+      bacterial locus's *motif* also occurs in human, and there is no shared coordinate
+      system between a bacterial contig and CHM13 — a coordinate query returns
+      `unscreened` for every row, correctly and uselessly. Add a query keyed on canonical
+      motif, which the interned `_canon` array already supports
+- [ ] Make the `chr` prefixing in `trcore.coords.normalize_chrom` opt-in. It rewrites
+      `NZ_CP012345.1` as `chrNZ_CP012345.1` and folds a contig named `MT` onto `chrM`,
+      and every catalogue read and query routes through it
+- [ ] A platform entry for the project's own catalog, so a per-genus catalog screens
+      against CHM13 and against the other genera by name rather than by file path
+- [ ] `novelty.insertions` (purity, union length, insertion filters) only applies to
+      `Inserted` records. Split the purity and coverage checks, which are general, from
+      the insertion-size filters, which are not
+- [ ] Point `NOVELTY_CACHE` at a project path. `trcore.paths.repo_root` otherwise caches
+      downloaded catalogues into `submodules/inTRuder/data/`, inside a submodule this
+      repo tracks by commit
+
+#### Module layout and flow
+
+The fork has grown four pipeline steps and a model package with no shared spine. Worth
+fixing before adding a fifth, and each of these makes the microbial path cheaper:
+
+- [ ] **Fold `strchive` into the screen.** `pipeline/strchive` and `pipeline/novelty` are
+      the same step: read a table of TR calls, index an external catalogue, join on locus
+      and motif, append prefixed columns. STRchive is a platform with a disease
+      annotation, not a pipeline of its own. Folding it in gives one command, one cache
+      root, one set of tolerance flags, and puts STRchive inside the `novelty.search`
+      sweep. It also demotes the one human-disease-only step to an optional platform
+- [ ] **Make `pipeline/trf` a package.** It is two argparse scripts
+      (`sv_trfcaller.py`, `filter_ins_trf.py`) while `novelty`, `strchive` and
+      `isolation_forest` are packages with `cli.py` and `__main__.py`. One `find` command
+      that takes either a FASTA or a VCF, picks the `trcore.io` reader from the input,
+      and only offers the SV gates when the input is a VCF
+- [ ] **Get insertion parsing out of `modeling`.**
+      `isolation_forest.features` imports `pipeline.novelty.insertions.parse_sizes`, so
+      scoring a FASTA-derived table drags VCF semantics in. Move the shared column
+      normalisation into `trcore` and let each source contribute its own feature block
+- [ ] **One catalog record type.** `novelty.catalog.ReferenceRepeat` and the §2 catalog
+      schema should be the same rows, with `genome`, `purity` and `rep_units` riding in
+      `annotations` the way the platform readers already allow
+- [ ] **Subworkflows in `workflows/main.nf`.** It is one flat `workflow` block of
+      `if (params.run_*)` branches on a hardwired VCF input. A `find` subworkflow per
+      source feeding one shared downstream chain lets the human and microbial runs share
+      everything after the finder. It is also where this repo's own layout applies — one
+      process per file under `workflows/modules/`, and the strict-parser limits in
+      `docs/workflows/README.md`
+
+### Catalog
+
 - [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
       TR locus catalog
+- [ ] Decide what counts as one locus: `pytrf` reports overlapping calls over the same
+      stretch, and six genomes per genus repeat near-identical loci, so raw calls need a
+      merge step before cross-sample entropy means anything. Merge on canonical motif
+      (`trcore.motifs.canonical_motif`, already rotation- and strand-aware) plus interval
+      overlap, so the merge rule is the same one the screen matches with
+- [ ] Choose the merge window and motif tolerance with `novelty.search` in enumeration
+      mode rather than by eye: there is no labelled locus set, so what is wanted is the
+      sensitivity analysis, not an optimum
 - [ ] Adapt PhasomeIt cataloging logic
-- [ ] Check catalog loci against the mock community genomes
+- [ ] Check catalog loci against the mock community genomes — a `known` verdict from the
+      screen with the mock strain genomes as the catalogue
 
 ## 3. Allele calling and error correction
 
@@ -195,8 +310,15 @@ The human reference they are screened against is `manifests/reference/chm13.json
 
 - [ ] Build the spike-in benchmark: clonal contaminant reads on HMP samples, one strain
       per synthetic batch, titrated to tumor-like depths
-- [ ] Build TR diversity and batch features
-- [ ] Train a gradient boosting model with SHAP attribution
+- [ ] Build TR diversity and batch features. The fork's
+      `modeling/unsupervised/isolation_forest` already has the feature registry, motif
+      strata, SHAP attribution and per-candidate split traces; its intrinsic features
+      (GC, Shannon entropy, purity, motif length, rep units) carry over, while its cohort
+      features (VAF, DV/DR depth) are VCF-only and need per-sample equivalents
+- [ ] Train a gradient boosting model with SHAP attribution. Isolation forest is the
+      unsupervised fallback if the spike-in benchmark yields too few labels to train on;
+      its STRchive recall gate is a human-only calibration and needs replacing with the
+      mock community
 - [ ] Test H1: entropy gap between biological signal and contaminants, including at low
       depth (Salter et al. and spike-ins)
 - [ ] Test H2: contaminants cluster by kit (Salter et al.) and synthetic batch; genuine
@@ -207,4 +329,8 @@ The human reference they are screened against is `manifests/reference/chm13.json
 
 ## 6. Open source
 
-- [ ] Contribute microbial TR locus discovery improvements to inTRuder
+- [ ] Contribute microbial TR locus discovery improvements to inTRuder. Most of §2 is
+      upstreamable as written — `trcore.io`, the FASTA finder, the motif-keyed screen,
+      the opt-in `chr` prefixing and the `strchive`-into-`novelty` fold generalize the
+      fork rather than branching it, and they are what lets one pipeline serve humans and
+      microbes instead of two
