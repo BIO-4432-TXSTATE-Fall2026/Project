@@ -69,8 +69,6 @@ environments:
       - pypi: ./
       - pypi: ./submodules/inTRuder
       - pypi: https://files.pythonhosted.org/packages/45/8f/9beacf79ca7c650688ad0baa80931adb988fe6e6e5d5903c23cc3dbd70eb/numpy-2.5.3-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
-      - pypi: https://files.pythonhosted.org/packages/7e/e6/dfbac08ae802bfa35247eb4fb0cc798593cda0fd0e5ad71c75d54f121115/pyfastx-2.3.1-cp314-cp314-manylinux_2_28_x86_64.whl
-      - pypi: https://files.pythonhosted.org/packages/8c/9e/04599618aab4c448155ce27d13d5b72efcb868992e52b8b5fb2448b87a4b/pytrf-1.5.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/ca/ba/ffdcb19be4ff6bfe7d969e7cef2c567c633df5a3a1cc1053394ad053bca8/pandas-3.0.6-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
       osx-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/backports.zstd-1.7.0-py314h680f03e_1.conda
@@ -107,8 +105,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-hbc1a06c_7.conda
       - pypi: ./
       - pypi: ./submodules/inTRuder
-      - pypi: https://files.pythonhosted.org/packages/02/a5/787c0ba435c61816b60028591b0b6b5846566518c5db92e48439c1624a6f/pytrf-1.5.0-cp314-cp314-macosx_10_15_x86_64.whl
-      - pypi: https://files.pythonhosted.org/packages/10/33/cea436a8bd149e6d6befd40d02c28443e06fe188e6b8d2e277f5a4320e80/pyfastx-2.3.1-cp314-cp314-macosx_10_15_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/70/78/cf416f15dc29375a229d9dfebf8db6e313f291580b39fa1a568b6052bb07/numpy-2.5.3-cp314-cp314-macosx_10_15_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/75/55/1a8875395b05ccd572cbca0b9255dcd2db6e6508e632a558c1a6884b39ad/pandas-3.0.6-cp314-cp314-macosx_10_15_x86_64.whl
       osx-arm64:
@@ -147,9 +143,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zstd-1.5.7-hf451053_7.conda
       - pypi: ./
       - pypi: ./submodules/inTRuder
-      - pypi: https://files.pythonhosted.org/packages/1c/72/ea280bc43f1f817aca28c69e40971d7d0cb82126dba7cf732abb72ef5ff3/pyfastx-2.3.1-cp314-cp314-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/35/61/47ae13476995cc8a40cd609e93e7cf11f273d8692925c2903cb6d38aa0d1/pandas-3.0.6-cp314-cp314-macosx_11_0_arm64.whl
-      - pypi: https://files.pythonhosted.org/packages/4f/76/8bbf2ebd0fead201788d04757c1ab26513e80cfaf30ccfe6a54cb8b8e457/pytrf-1.5.0-cp314-cp314-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9e/59/abcc2d8def4fd60eec7d87f92d27c13448ffd9ab14339bcc63a0d7a2fdea/numpy-2.5.3-cp314-cp314-macosx_11_0_arm64.whl
   default:
     channels:
@@ -8394,8 +8388,8 @@ packages:
   requires_dist:
   - numpy>=2.0
   - pandas>=3.0.5
-  - pytrf>=1.5.0
   - tqdm>=4.70.0
+  - pytrf>=1.5.0 ; extra == 'trf'
   - cyvcf2>=0.34.0 ; extra == 'sv'
   - pyfastx>=2.3.1 ; extra == 'fasta'
   - pysam>=0.23 ; extra == 'compression'
@@ -8406,20 +8400,6 @@ packages:
   - scipy ; extra == 'modeling'
   - matplotlib>=3.11.1 ; extra == 'modeling'
   requires_python: '>=3.11'
-- pypi: https://files.pythonhosted.org/packages/02/a5/787c0ba435c61816b60028591b0b6b5846566518c5db92e48439c1624a6f/pytrf-1.5.0-cp314-cp314-macosx_10_15_x86_64.whl
-  name: pytrf
-  version: 1.5.0
-  sha256: 8810c18dd9435af4f3ae85d23c747f38e65f8ecc1e30f8e0395eb694fa06ef65
-  requires_dist:
-  - pyfastx>=2.3.1
-- pypi: https://files.pythonhosted.org/packages/10/33/cea436a8bd149e6d6befd40d02c28443e06fe188e6b8d2e277f5a4320e80/pyfastx-2.3.1-cp314-cp314-macosx_10_15_x86_64.whl
-  name: pyfastx
-  version: 2.3.1
-  sha256: 92468f619af64860fcd856763374893500755e6831e46f4c09e0056c731402f7
-- pypi: https://files.pythonhosted.org/packages/1c/72/ea280bc43f1f817aca28c69e40971d7d0cb82126dba7cf732abb72ef5ff3/pyfastx-2.3.1-cp314-cp314-macosx_11_0_arm64.whl
-  name: pyfastx
-  version: 2.3.1
-  sha256: 6e40a35063673c07f3bbe0660546f8a4cb2910034a68c6ae2e2b739618f50be3
 - pypi: https://files.pythonhosted.org/packages/35/61/47ae13476995cc8a40cd609e93e7cf11f273d8692925c2903cb6d38aa0d1/pandas-3.0.6-cp314-cp314-macosx_11_0_arm64.whl
   name: pandas
   version: 3.0.6
@@ -8515,12 +8495,6 @@ packages:
   version: 2.5.3
   sha256: b0521d0f4aebb6e06189451025fa17a913287b13c03d5fe05c017333b654ea5b
   requires_python: '>=3.12'
-- pypi: https://files.pythonhosted.org/packages/4f/76/8bbf2ebd0fead201788d04757c1ab26513e80cfaf30ccfe6a54cb8b8e457/pytrf-1.5.0-cp314-cp314-macosx_11_0_arm64.whl
-  name: pytrf
-  version: 1.5.0
-  sha256: 5ce3ba778d4fd1f084f66be4ecbb26c0ac4d2443416cb5af97c3f2522941d9bb
-  requires_dist:
-  - pyfastx>=2.3.1
 - pypi: https://files.pythonhosted.org/packages/70/78/cf416f15dc29375a229d9dfebf8db6e313f291580b39fa1a568b6052bb07/numpy-2.5.3-cp314-cp314-macosx_10_15_x86_64.whl
   name: numpy
   version: 2.5.3
@@ -8616,16 +8590,6 @@ packages:
   - xlsxwriter>=3.2.0 ; extra == 'all'
   - zstandard>=0.23.0 ; extra == 'all'
   requires_python: '>=3.11'
-- pypi: https://files.pythonhosted.org/packages/7e/e6/dfbac08ae802bfa35247eb4fb0cc798593cda0fd0e5ad71c75d54f121115/pyfastx-2.3.1-cp314-cp314-manylinux_2_28_x86_64.whl
-  name: pyfastx
-  version: 2.3.1
-  sha256: 0bda36e305a66626c56d670f94701797836750933923a9715ba1d240fc040ed1
-- pypi: https://files.pythonhosted.org/packages/8c/9e/04599618aab4c448155ce27d13d5b72efcb868992e52b8b5fb2448b87a4b/pytrf-1.5.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
-  name: pytrf
-  version: 1.5.0
-  sha256: 36ba496df78134397e3ed159c865e3d9e33a088a6f6c7282e4965fc8edd3fe7b
-  requires_dist:
-  - pyfastx>=2.3.1
 - pypi: https://files.pythonhosted.org/packages/9e/59/abcc2d8def4fd60eec7d87f92d27c13448ffd9ab14339bcc63a0d7a2fdea/numpy-2.5.3-cp314-cp314-macosx_11_0_arm64.whl
   name: numpy
   version: 2.5.3
