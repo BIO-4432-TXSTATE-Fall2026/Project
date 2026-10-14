@@ -1,0 +1,38 @@
+nextflow_process {
+
+    name "TR_SWEEP"
+    script "workflows/modules/preprocess/tr_sweep.nf"
+    process "TR_SWEEP"
+
+    // Stubbed: the real script syncs genomes and runs the finder once per grid point per
+    // genome. What matters to check without that is that the grid expands -- the whole
+    // reason this is one task rather than one per point.
+    test("expands the grid into one row per point") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
+                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[2] = 'genome'
+                input[3] = '0.8 0.7'
+                input[4] = '3 2'
+                input[5] = '10 8 6'
+                input[6] = 'dir'
+                input[7] = 'tr-sweep.tsv'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            def table = path(process.out.sweep[0]).text.trim().split('\n')
+            assert table[0] == 'min_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci'
+            // 2 identities x 2 seed-unit values x 3 seed lengths, plus the header.
+            assert table.size() == 13
+            assert table[1].startsWith('0.8\t3\t10')
+            assert table[12].startsWith('0.7\t2\t6')
+        }
+    }
+}

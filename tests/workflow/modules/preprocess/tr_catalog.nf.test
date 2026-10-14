@@ -1,0 +1,67 @@
+nextflow_process {
+
+    name "TR_CATALOG"
+    script "workflows/modules/preprocess/tr_catalog.nf"
+    process "TR_CATALOG"
+
+    // Stubbed: the real script syncs genomes from S3 and runs the repeat finder over
+    // every contig. This checks the wiring -- that the spec is staged, the finder
+    // thresholds reach the command line, and both the table and the BED come back named.
+    test("emits a named catalog and BED") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
+                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[2] = 'genome'
+                input[3] = ''
+                input[4] = ''
+                input[5] = ''
+                input[6] = 'dir'
+                input[7] = 'tr-catalog.tsv'
+                input[8] = 'tr-catalog.bed'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.catalog[0].endsWith('tr-catalog.tsv')
+            // The catalog schema, which is what §3's read filter and §4's entropy read.
+            assert path(process.out.catalog[0]).text.startsWith(
+                'genome\tcontig\tstart\tend\tmotif\tpurity\tmotif_length\trep_length\trep_units')
+            assert process.out.bed[0].endsWith('tr-catalog.bed')
+            // BED4: the schema novelty.platforms reads a catalogue in.
+            assert path(process.out.bed[0]).text.split('\n')[0].split('\t').size() == 4
+        }
+    }
+
+    // The thresholds are the point of the process being parameterised at all: a sweep is
+    // one task per grid point, so a given point has to reach the finder unchanged.
+    test("accepts finder thresholds") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
+                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[2] = 'genome'
+                input[3] = 0.7
+                input[4] = 2
+                input[5] = 6
+                input[6] = 'dir'
+                input[7] = 'tr-catalog.tsv'
+                input[8] = 'tr-catalog.bed'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.catalog[0].endsWith('tr-catalog.tsv')
+        }
+    }
+}
