@@ -75,7 +75,11 @@ platforms = ["osx-arm64", "osx-64", "linux-64"]
 [tool.pixi.feature.nextflow.tasks]
 pipeline = "nextflow run ."
 test-workflow = "nf-test test"
-build-container = { cmd = "docker build -t ghcr.io/bio-4432-txstate-fall2026/project/{{ name }}:latest -f containers/{{ name }}.Dockerfile .", args = ["name"] }
+# --platform because the images install a pixi environment, and the stage environments
+# are solved for linux-64 only: an unqualified build on an arm64 machine asks pixi.lock
+# for a linux-aarch64 it does not have. It also makes a local build the same artifact CI
+# publishes, at the cost of emulation on Apple Silicon.
+build-container = { cmd = "docker build --platform linux/amd64 -t ghcr.io/bio-4432-txstate-fall2026/project/{{ name }}:latest -f containers/{{ name }}.Dockerfile .", args = ["name"] }
 
 [tool.pixi.feature.nextflow.dependencies]
 # Nextflow's launcher runs on this JDK through the JAVA_HOME the environment sets.
@@ -121,6 +125,12 @@ sra = { features = ["sra"] }
 nextflow = { features = ["nextflow"], no-default-feature = true }
 catalog = { features = ["catalog"] }
 notebooks = { features = ["catalog", "notebooks"] }
+# One environment per pipeline stage, named for it, which containers/<stage>.Dockerfile
+# installs with --frozen. The stage images are the reason `preprocess` exists separately
+# from `default`: the CLI is all a preprocessing task runs, and `default` carries pytest
+# and ruff. It shares the default solve group so the image and a developer's environment
+# resolve to the same versions. `catalog` above already serves its stage.
+preprocess = { solve-group = "default" }
 
 [tool.pixi.dependencies]
 python = ">=3.11"
