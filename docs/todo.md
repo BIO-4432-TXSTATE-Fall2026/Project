@@ -191,18 +191,18 @@ everything after the finder should be the same code.
       adapters behind it. Both dependencies are optional extras imported inside the
       readers, so `import trcore.io` stays pure-stdlib, and `Inserted.locate` returns
       `None` rather than a coordinate that indexes nothing
-- [ ] Commit `trcore/io` and `tests/python/trcore/io` — both are still untracked in the
-      submodule — then bump the submodule pin here
-- [ ] A FASTA genome scanner beside `pipeline/trf/sv_trfcaller.py`, feeding the same
-      `pytrf.ATRFinder` from `trcore.io` records instead of VCF ALT sequences
-- [ ] Route `sv_trfcaller.py` through `trcore.io.read_insertions` as well, so the two
-      entry points share one record type instead of one of them parsing cyvcf2 inline
-- [ ] Catalog output schema: `genome, contig, start, end, motif, purity, rep_units`, with
-      no sample, depth or insertion columns, plus BED export for the read filter (§3) and
-      the CHM13 screen
-- [ ] A bacterial TR parameter profile. The defaults (`max_motif=500`,
-      `max_rep_length=10000`) are sized for long reads, and the `--min_sv_length` /
-      `--max_sv_length` gates mean nothing off a FASTA
+- [x] Commit `trcore/io` and `tests/python/trcore/io`, then bump the submodule pin here
+- [x] A FASTA genome scanner feeding the same `pytrf.ATRFinder` from `trcore.io` records
+      instead of VCF ALT sequences (`pipeline/trf/find.py`, chosen by `--format`)
+- [x] Route the VCF path through `trcore.io.read_insertions` as well, so both entry
+      points share one record type. `sv_trfcaller.py` is gone and `pipeline/trf/cli.py`
+      reads either source
+- [x] Catalog output schema, with no sample, depth or insertion columns, plus BED4 export
+      for the read filter (§3) and the CHM13 screen (`pipeline/trf/writers.py`)
+- [ ] Settle the bacterial TR parameter profile. `params.PROFILES` carries a provisional
+      `genome` profile beside `sv`, and the SV gates are now offered only for VCF input,
+      but its values came from synthetic checks. Choosing them needs real genomes and the
+      same enumeration `novelty.search` does, not an optimum
 
 #### `pipeline/novelty`
 
@@ -255,11 +255,9 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
       annotation, not a pipeline of its own. Folding it in gives one command, one cache
       root, one set of tolerance flags, and puts STRchive inside the `novelty.search`
       sweep. It also demotes the one human-disease-only step to an optional platform
-- [ ] **Make `pipeline/trf` a package.** It is two argparse scripts
-      (`sv_trfcaller.py`, `filter_ins_trf.py`) while `novelty`, `strchive` and
-      `isolation_forest` are packages with `cli.py` and `__main__.py`. One `find` command
-      that takes either a FASTA or a VCF, picks the `trcore.io` reader from the input,
-      and only offers the SV gates when the input is a VCF
+- [x] **Make `pipeline/trf` a package.** `cli.py`, `__main__.py`, `find.py`, `params.py`,
+      `writers.py` and `filters.py`, with one `find` command that takes either a FASTA or
+      a VCF and only offers the SV gates for a VCF
 - [ ] **Get insertion parsing out of `modeling`.**
       `isolation_forest.features` imports `pipeline.novelty.insertions.parse_sizes`, so
       scoring a FASTA-derived table drags VCF semantics in. Move the shared column
