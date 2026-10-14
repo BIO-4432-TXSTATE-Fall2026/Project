@@ -87,11 +87,32 @@ nf-test = ">=0.9.5,<0.10"
 # finding and intruder.trcore for motif equivalence. Its own pipeline targets long-read
 # SV calls, so nothing here runs its workflows. Its dependencies include pysam and
 # cyvcf2, which have no Windows wheels, so this feature drops win-64.
+#
+# pytrf is named here rather than taken through intruder's `trf` extra, because bioconda
+# ships it built for every platform in this list while PyPI would build it from source.
+# That is the same split inTRuder's own pixi features make, and why bioconda is here.
 [tool.pixi.feature.catalog]
+channels = ["conda-forge", "bioconda"]
 platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.feature.catalog.dependencies]
+pytrf = ">=1.5.0"
 
 [tool.pixi.feature.catalog.pypi-dependencies]
 intruder = { path = "submodules/inTRuder", editable = true }
+
+# Exploratory notebooks in notebooks/. Pandas and matplotlib are for looking at data, not
+# for producing anything the pipeline consumes, so they stay out of the default
+# environment: the CLI's only runtime dependency is still boto3.
+[tool.pixi.feature.notebooks.tasks]
+lab = "jupyter lab"
+notebook = { cmd = "jupyter execute {{ path }}", args = ["path"] }
+
+[tool.pixi.feature.notebooks.dependencies]
+jupyterlab = ">=4.5,<5"
+ipykernel = ">=6.31,<7"
+pandas = ">=3.0.5,<4"  # the floor intruder declares
+matplotlib = ">=3.10,<4"
 
 [tool.pixi.environments]
 default = { features = ["test", "lint"], solve-group = "default" }
@@ -99,6 +120,7 @@ r = { features = ["r"] }
 sra = { features = ["sra"] }
 nextflow = { features = ["nextflow"], no-default-feature = true }
 catalog = { features = ["catalog"] }
+notebooks = { features = ["catalog", "notebooks"] }
 
 [tool.pixi.dependencies]
 python = ">=3.11"
