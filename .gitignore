@@ -231,6 +231,9 @@ __marimo__/
 # Small tables the CLI derives from those downloads. These are ours, they are committed,
 # and docs/data/ says where each one came from.
 !/data/derived/
+# Except the TR catalogs: the finder thresholds that produce them are not settled, so
+# what lands here is one point in a sweep rather than a result worth committing.
+/data/derived/catalog/
 
 # Nextflow and nf-test run state and outputs
 /work/
