@@ -28,11 +28,20 @@ nextflow_process {
         then {
             assert process.success
             def table = path(process.out.sweep[0]).text.trim().split('\n')
-            assert table[0] == 'min_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci'
+            assert table[0] == 'min_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci' +
+                '\toverlaps\tmotif_1\tmotif_2\tmotif_3\tmotif_4_5\tmotif_6p\tunits_2\tmin_rep_length'
             // 2 identities x 2 seed-unit values x 3 seed lengths, plus the header.
             assert table.size() == 13
             assert table[1].startsWith('0.8\t3\t10')
             assert table[12].startsWith('0.7\t2\t6')
+            // Every row carries the full summary, and the motif bands account for every
+            // locus. The notebook reads the bands as a partition of `loci`, so a column
+            // added without a band to match it should fail here rather than there.
+            def columns = table[0].split('\t').size()
+            table.each { row -> assert row.split('\t').size() == columns }
+            def fields = table[1].split('\t')
+            def bands = fields[6..10].collect { it as int }.sum()
+            assert bands == (fields[4] as int)
         }
     }
 }
