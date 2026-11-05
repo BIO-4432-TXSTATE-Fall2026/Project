@@ -5,6 +5,80 @@ Steps for the project in `docs/documents/proposal.pdf`, in rough order. Data cho
 `docs/data/tcga_alternatives.md`. Data deferred to future comparisons is in
 `docs/comparisons.md`.
 
+## The measurements
+
+What the project has to measure, and against what, to say anything about H1 or H2. The
+sections below are the machinery; this is the experiment. Nothing here has been done —
+there is no entropy code, no allele caller and no classifier in the repository, and
+`--stage pipeline` stops with a message saying so.
+
+1. **Does a catalog locus exist where we say it does?** Call loci in the 22 mock-community
+   strains, then screen them back against those same genomes. The only ground truth
+   available anywhere in the project: known strains, known sequence, so a locus that does
+   not recover is a finder artifact rather than biology. Everything downstream is
+   conditional on this, which is why it comes before the real catalog (§2).
+
+2. **Is a TR locus distinguishable from human sequence?** Screen catalog loci against
+   T2T-CHM13 by canonical motif. Gihawi's documented failure mode is human reads
+   misclassified as bacterial, so a TR signature that also occurs in human cannot separate
+   contamination from host — it is the same confusion one level down. Motif-keyed, not
+   coordinate-keyed: a bacterial contig and CHM13 share no coordinate system (§1, §2).
+
+3. **What is the cross-sample entropy of a genuine taxon?** Measure allele-length entropy
+   per locus across HMP body-site samples for taxa shared with tumor datasets —
+   *Fusobacterium*, *Streptococcus*, oral anaerobes. This is the proposal's positive
+   control and it sets the scale: without a number for "high entropy" in known-genuine
+   populations, H1's entropy gap has no units. Needs `tongue_dorsum` (128 samples) or
+   `stool` (139); `subgingival_plaque` has 7 and cannot support a cross-sample statistic
+   (§3, §4).
+
+4. **What is the cross-sample entropy of a known contaminant?** The same measurement on
+   the Salter dilution series — a clonal reagent organism across 4 kits. H1 predicts this
+   is near zero, because contaminant strains are copies of a few manufacturing isolates
+   rather than evolving populations. This is the low-entropy side of the gap, and the only
+   real-contaminant measurement the project has (§3, §4).
+
+5. **Is there a gap, and does it survive depth?** Compare 3 against 4. Depth is confounded
+   with dilution by construction — `mbases` falls from 229 to 0 down each Salter series,
+   12 runs report 0 — so depth enters as a covariate and the data are not rarefied
+   (Willis 2019); the estimator is bias-corrected (Chao–Shen) because plug-in entropy is
+   negatively biased exactly where the interesting samples are. **This comparison is H1**
+   (§4).
+
+6. **Does the gap hold at tumor-like depth?** H1 claims detectability at the depths
+   characteristic of tumor samples, which is a separate claim from the gap existing at
+   all. Titrate: entropy gap as a function of per-sample depth, pooled across runs (259
+   of 274 HMP samples have more than one run) (§4).
+
+7. **Do contaminants group by batch, and genuine taxa not?** Cluster TR signatures by
+   extraction kit on Salter and by center on HMP. **This is H2**, with one limit worth
+   stating before the test rather than after: all 35 Salter runs are one center, so the
+   contaminant side has no center variation, and HMP's centers are 91% WUGSC and BI. H2
+   is a kit claim on this data (§5).
+
+8. **Can a model separate them, and on what features?** Gradient boosting with SHAP over
+   TR diversity and batch metrics. Labels are the problem: no labelled locus set exists,
+   which is why the spike-in benchmark — clonal contaminant reads titrated onto HMP
+   samples at tumor-like depth — is a prerequisite rather than a nice-to-have, and why
+   isolation forest is the unsupervised fallback (§5).
+
+9. **Is it better than what people already use?** Run `decontam` as the baseline on the
+   same data. Salter is the one dataset where it can genuinely compete, because
+   `decontam`'s frequency method needs DNA concentration and a dilution series is
+   concentration by construction (§5).
+
+10. **Does the signal transfer to a different failure mode?** Check the catalog against
+    Gihawi's retained and rejected taxa. The proposal already concedes these labels test
+    database-driven misclassification and a normalization artifact, not reagent clonality
+    — so this is a transfer test and should be reported as one, not as validation of H1
+    (§0, §1).
+
+Two constraints bound all of the above. The proposal's Target Domain has no data behind
+it — no TCGA manifest, no dbGaP access — so the stress test is the spike-in benchmark or
+nothing. And every allele length currently carries a flank-dependent inflation of 33–48%
+from the finder's `max_extension`, so steps 3 onward measure noise until that is fixed
+(§2).
+
 ## 0. Proposal
 
 - [x] Write problem statement, hypotheses (H1, H2), data sources, and pipeline
@@ -12,7 +86,10 @@ Steps for the project in `docs/documents/proposal.pdf`, in rough order. Data cho
 - [ ] Pin the inTRuder commit in the reference
 - [ ] Cite or drop Vogler et al. (2006) and Zepeda-Rivera et al. (2024)
 - [ ] Replace TCGA and Gihawi et al. (2023) validation in Table 1 and Section 3 with
-      Salter et al. (2014) and the spike-in benchmark; move TCGA to future work
+      Salter et al. (2014) and the spike-in benchmark; move TCGA to future work. The
+      prose is partly there — the Gihawi row already concedes it tests an adjacent
+      failure mode — but Table 1 still leads with TCGA and does not mention Salter or
+      the spike-ins at all, which is what §1 and §5 here are actually built on
 
 ## 1. Data acquisition
 
@@ -174,9 +251,11 @@ The human reference they are screened against is `manifests/reference/chm13.json
 
 ### inTRuder fork changes
 
-The fork targets human long-read SV calls. Its only TR finder reads insertion sequences
-out of a VCF, and nothing in it opens a FASTA, so it cannot yet catalog loci in a
-bacterial reference genome.
+The fork targets human long-read SV calls. Its only TR finder read insertion sequences
+out of a VCF, and nothing in it opened a FASTA, so it could not catalog loci in a
+bacterial reference genome. The `trf` package below closed that gap: `trf find --format
+fasta` now scans a reference contig and writes the catalog schema. What is left in this
+section is not the reader but the parameters and the merge.
 
 The dividing line worth building on is not human versus microbe. It is where the
 sequence came from — a reference contig, or sequence a sample carries that the reference
@@ -203,6 +282,14 @@ everything after the finder should be the same code.
       `genome` profile beside `sv`, and the SV gates are now offered only for VCF input,
       but its values came from synthetic checks. Choosing them needs real genomes and the
       same enumeration `novelty.search` does, not an optimum
+- [ ] **Put `max_extension` on the grid, and first.** It is the one finder setting that
+      moves the quantity §4 measures rather than the number of loci, and the sweep cannot
+      reach it: `TR_CATALOG` and `TR_SWEEP` expose the three seed and identity floors
+      only, so the profile's provisional `20` is frozen into every catalog so far. On
+      planted tracts, `0` recovers true length and purity exactly where `20` inflates
+      allele length 33–48% by absorbed background — by an amount that depends on the
+      flank, so it is noise added to the very variance H1 is about, not a boundary
+      trade. Plumb it through both processes before any threshold is chosen
 
 #### `pipeline/novelty`
 
@@ -274,8 +361,17 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
 
 ### Catalog
 
+- [x] Wire the finder into the pipeline: `TR_CATALOG` builds the catalog and BED for one
+      genome manifest, `TR_SWEEP` summarises a whole threshold grid in one task, both
+      syncing and deleting the genomes inside the task. `--preprocess
+      all|tables|catalog|sweep` picks which runs
+- [x] Build a catalog and sensitivity surface for the mock community and read them in
+      `notebooks/eda.ipynb`. Its committed outputs are the only record —
+      `data/derived/catalog/` is git-ignored and now dangles into a deleted `work/`
 - [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
-      TR locus catalog
+      TR locus catalog. Only the 22 mock strains have been through the finder;
+      `reference-genomes-target` is synced (198 genomes) but never scanned, and the
+      contaminant specs are not synced at all (§1)
 - [ ] Decide what counts as one locus: `pytrf` reports overlapping calls over the same
       stretch, and six genomes per genus repeat near-identical loci, so raw calls need a
       merge step before cross-sample entropy means anything. Merge on canonical motif
@@ -322,11 +418,16 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
 - [ ] Test H2: contaminants cluster by kit (Salter et al.) and synthetic batch; genuine
       HMP taxa do not cluster by center. The HMP centers are unbalanced — WUGSC and BI are
       91% of the 568 runs, BCM 34 and JCVI 19 — so the two small centers carry little
-      weight (`docs/data/derived/hmp-sra-runs.md`)
+      weight (`docs/data/derived/hmp-sra-runs.md`). The proposal states H2 over center
+      *and* batch, but all 35 Salter runs are one center (`UBP-CNRS`), so the contaminant
+      side has no center variation at all — H2 is a kit claim on this data, and restating
+      it that way is the honest fix
 - [ ] Compare against decontam as the baseline
 
 ## 6. Open source
 
+- [x] Land the shared primitives and the FASTA path in the fork: `trcore` (io, coords,
+      motifs) and the `trf` find/filter package
 - [ ] Contribute microbial TR locus discovery improvements to inTRuder. Most of §2 is
       upstreamable as written — `trcore.io`, the FASTA finder, the motif-keyed screen,
       the opt-in `chr` prefixing and the `strchive`-into-`novelty` fold generalize the
