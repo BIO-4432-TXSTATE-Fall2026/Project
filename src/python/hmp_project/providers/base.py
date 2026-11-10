@@ -5,7 +5,7 @@ from collections.abc import Iterator
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 
 
 @dataclass(frozen=True)
@@ -37,6 +37,15 @@ class Provider(ABC):
     def download_range(self, obj: RemoteObject, start: int, end: int, dest: Path) -> None:
         """Write bytes ``[start, end)`` of ``obj`` to ``dest``, creating parent directories
         as needed. Fails if the remote object no longer matches ``obj``'s ETag.
+        """
+
+    @abstractmethod
+    def open_stream(self, obj: RemoteObject, start: int = 0) -> BinaryIO:
+        """Return a readable file object over ``obj``'s bytes from ``start`` on, for
+        callers that consume them as they arrive and never store them. ``start`` is how a
+        caller resumes after a dropped connection. Fails if the remote object no longer
+        matches ``obj``'s ETag, so a resumed stream cannot splice two versions together.
+        The caller closes it.
         """
 
     @abstractmethod

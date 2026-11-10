@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 from collections.abc import Iterator
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 
 import pytest
 
@@ -43,6 +44,13 @@ class FakeProvider(Provider):
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(data[start:end])
         self.downloads.append(f"{obj.key}[{start}:{end}]")
+
+    def open_stream(self, obj: RemoteObject, start: int = 0) -> BinaryIO:
+        data = self.objects[obj.key][0]
+        if hashlib.md5(data).hexdigest() != obj.etag:
+            raise OSError(f"{obj.key} changed")
+        self.downloads.append(f"{obj.key}[{start}:]")
+        return io.BytesIO(data[start:])
 
     def describe(self) -> dict[str, Any]:
         return {"type": "fake"}

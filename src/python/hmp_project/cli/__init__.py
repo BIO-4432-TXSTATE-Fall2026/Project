@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import argparse
 
-from hmp_project.cli import convert, extract, new, sync
+from hmp_project.cli import convert, extract, filter, genomes, loci, new, sync
 
-SUBCOMMANDS = (new, sync, convert, extract)
+SUBCOMMANDS = (new, sync, convert, extract, genomes, loci, filter)
 
 
 def main(argv: list[str] | None = None) -> int:

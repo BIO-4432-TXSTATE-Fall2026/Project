@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from collections.abc import Iterator
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 
 import boto3
 from botocore import UNSIGNED
@@ -53,6 +53,15 @@ class S3Provider(Provider):
             for chunk in response["Body"].iter_chunks(1 << 20):
                 f.write(chunk)
         os.replace(partial, dest)
+
+    def open_stream(self, obj: RemoteObject, start: int = 0) -> BinaryIO:
+        # The body is botocore's StreamingBody, which raises rather than returning short
+        # if the connection drops before Content-Length bytes have arrived.
+        ranged = {"Range": f"bytes={start}-"} if start else {}
+        response = self._client.get_object(
+            Bucket=self.bucket, Key=obj.key, IfMatch=obj.etag, **ranged
+        )
+        return response["Body"]
 
     def describe(self) -> dict[str, Any]:
         return {
