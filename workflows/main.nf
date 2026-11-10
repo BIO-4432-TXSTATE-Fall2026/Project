@@ -3,6 +3,15 @@ include { TR_CATALOG } from './modules/preprocess/tr_catalog'
 include { TR_SWEEP } from './modules/preprocess/tr_sweep'
 include { notifyRun; announceStart; announceDone } from './modules/notify'
 
+// A genome spec's lockfile, or nothing if the spec has never been synced. The catalog
+// processes sync inside the task, which writes the lock there, so a spec such as
+// contaminants/kit can be cataloged before anyone has synced it by hand. A missing file
+// cannot be staged, and an empty list stages nothing.
+def specLock(spec) {
+    def lock = file("${spec.parent}/${spec.simpleName}.lock.json")
+    return lock.exists() ? lock : []
+}
+
 // Preprocessing: rebuild the committed tables in data/derived/ from their upstream
 // catalogs. A stage of its own rather than part of the analysis, because its outputs are
 // committed and rebuilding them is a rare, deliberate act.
@@ -34,10 +43,11 @@ workflow PREPROCESS {
 
     if (params.preprocess == 'sweep') {
         sweep_spec = file(params.catalog_spec, checkIfExists: true)
-        sweep_lock = file("${sweep_spec.parent}/${sweep_spec.simpleName}.lock.json")
+        sweep_lock = specLock(sweep_spec)
 
         TR_SWEEP(announceStart(channel.of(sweep_spec), 'TR sweep'),
-                 sweep_lock, params.catalog_profile, params.sweep_identities,
+                 sweep_lock, params.catalog_profile, params.sweep_max_extensions,
+                 params.sweep_identities,
                  params.sweep_seed_units, params.sweep_seed_lengths,
                  params.catalog_genome_from, params.sweep_table)
 
@@ -46,16 +56,17 @@ workflow PREPROCESS {
 
     if (params.preprocess in ['all', 'catalog']) {
         genome_spec = file(params.catalog_spec, checkIfExists: true)
-        genome_lock = file("${genome_spec.parent}/${genome_spec.simpleName}.lock.json")
+        genome_lock = specLock(genome_spec)
 
         // Nextflow refuses a null `val` input, so an unset threshold crosses as ''.
         identity = params.catalog_min_identity == null ? '' : params.catalog_min_identity
         seed_units = params.catalog_min_seed_units == null ? '' : params.catalog_min_seed_units
         seed_length = params.catalog_min_seed_length == null ? '' : params.catalog_min_seed_length
+        max_extension = params.catalog_max_extension == null ? '' : params.catalog_max_extension
 
         TR_CATALOG(announceStart(channel.of(genome_spec), 'TR catalog'),
                    genome_lock, params.catalog_profile, identity,
-                   seed_units, seed_length,
+                   seed_units, seed_length, max_extension,
                    params.catalog_genome_from, params.catalog_table, params.catalog_bed)
 
         catalog = announceDone(TR_CATALOG.out.catalog, 'TR catalog')

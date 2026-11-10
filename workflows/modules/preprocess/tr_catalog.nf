@@ -17,7 +17,8 @@ process TR_CATALOG {
     tag "${spec.simpleName}:${profile}" +
         "/${min_identity == '' ? 'default' : min_identity}" +
         "/${min_seed_units == '' ? 'default' : min_seed_units}" +
-        "/${min_seed_length == '' ? 'default' : min_seed_length}"
+        "/${min_seed_length == '' ? 'default' : min_seed_length}" +
+        "/${max_extension == '' ? 'default' : max_extension}"
     label 'catalog'
 
     // sync rewrites the spec's lockfile, so the task gets its own copy rather than a
@@ -26,11 +27,12 @@ process TR_CATALOG {
 
     input:
     path spec
-    path lock              // staged, never named: sync finds it beside the spec
+    path lock              // staged, never named: sync finds it beside the spec; [] if never synced
     val profile
     val min_identity
     val min_seed_units
     val min_seed_length
+    val max_extension
     val genome_from        // 'dir' for HMP layouts, 'file' for one genome per file
     val catalog_table
     val catalog_bed
@@ -57,33 +59,25 @@ process TR_CATALOG {
     if (min_seed_length != '') {
         overrides += " --min-seed-length ${min_seed_length}"
     }
+    if (max_extension != '') {
+        overrides += " --max-extension ${max_extension}"
+    }
     """
     # The genomes land in ./${spec.simpleName}/ and never leave the task directory.
     ${params.cli} sync ${spec} --data-dir .
 
-    # HMP ships the mock community as .nuc.fsa.bz2, and pyfastx reads plain or gzip only,
-    # so bzip2 has to come off before the finder sees it. gzip it opens itself.
-    find ./${spec.simpleName} -name '*.bz2' -exec bunzip2 -q {} + || true
+    # One FASTA per genome, with the name the catalog gives it. `genomes` decompresses
+    # bzip2, converts GenBank to FASTA, and rejects a genome with two sequence files.
+    ${params.cli} genomes ${spec} --data-dir . --name-from ${genome_from} --out genomes.tsv
 
     # One table per genome, concatenated below. --format fasta because HMP names its
     # genomes .nuc.fsa, which the extension sniffer cannot place.
     mkdir -p calls
-    find ./${spec.simpleName} -type f \\
-        \\( -name '*.fsa' -o -name '*.fna' -o -name '*.fa' -o -name '*.fasta' \\
-           -o -name '*.fna.gz' -o -name '*.fa.gz' -o -name '*.fasta.gz' \\) \\
-        | sort > genomes.txt
-    test -s genomes.txt || { echo "no FASTA in ${spec.simpleName}" >&2; exit 1; }
-
-    while IFS= read -r genome ; do
-        if [ "${genome_from}" = dir ] ; then
-            name=\$(basename "\$(dirname "\$genome")")
-        else
-            name=\$(basename "\$genome" | sed 's/[.][^.]*\$//')
-        fi
+    while IFS=\$'\\t' read -r name genome ; do
         ${params.trf} find "\$genome" "calls/\$name.tsv" \\
             --format fasta --profile ${profile} --genome "\$name" \\
             --bed "calls/\$name.bed"${overrides}
-    done < genomes.txt
+    done < genomes.tsv
 
     # One header, then every genome's rows. The per-genome tables carry the same columns,
     # so the first file's header stands for all of them.
@@ -91,7 +85,7 @@ process TR_CATALOG {
     cat calls/*.bed > ${catalog_bed}
 
     # The sequence was only ever the input to the finder.
-    rm -rf ./${spec.simpleName} calls genomes.txt
+    rm -rf ./${spec.simpleName} calls genomes.tsv
     """
 
     stub:

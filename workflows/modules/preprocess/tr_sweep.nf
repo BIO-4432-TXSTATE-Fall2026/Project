@@ -18,8 +18,14 @@
 // stop deciding, and overlapping calls -- the §2 merge's whole subject -- multiply as the
 // seed loosens, so a raw yield inflates unevenly down the grid. The calls themselves stay
 // out of the table: TR_CATALOG at a chosen point is where they come from.
+//
+// `max_extension` leads the grid because it is the one setting that moves what §4
+// measures, not only how many loci there are: it is how far a call extends past its seed
+// into flanking sequence, so it inflates allele length by an amount that depends on the
+// flank. The yields here only say which loci an extension admits; the inflation itself
+// shows in rep_length, comparing TR_CATALOG at two extensions.
 def sweep_header() {
-    'min_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci\toverlaps' +
+    'max_extension\tmin_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci\toverlaps' +
         '\tmotif_1\tmotif_2\tmotif_3\tmotif_4_5\tmotif_6p\tunits_2\tmin_rep_length'
 }
 
@@ -32,9 +38,10 @@ process TR_SWEEP {
 
     input:
     path spec
-    path lock              // staged, never named: sync finds it beside the spec
+    path lock              // staged, never named: sync finds it beside the spec; [] if never synced
     val profile
-    val identities         // space-separated, as a shell for-loop reads them
+    val extensions         // space-separated, as a shell for-loop reads them
+    val identities
     val seed_units
     val seed_lengths
     val genome_from        // 'dir' for HMP layouts, 'file' for one genome per file
@@ -48,14 +55,8 @@ process TR_SWEEP {
     # The genomes land in ./${spec.simpleName}/ and never leave the task directory.
     ${params.cli} sync ${spec} --data-dir .
 
-    # HMP ships the mock community as .nuc.fsa.bz2, and pyfastx reads plain or gzip only.
-    find ./${spec.simpleName} -name '*.bz2' -exec bunzip2 -q {} + || true
-
-    find ./${spec.simpleName} -type f \\
-        \\( -name '*.fsa' -o -name '*.fna' -o -name '*.fa' -o -name '*.fasta' \\
-           -o -name '*.fna.gz' -o -name '*.fa.gz' -o -name '*.fasta.gz' \\) \\
-        | sort > genomes.txt
-    test -s genomes.txt || { echo "no FASTA in ${spec.simpleName}" >&2; exit 1; }
+    # One FASTA per genome, named as the catalog names it; see TR_CATALOG.
+    ${params.cli} genomes ${spec} --data-dir . --name-from ${genome_from} --out genomes.tsv
 
     # One pass over a point's calls. Written to a file rather than inlined in the loop so
     # that awk's fields stay readable: every \$ in the script block is escaped once for
@@ -85,20 +86,17 @@ AWK
 
     printf '%s\\n' '${sweep_header()}' > ${sweep_table}
 
-    for identity in ${identities} ; do
+    for extension in ${extensions} ; do
+     for identity in ${identities} ; do
       for units in ${seed_units} ; do
         for length in ${seed_lengths} ; do
-          while IFS= read -r genome ; do
-            if [ "${genome_from}" = dir ] ; then
-                name=\$(basename "\$(dirname "\$genome")")
-            else
-                name=\$(basename "\$genome" | sed 's/[.][^.]*\$//')
-            fi
+          while IFS=\$'\\t' read -r name genome ; do
             # --format fasta because HMP names its genomes .nuc.fsa, which the extension
             # sniffer cannot place. point.tsv is a scratch file: it is summarised and
             # overwritten by the next point.
             ${params.trf} find "\$genome" point.tsv \\
                 --format fasta --profile ${profile} --genome "\$name" \\
+                --max-extension "\$extension" \\
                 --min-identity "\$identity" \\
                 --min-seed-units "\$units" \\
                 --min-seed-length "\$length"
@@ -108,28 +106,32 @@ AWK
             summary=\$(tail -n +2 point.tsv \\
                 | sort -t "\$(printf '\\t')" -k2,2 -k3,3n \\
                 | awk -f summarise.awk)
-            printf '%s\\t%s\\t%s\\t%s\\t%s\\n' \\
-                "\$identity" "\$units" "\$length" "\$name" "\$summary" >> ${sweep_table}
-          done < genomes.txt
+            printf '%s\\t%s\\t%s\\t%s\\t%s\\t%s\\n' \\
+                "\$extension" "\$identity" "\$units" "\$length" "\$name" "\$summary" \\
+                >> ${sweep_table}
+          done < genomes.tsv
         done
       done
+     done
     done
 
     # The sequence was only ever the input to the finder.
-    rm -rf ./${spec.simpleName} genomes.txt point.tsv summarise.awk
+    rm -rf ./${spec.simpleName} genomes.tsv point.tsv summarise.awk
     """
 
     stub:
     """
     printf '%s\\n' '${sweep_header()}' > ${sweep_table}
-    for identity in ${identities} ; do
+    for extension in ${extensions} ; do
+     for identity in ${identities} ; do
       for units in ${seed_units} ; do
         for length in ${seed_lengths} ; do
           # The motif bands sum to loci, so a notebook cell that checks that holds here too.
-          printf '%s\\t%s\\t%s\\tstub\\t13\\t1\\t4\\t3\\t3\\t2\\t1\\t0\\t12\\n' \\
-              "\$identity" "\$units" "\$length" >> ${sweep_table}
+          printf '%s\\t%s\\t%s\\t%s\\tstub\\t13\\t1\\t4\\t3\\t3\\t2\\t1\\t0\\t12\\n' \\
+              "\$extension" "\$identity" "\$units" "\$length" >> ${sweep_table}
         done
       done
+     done
     done
     """
 }

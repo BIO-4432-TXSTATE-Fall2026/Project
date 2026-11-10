@@ -16,11 +16,12 @@ nextflow_process {
                 input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
                 input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
                 input[2] = 'genome'
-                input[3] = '0.8 0.7'
-                input[4] = '3 2'
-                input[5] = '10 8 6'
-                input[6] = 'dir'
-                input[7] = 'tr-sweep.tsv'
+                input[3] = '0 20'
+                input[4] = '0.8 0.7'
+                input[5] = '3 2'
+                input[6] = '10 8 6'
+                input[7] = 'dir'
+                input[8] = 'tr-sweep.tsv'
                 """
             }
         }
@@ -28,20 +29,22 @@ nextflow_process {
         then {
             assert process.success
             def table = path(process.out.sweep[0]).text.trim().split('\n')
-            assert table[0] == 'min_identity\tmin_seed_units\tmin_seed_length\tgenome\tloci' +
-                '\toverlaps\tmotif_1\tmotif_2\tmotif_3\tmotif_4_5\tmotif_6p\tunits_2\tmin_rep_length'
-            // 2 identities x 2 seed-unit values x 3 seed lengths, plus the header.
-            assert table.size() == 13
-            assert table[1].startsWith('0.8\t3\t10')
-            assert table[12].startsWith('0.7\t2\t6')
+            assert table[0] == 'max_extension\tmin_identity\tmin_seed_units\tmin_seed_length' +
+                '\tgenome\tloci\toverlaps\tmotif_1\tmotif_2\tmotif_3\tmotif_4_5\tmotif_6p' +
+                '\tunits_2\tmin_rep_length'
+            // 2 extensions x 2 identities x 2 seed-unit values x 3 seed lengths, plus the
+            // header.
+            assert table.size() == 25
+            assert table[1].startsWith('0\t0.8\t3\t10')
+            assert table[24].startsWith('20\t0.7\t2\t6')
             // Every row carries the full summary, and the motif bands account for every
             // locus. The notebook reads the bands as a partition of `loci`, so a column
             // added without a band to match it should fail here rather than there.
             def columns = table[0].split('\t').size()
             table.each { row -> assert row.split('\t').size() == columns }
             def fields = table[1].split('\t')
-            def bands = fields[6..10].collect { it as int }.sum()
-            assert bands == (fields[4] as int)
+            def bands = fields[7..11].collect { it as int }.sum()
+            assert bands == (fields[5] as int)
         }
     }
 }

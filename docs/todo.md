@@ -159,7 +159,7 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 
 - [x] Map `reference_genomes/` directory IDs to organisms
       (`manifests/hmp/reference-genomes-list.json`)
-- [x] Sync `*.nuc.fsa` or `*.gbk` for target genera: 198 genomes, 760 MB
+- [x] Sync `*.nuc.fsa` or `*.gbk` for target genera: 198 genomes, 470 MB, one file each
       (`manifests/hmp/reference-genomes-target.json`)
 - [x] Sync `HHS/HMMC/`: 22 strain genomes and the strain sheet, 27 MB
       (`manifests/hmp/mock-community.json`)
@@ -282,14 +282,16 @@ everything after the finder should be the same code.
       `genome` profile beside `sv`, and the SV gates are now offered only for VCF input,
       but its values came from synthetic checks. Choosing them needs real genomes and the
       same enumeration `novelty.search` does, not an optimum
-- [ ] **Put `max_extension` on the grid, and first.** It is the one finder setting that
-      moves the quantity §4 measures rather than the number of loci, and the sweep cannot
-      reach it: `TR_CATALOG` and `TR_SWEEP` expose the three seed and identity floors
-      only, so the profile's provisional `20` is frozen into every catalog so far. On
-      planted tracts, `0` recovers true length and purity exactly where `20` inflates
-      allele length 33–48% by absorbed background — by an amount that depends on the
-      flank, so it is noise added to the very variance H1 is about, not a boundary
-      trade. Plumb it through both processes before any threshold is chosen
+- [x] **Put `max_extension` on the grid, and first.** `TR_CATALOG` takes
+      `--catalog_max_extension` and `TR_SWEEP` sweeps `--sweep_max_extensions` (default
+      `0 10 20`) as its leading axis. On planted tracts, `0` recovers true length and
+      purity exactly where `20` inflates allele length 33–48% by absorbed background —
+      by an amount that depends on the flank, so it is noise added to the very variance
+      H1 is about. On one mock genome (*A. baumannii*), `0` gives 139 calls with a mean
+      length of 16 bp and `20` gives 12 calls averaging 81 bp
+- [ ] Choose `max_extension` from a sweep over the target genomes, holding the other
+      axes at one value each: the grid runs once per genome, so the full four-axis grid
+      on 198 genomes is many hours in one task
 
 #### `pipeline/novelty`
 
@@ -368,10 +370,16 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
 - [x] Build a catalog and sensitivity surface for the mock community and read them in
       `notebooks/eda.ipynb`. Its committed outputs are the only record —
       `data/derived/catalog/` is git-ignored and now dangles into a deleted `work/`
+- [x] Prepare the catalog processes for the target and contaminant genomes.
+      `TR_CATALOG`, `TR_SWEEP` and `TR_LOCI` read their genomes from `hmp_project
+      genomes`, which lists one FASTA per genome, converts GenBank to FASTA, and rejects
+      a genome with two sequence files. The target spec keeps one file per genome (the
+      contigs, not the scaffolds). A spec with no lockfile yet, such as
+      `contaminants/kit`, is synced inside the task
 - [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
-      TR locus catalog. Only the 22 mock strains have been through the finder;
-      `reference-genomes-target` is synced (198 genomes) but never scanned, and the
-      contaminant specs are not synced at all (§1)
+      TR locus catalog, one `--catalog_spec` per run, each with its own
+      `--catalog_table` and `--catalog_bed` so the runs do not publish over each other.
+      Only the 22 mock strains have been through the finder so far
 - [ ] Decide what counts as one locus: `pytrf` reports overlapping calls over the same
       stretch, and six genomes per genus repeat near-identical loci, so raw calls need a
       merge step before cross-sample entropy means anything. Merge on canonical motif
