@@ -105,6 +105,18 @@ pytrf = ">=1.5.0"
 [tool.pixi.feature.catalog.pypi-dependencies]
 intruder = { path = "submodules/inTRuder", editable = true }
 
+# The pipeline stage's read filter: lbzip2 to decompress HMP's bzip2 tarballs on several
+# cores, and bbduk (from bbmap) as the k-mer gate. The stream itself is the project CLI,
+# so nothing else is needed; the reference the gate reads is built in the catalog image,
+# where inTRuder is. Both are linux and macOS only, like the other bioconda features.
+[tool.pixi.feature.filter]
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.feature.filter.dependencies]
+lbzip2 = ">=2.5,<3"
+bbmap = ">=40.5,<41"
+
 # Exploratory notebooks in notebooks/. Pandas and matplotlib are for looking at data, not
 # for producing anything the pipeline consumes, so they stay out of the default
 # environment: the CLI's only runtime dependency is still boto3.
@@ -125,12 +137,16 @@ sra = { features = ["sra"] }
 nextflow = { features = ["nextflow"], no-default-feature = true }
 catalog = { features = ["catalog"] }
 notebooks = { features = ["catalog", "notebooks"] }
+# The tests that need inTRuder -- `loci` reads genomes through it -- skip in `default`,
+# which has no intruder or pyfastx. This is where they run.
+test-catalog = { features = ["catalog", "test"] }
 # One environment per pipeline stage, named for it, which containers/<stage>.Dockerfile
 # installs with --frozen. The stage images are the reason `preprocess` exists separately
 # from `default`: the CLI is all a preprocessing task runs, and `default` carries pytest
 # and ruff. It shares the default solve group so the image and a developer's environment
 # resolve to the same versions. `catalog` above already serves its stage.
 preprocess = { solve-group = "default" }
+filter = { features = ["filter"] }
 
 [tool.pixi.dependencies]
 python = ">=3.11"
