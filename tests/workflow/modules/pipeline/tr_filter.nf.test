@@ -1,0 +1,42 @@
+nextflow_process {
+
+    name "TR_FILTER"
+    script "workflows/modules/pipeline/tr_filter.nf"
+    process "TR_FILTER"
+
+    // Stubbed: the real script streams gigabytes from S3. This checks the wiring -- that
+    // a sample crosses as values beside its staged spec and lock, and that the reads and
+    // counts come back named for it. The stream itself is tested in
+    // tests/python/cli/test_filter.py, against a synthetic tarball.
+    test("emits reads and counts named for the sample") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of(tuple(
+                    'SRS013950',
+                    file("${projectDir}/manifests/hmp/subgingival-plaque.json"),
+                    file("${projectDir}/manifests/hmp/subgingival-plaque.lock.json"),
+                    'HHS/HMASM/WGS/subgingival_plaque/SRS013950.tar.bz2',
+                    '9f66ffc4fbd1abb0e9ec82be6e97855d'))
+                input[1] = file("${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv")
+                input[2] = 25
+                input[3] = 1
+                input[4] = 2
+                input[5] = 'lbzip2'
+                input[6] = ''
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.reads[0].endsWith('SRS013950.loci.fastq.gz')
+            assert process.out.counts[0].endsWith('SRS013950.counts.tsv')
+            // The schema FILTER_SUMMARY reads its pass fraction out of.
+            assert path(process.out.counts[0]).text.startsWith(
+                'sample\tspec\tkey\treads_1\treads_2\treads_singleton\treads_seen\treads_passed')
+        }
+    }
+}

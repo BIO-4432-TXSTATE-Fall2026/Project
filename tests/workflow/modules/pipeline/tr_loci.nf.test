@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "TR_LOCI"
+    script "workflows/modules/pipeline/tr_loci.nf"
+    process "TR_LOCI"
+
+    // Stubbed: the real script syncs genomes from S3. This checks the wiring -- that the
+    // catalog and the genome manifests are staged and the reference comes back named.
+    // What goes into the reference is tests/python/cli/test_loci.py's business.
+    test("emits a named reference") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv")
+                input[1] = file("${projectDir}/manifests/hmp/mock-community.json")
+                input[2] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[3] = 'dir'
+                input[4] = 50
+                input[5] = 'tr-loci.fa'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.fasta[0].endsWith('tr-loci.fa')
+            assert path(process.out.fasta[0]).text.startsWith('>')
+        }
+    }
+}

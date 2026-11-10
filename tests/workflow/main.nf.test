@@ -3,9 +3,10 @@ nextflow_pipeline {
     name "Pipeline"
     script "workflows/main.nf"
 
-    // Only the stage branching is tested here. A run of the preprocessing stage itself is
-    // covered by the process test, which is stubbed: the stage publishes into the working
-    // tree through `outputDir`, which is not somewhere a test should write.
+    // The preprocessing stage is only tested for its branching here. A run of it is covered
+    // by the process tests, which are stubbed: the stage publishes into the working tree
+    // through `outputDir`, which is not somewhere a test should write. The pipeline stage
+    // publishes into results/, relative to the test's own launch directory, so it runs.
     test("stops when the stage does not exist") {
         when {
             params {
@@ -19,7 +20,27 @@ nextflow_pipeline {
         }
     }
 
-    test("stops when the analysis stage is asked for") {
+    test("stops when the pipeline part does not exist") {
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'nonsense'
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("unknown --pipeline 'nonsense'") }
+        }
+    }
+
+    // The whole stage, stubbed and with its defaults, as a clean clone runs it: the stage
+    // builds its own catalog, the reference feeds the filter, every plaque sample in the
+    // lock becomes one task, and the summary collects them all. The stage publishes into
+    // results/, which resolves inside the test's own directory.
+    test("runs the pipeline stage end to end") {
+        options "-stub"
+
         when {
             params {
                 stage = 'pipeline'
@@ -27,8 +48,31 @@ nextflow_pipeline {
         }
 
         then {
-            assert workflow.failed
-            assert workflow.stdout.any { it.contains('has no analysis yet') }
+            assert workflow.success
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_CATALOG') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 7
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_LOCI') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:FILTER_SUMMARY') } == 1
+        }
+    }
+
+    // A named catalog is used as given: no TR_CATALOG task, straight to the reference.
+    test("builds the reference from a named catalog") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'loci'
+                loci_catalog = "${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_CATALOG') } == 0
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_LOCI') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 0
         }
     }
 }

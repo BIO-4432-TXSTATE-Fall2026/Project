@@ -1,0 +1,29 @@
+nextflow_process {
+
+    name "FILTER_SUMMARY"
+    script "workflows/modules/pipeline/filter_summary.nf"
+    process "FILTER_SUMMARY"
+
+    // Not stubbed: it is awk over two small tables. The fixtures are one sample with
+    // reads and one with none, which is the case the pass fraction must not divide by.
+    test("merges the counts and adds the pass fraction") {
+        when {
+            process {
+                """
+                input[0] = files("${projectDir}/tests/workflow/fixtures/filter/*.counts.tsv")
+                input[1] = 'filter-summary.tsv'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            def lines = path(process.out.summary[0]).text.readLines()
+            assert lines.size() == 3
+            assert lines[0].startsWith('sample\t') && lines[0].endsWith('\tpass_fraction')
+            // Sorted by sample, whatever order the counts were staged in.
+            assert lines[1].startsWith('SRS013950\t') && lines[1].endsWith('\tNA')
+            assert lines[2].startsWith('SRS014107\t') && lines[2].endsWith('\t0.010000')
+        }
+    }
+}

@@ -394,9 +394,11 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
 
 ## 3. Allele calling and error correction
 
-- [ ] Stream HMP1 reads from S3 through a locus filter, one SLURM array task per sample,
-      keeping only locus-hitting reads and per-sample read counts; test on
-      `subgingival_plaque` first
+- [x] Stream HMP1 reads from S3 through a locus filter, one SLURM array task per sample,
+      keeping only locus-hitting reads and per-sample read counts
+      (`--stage pipeline`, `docs/workflows/pipeline/`)
+- [ ] Run it on `subgingival_plaque` first: check lbzip2 against bzip2 on the cluster, then
+      read the pass fraction from `filter-summary.tsv` to size the stool and tongue runs
 - [ ] Anchor reads to cataloged loci
 - [ ] Measure allele lengths per sample
 - [ ] Apply a stutter model adapted from STRling and HipSTR

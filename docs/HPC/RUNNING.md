@@ -92,6 +92,47 @@ that catalog behind in its work directory; `nextflow clean` removes it.
 
 What the stage builds is in `docs/workflows/preprocess/`.
 
+## The read filter
+
+`--stage pipeline` builds the TR catalog and the filter's reference from the mock
+community, then streams each HMP sample from S3 through the filter, one array task per
+sample. What it runs and why is in `docs/workflows/pipeline/`.
+
+**Before the first run, refresh the images.** The run needs the `filter` image and a
+`catalog` image new enough to have the `loci` subcommand. Run the Containers workflow in
+GitHub Actions on the pushed commit, then delete any `catalog` image Apptainer already
+converted: images are pulled by the `latest` tag, and a cached copy is reused rather than
+pulled again.
+
+```sh
+rm -f "${NXF_APPTAINER_CACHEDIR:-work/singularity}"/*project-catalog-latest*
+```
+
+Then, from the clone:
+
+```sh
+# 1. the plaque pilot, everything: catalog, reference, 7 samples, summary
+sbatch -p shared -c 1 --mem=4G -t 1-00:00:00 -J nf-filter -o nf-filter-%j.log \
+  --wrap "pixi run pipeline --stage pipeline -profile slurm,apptainer \
+          --slurm_queue shared -ansi-log false -resume"
+
+# 2. read the pass fraction, then decide on stool and tongue
+column -t results/filter/filter-summary.tsv
+```
+
+Then the rest, a site or two at a time, by what the pass fraction projects for disk. The
+catalog and reference are cached, so `-resume` goes straight to the new samples:
+
+```sh
+sbatch -p shared -c 1 --mem=4G -t 2-00:00:00 -J nf-filter -o nf-filter-%j.log \
+  --wrap "pixi run pipeline --stage pipeline --filter_body_sites stool,tongue-dorsum \
+          -profile slurm,apptainer --slurm_queue shared -ansi-log false -resume"
+```
+
+A dropped S3 connection is resumed inside the task, from the byte it stopped at; its
+`.command.err` logs each one. A task that fails anyway is retried twice, and a sample
+that still fails leaves no reads behind, so `-resume` reruns only it.
+
 ## Longer runs
 
 A login node may kill long processes, and image pulls use its CPU. For real runs, submit

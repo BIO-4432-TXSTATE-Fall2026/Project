@@ -8,6 +8,7 @@ cluster, see `docs/HPC/RUNNING.md`; for SLURM itself, `docs/HPC/SLURM.md`.
 | `workflows/main.nf`      | The entry workflow; picks a stage and declares outputs   |
 | `workflows/modules/`     | One process per file                                     |
 | `workflows/modules/preprocess/` | The preprocessing processes (`docs/workflows/preprocess/`) |
+| `workflows/modules/pipeline/` | The analysis processes (`docs/workflows/pipeline/`) |
 | `conf/`                  | Resources, executor, and container profiles              |
 | `tests/workflow/`        | nf-test tests, mirroring the layout of `workflows/`      |
 
@@ -20,15 +21,15 @@ preprocessing *produces* committed inputs.
 | Stage        | Does                                          | Publishes to     |
 | ------------ | --------------------------------------------- | ---------------- |
 | `preprocess` | Rebuilds the tables in `data/derived/`        | the working tree |
-| `pipeline`   | The analysis. Does not exist yet              | `results/`       |
+| `pipeline`   | The analysis: so far, the streaming read filter | `results/`     |
 
 ```sh
 pixi run pipeline --stage preprocess
 ```
 
-`pipeline` is the default and has no analysis behind it, so a run with no `--stage` stops
-with a message rather than doing anything. That is deliberate: preprocessing writes into
-the working tree, so it is asked for by name and never entered by accident.
+`pipeline` is the default. That is deliberate: preprocessing writes into the working
+tree, so it is asked for by name and never entered by accident. See
+`docs/workflows/pipeline/` for what the analysis runs so far.
 
 Nextflow 26's strict parser has no `-entry`, so the stage is a parameter and `main.nf`
 branches on it. An unknown stage stops the run rather than quietly doing nothing.

@@ -1,0 +1,2 @@
+sample	spec	key	reads_1	reads_2	reads_singleton	reads_seen	reads_passed	reads_written	bytes_read	bytes_decompressed	elapsed_s
+SRS013950	subgingival-plaque	HHS/HMASM/WGS/subgingival_plaque/SRS013950.tar.bz2	0	0	0	0	0	0	0	0	1.0
