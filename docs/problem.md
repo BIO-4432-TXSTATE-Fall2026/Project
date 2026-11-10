@@ -48,7 +48,7 @@ is whether within-taxon *sequence* variation carries the signal at finer resolut
 | HMP1 shotgun reads (`HHS/HMASM/WGS/`) | 274 samples: stool 139 (998 GB), tongue dorsum 128 (760 GB), subgingival plaque 7 | The positive side. Real, diverse microbiomes across hundreds of people: the baseline for what high TR entropy looks like, and the taxa that must *not* cluster by center under H2 |
 | Salter et al. (2014) reads (ENA `ERP006808`) | 35 MiSeq runs, 0.49 GB; 4 kits × 10 dilution steps, plus `PSP_PLUS` at 4 and one water control | The negative side. A pure-contaminant dataset with known kit labels: tests H1's low-entropy prediction directly and supplies real batch labels for H2 |
 | SRA run metadata freeze (`sra/metadata_json/`, `09_01_2020`) | 60 files, 2.3 GB → 568 WGS/Illumina runs over all 274 HMP samples | H2's batch labels. Which center sequenced each HMP sample and when, and the only place Salter's kit and dilution can be recovered from (they live in free text) |
-| HMP reference genomes (`reference_genomes/`) | 198 genomes for target genera, 760 MB | The TR locus catalog that inTRuder builds — where to look |
+| HMP reference genomes (`reference_genomes/`) | 198 genomes for target genera, 470 MB | The TR locus catalog that inTRuder builds — where to look |
 | HMP mock community (`HHS/HMMC/`) | 22 known strains, 27 MB | Ground truth. Checks the catalog and the allele caller before either is trusted on real samples |
 | Contaminant genomes and spike-ins | 30 genomes: 5 kit genera, 6 species each (`docs/manifests/contaminants/kit.md`) | The controlled benchmark: clonal contaminant reads laid onto HMP samples, one strain per synthetic batch, titrated to tumor-like depth |
 

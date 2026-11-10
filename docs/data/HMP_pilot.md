@@ -62,7 +62,7 @@ body site. 690 of 752 sequenced samples passed HMP QC and are included.
   files (`.nin`, `.nhr`, `.nsq`, …).
 - Directories are numeric IDs, mapped to organisms by the bucket's `list.json`
   (`docs/manifests/hmp/reference-genomes-list.md`). The six genera above are synced in
-  `hmp/reference-genomes-target` (198 genomes, 760 MB); which files, and the ones that
+  `hmp/reference-genomes-target` (198 genomes, 470 MB); which files, and the ones that
   needed working around, are on its page
   (`docs/manifests/hmp/reference-genomes-target.md`).
 

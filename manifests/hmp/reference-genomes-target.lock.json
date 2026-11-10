@@ -28,27 +28,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/20527/20527.DS572674-DS572694.nuc.fsa",
-      "size": 1961243,
-      "etag": "e7cfeb298c04871207dd3d64b0afe6a3",
-      "last_modified": "2013-08-14T21:42:32Z",
-      "sha256": "66d94b8e32245da37ea82311ee5ea43afcedfea92255edfb6f10b06fa6977fa1",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/30025/30025.ACBX02000001-ACBX02000073.nuc.fsa",
       "size": 3575451,
       "etag": "6544253c9152fbbbb2d02e0c1d97dd86",
       "last_modified": "2013-08-14T22:03:48Z",
       "sha256": "b33334bbd4820110e57fe96eaf4cafd0a03596515e3567b0f169c3509b5b03cd",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/30025/30025.GG703852-GG703878.nuc.fsa",
-      "size": 3574338,
-      "etag": "688f86922d0f73b2d51a44eb9b267406",
-      "last_modified": "2013-08-14T22:04:14Z",
-      "sha256": "7b78f1ea1a3e98caae12fa2354b37b18feecf55e6fb18da8300c88d9c9061d5d",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -68,27 +52,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/30495/30495.GG665876-GG665928.nuc.fsa",
-      "size": 2666395,
-      "etag": "3be570d730c9c07018d14eb7d947861c",
-      "last_modified": "2013-08-14T22:16:42Z",
-      "sha256": "647bf2990e040c240ae0c4b5d727abbc8ed2a009f7ba59faceec7cdfbb129406",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/30645/30645.AEEM01000001-AEEM01000025.nuc.fsa",
       "size": 2255254,
       "etag": "4d88692e8cca3e4a5783f0a81c6decf7",
       "last_modified": "2013-08-14T22:19:06Z",
       "sha256": "ae50099d5c950982f158445ab97064fadc0d8f9f048b194141adedf992302618",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/30645/30645.GL397173-GL397178.nuc.fsa",
-      "size": 2285507,
-      "etag": "0a7ccd0b958043cff00d980eb36fa898",
-      "last_modified": "2013-08-14T22:19:25Z",
-      "sha256": "ee6c3183ce1d1a5e48281691d621d554749fe6166e6422ffc313684254ec2dbb",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -156,27 +124,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32419/32419.GG658179-GG658198.nuc.fsa",
-      "size": 1743735,
-      "etag": "7c0cb5651472b91eea30906f4b505006",
-      "last_modified": "2013-08-14T23:07:46Z",
-      "sha256": "076210a58da8298f7796d27ea617425dd65fa78ffd6cfc9d3c87cd3b3de964c0",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32421/32421.ACDB02000001-ACDB02000044.nuc.fsa",
       "size": 2717494,
       "etag": "26ec9744b0f1e58d22ba56c9331f7190",
       "last_modified": "2013-08-14T23:08:06Z",
       "sha256": "5d083e031d95fd89148c37d7b446878dc49dd75930942f3d140edfb63e031157",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32421/32421.GL987987-GL987994.nuc.fsa",
-      "size": 2716710,
-      "etag": "3094bcb7378d8d80aa12ed2553a211d9",
-      "last_modified": "2013-08-14T23:08:27Z",
-      "sha256": "635e701ebed1c7cea1c1a44f573bdd8711cdda886c2deb6ada4103776ce9d5ad",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -188,27 +140,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32423/32423.GL987995-GL988005.nuc.fsa",
-      "size": 3356323,
-      "etag": "f9e1a36ef1f0cf2d98601e73d4f6c567",
-      "last_modified": "2013-08-14T23:09:05Z",
-      "sha256": "bf666bb5e4b04c565f5f66ddb248052c0a9505b897799e967d354ed4bd8f149c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32469/32469.ADGG01000001-ADGG01000080.nuc.fsa",
       "size": 2504632,
       "etag": "28901410697708680d9cca78cf97ab74",
       "last_modified": "2013-08-14T23:19:27Z",
       "sha256": "3e19ac93b144dcba9ce2b1ca98f50cb0af6192bafe8e8fc8147d650141f87fcc",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32469/32469.GG770374-GG770404.nuc.fsa",
-      "size": 2524848,
-      "etag": "d41ee09e6dd65e0773e047ba36f7be17",
-      "last_modified": "2013-08-14T23:19:40Z",
-      "sha256": "de3bb63b33554045d091d4ca799a36233ebbce554f0f6bf10adfa22c36a08ed3",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -220,27 +156,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32471/32471.JH594455-JH594499.nuc.fsa",
-      "size": 3787272,
-      "etag": "ec76810f16c9ecffcaef31b643bbfc4d",
-      "last_modified": "2013-08-14T23:20:36Z",
-      "sha256": "4bcb60c3366a90cc4296301198af9027ad53abd74314e337d4b1544aa1b0aa2c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32473/32473.ACDC02000001-ACDC02000061.nuc.fsa",
       "size": 2518095,
       "etag": "c4d053908e9789b763b55d0fb5db0fa1",
       "last_modified": "2013-08-14T23:20:56Z",
       "sha256": "17a9543f0823b5396a5dcb8b23d15d95637bd835a221b3a6459ccc854cb697ee",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32473/32473.GL988006-GL988011.nuc.fsa",
-      "size": 2517886,
-      "etag": "effeb1c4aee8080d11b5f1350f73c90b",
-      "last_modified": "2013-08-14T23:21:14Z",
-      "sha256": "b60360bec46f46a5b101dc784a003137993f41e7bdb3c8b732c451408d66625c",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -252,27 +172,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32475/32475.GL945387-GL945390.nuc.fsa",
-      "size": 2169355,
-      "etag": "7984e89f2651712dafb59cb36fe4449f",
-      "last_modified": "2013-08-14T23:21:56Z",
-      "sha256": "c58dc7c397a4ae64d4c5774fe9ddcbf853ff21471885cfb8add40a65086ba3d1",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32477/32477.ACDD01000001-ACDD01000099.nuc.fsa",
       "size": 1889870,
       "etag": "a3ccafeb331119ef924328480c8047d9",
       "last_modified": "2013-08-14T23:22:08Z",
       "sha256": "fc56db2531cfe3bd859ed80d7219b90f57bfe25fa032875df91881402ee9fc21",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32477/32477.GG657971-GG657998.nuc.fsa",
-      "size": 1966110,
-      "etag": "9f10c26ddfbdb572ed42014679f3789f",
-      "last_modified": "2013-08-14T23:22:21Z",
-      "sha256": "35241a3cb0902be14ac72ccc7446f278f4050941f9da3672519ac2abcdf01880",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -284,27 +188,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32479/32479.GG657999-GG658010.nuc.fsa",
-      "size": 2307810,
-      "etag": "4c3bb9b917dd41609a87123dcabd2a21",
-      "last_modified": "2013-08-14T23:22:47Z",
-      "sha256": "8844b8f32a14c0c74d7d7f2a04f1ce3e07aee8c8e66896a659b376e661bca434",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32483/32483.ACDF01000001-ACDF01000095.nuc.fsa",
       "size": 2521316,
       "etag": "67df8828f60377523008c6974640780c",
       "last_modified": "2013-08-14T23:23:00Z",
       "sha256": "5a12d8d1ddff7a2be231087fe4b92939c0bcdbd7bc5ac3d41b710f28a73c6f33",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32483/32483.GG658011-GG658028.nuc.fsa",
-      "size": 2554865,
-      "etag": "461680bdbf39d7b09e044d05f68cf5e1",
-      "last_modified": "2013-08-14T23:23:13Z",
-      "sha256": "01aa391afd5370014f0950f005b2c72942cb4d325146426133013351f9696d92",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -316,27 +204,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32485/32485.GL988012-GL988028.nuc.fsa",
-      "size": 1995629,
-      "etag": "0bcdba6749cdc6dba9380c13c688fb17",
-      "last_modified": "2013-08-14T23:23:52Z",
-      "sha256": "8c1da172404b8171978eda2c7ec688bb8fcf8d7464378a164e760955e2a2bd4a",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/32487/32487.ACDH02000001-ACDH02000049.nuc.fsa",
       "size": 3547607,
       "etag": "344544d8af8b9576cd3eed0c0a89975a",
       "last_modified": "2013-08-14T23:24:10Z",
       "sha256": "0be4766144cedb373a881a3bb49b172dc8ac1e085b1d06bcaed26988e0565301",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/32487/32487.JH815228-JH815235.nuc.fsa",
-      "size": 3546769,
-      "etag": "69b1e77a548d697442760c0720c866e1",
-      "last_modified": "2013-08-14T23:24:31Z",
-      "sha256": "42eabb7222499619997d7e7aa6e5fe2a030763f8bcf1c23c27e2847c9cf86023",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -348,27 +220,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/32501/32501.EQ999802-EQ999877.nuc.fsa",
-      "size": 2496667,
-      "etag": "ad75f3b4987938716655fd8217aade3e",
-      "last_modified": "2013-08-14T23:27:44Z",
-      "sha256": "63cdc2921ad28e6fb19665bc34fbd91e9fb05c2a2e62da8c207297e8581603ad",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/33153/33153.ACIJ02000001-ACIJ02000034.nuc.fsa",
       "size": 2630588,
       "etag": "5fa7baa67b52915a1a0455d31e588f05",
       "last_modified": "2013-08-14T23:33:57Z",
       "sha256": "040392a635788b8898a700b8851b1e44bc59a02afab8a2bee538a365bfcbd1d4",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/33153/33153.GG700642-GG700647.nuc.fsa",
-      "size": 2629598,
-      "etag": "e93097e03498e6f9d43767b5f4947d70",
-      "last_modified": "2013-08-14T23:34:16Z",
-      "sha256": "b238d9409f301af1b5fcc90791f6770fd1c52fb6132e704252594700bf29b9f5",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -396,14 +252,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/34637/34637.GG704780-GG704809.nuc.fsa",
-      "size": 3332259,
-      "etag": "f7ccf7d24d9ccfff1dba021aec0b0836",
-      "last_modified": "2013-08-14T23:49:58Z",
-      "sha256": "029b7445e7efa5786ea133b3d624654176e2a90c00b7453ab6b2fe9042dd36db",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/34659/34659.CP001993.nuc.fsa",
       "size": 2123689,
       "etag": "de30f294fd8ad684a9c2acd07b13e9bd",
@@ -420,27 +268,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/34699/34699.JH815332-JH815481.nuc.fsa",
-      "size": 2637882,
-      "etag": "0ba3916d1a53b90a084a3dc899f28a61",
-      "last_modified": "2013-08-14T23:56:21Z",
-      "sha256": "7a8a202682783a3c7c12ed4f0e6ddf5c167e74216ec09105a9787d5c2fc20463",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/37947/37947.ACOI01000001-ACOI01000031.nuc.fsa",
       "size": 2260958,
       "etag": "f67e524c0eefd46961e0cd84ad2dd24c",
       "last_modified": "2013-08-14T23:59:15Z",
       "sha256": "4cf391668fc61f7e6a33434ed5a8442008c24715eb119e3b861e672e095e57e4",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/37947/37947.GG704939-GG704948.nuc.fsa",
-      "size": 2268436,
-      "etag": "eb6b253d79fd068d8c07fd35ef2fd2b7",
-      "last_modified": "2013-08-14T23:59:30Z",
-      "sha256": "098553a842be8c788c5bbcc6604ab7c560423675bb5d8df69ff9387bfda3d162",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -452,27 +284,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38329/38329.GG703883-GG703900.nuc.fsa",
-      "size": 3307865,
-      "etag": "b0f98d1c9491468d70b1103ba18419d2",
-      "last_modified": "2013-08-15T00:03:36Z",
-      "sha256": "ce74349daaf5437c453efd6ac22d9725cb754d1d8d1cb80564088de01db48f23",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38331/38331.ACVA01000001-ACVA01000098.nuc.fsa",
       "size": 3049146,
       "etag": "249022fb7a9dbe8513a7a31e79c83a47",
       "last_modified": "2013-08-15T00:03:58Z",
       "sha256": "faa78053317229d9b832f7d7a001cda5b694808bc068f9b8007a8301338689cb",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38331/38331.GG698712-GG698737.nuc.fsa",
-      "size": 3047033,
-      "etag": "c92662a50a6b5c7e04d99e209f4696bc",
-      "last_modified": "2013-08-15T00:04:18Z",
-      "sha256": "70581285432f6acb794a9202f65b8a13591b41533e6d04b3c1c1a5d40056c768",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -484,27 +300,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38357/38357.GG698790-GG698801.nuc.fsa",
-      "size": 2295419,
-      "etag": "4434720f0600d383c816e0d06cfc14b0",
-      "last_modified": "2013-08-15T00:10:12Z",
-      "sha256": "1f89dd3b8139310634930321bc01edd4355071495284765d8464102ff99d084d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38519/38519.ACQE01000001-ACQE01000198.nuc.fsa",
       "size": 2299227,
       "etag": "2bc6fad3585251ed083a4a0c347f1198",
       "last_modified": "2013-08-15T00:14:15Z",
       "sha256": "07091c6e5dc4937bc59b268f5caedf519365ed5d0ba8fefd0ebe743c2c8ba2da",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38519/38519.GG704455-GG704494.nuc.fsa",
-      "size": 2351243,
-      "etag": "b1837fe256d68aa175f1fc22c8e15eaf",
-      "last_modified": "2013-08-15T00:14:28Z",
-      "sha256": "e14b817f997d5b610730283f4503460a385981d5876519b3c572ded70e2190ac",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -516,27 +316,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38521/38521.GG740072-GG740132.nuc.fsa",
-      "size": 4177015,
-      "etag": "aee7b8c7e668deedfff930fefce37637",
-      "last_modified": "2013-08-15T00:14:57Z",
-      "sha256": "8b417a1846519fc93987349733558952541ec3136a438d2d32b0a21704ab93a6",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38731/38731.ACZS01000001-ACZS01000190.nuc.fsa",
       "size": 3658505,
       "etag": "6095e8f60fc66ba519db01a68b6b9ccb",
       "last_modified": "2013-08-15T00:16:56Z",
       "sha256": "c81405929270287fd1dcbbe4c6dc5ea08ae98c923dbffbfd0d8d276983bf3221",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38731/38731.GG704824-GG704862.nuc.fsa",
-      "size": 3702104,
-      "etag": "26694c51783542445fe07992d3ccc259",
-      "last_modified": "2013-08-15T00:17:28Z",
-      "sha256": "0af18fbb4ea18c0524c30b0ea69d2f73715742b62565027c41c15ba9682dca3c",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -548,27 +332,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38733/38733.GG749268-GG749277.nuc.fsa",
-      "size": 1947092,
-      "etag": "ed20956471ff616ec56c77b3b5978ae7",
-      "last_modified": "2013-08-15T00:18:07Z",
-      "sha256": "e29eec27969799cc1e3ee4e08ebe4cb7c3af851a769105088479a075fa33f15a",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38737/38737.ACRB01000001-ACRB01000264.nuc.fsa",
       "size": 3379886,
       "etag": "2b7ffe8990ec53381a5d03c6cf5b9fa2",
       "last_modified": "2013-08-15T00:18:27Z",
       "sha256": "fce556dd25c13623e081ab92b7dfdff3790eee045ca8d6e14699c9aa6059d5fc",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38737/38737.GG739926-GG740009.nuc.fsa",
-      "size": 3423942,
-      "etag": "11137b952515b3a21b4ccdfae2d4168d",
-      "last_modified": "2013-08-15T00:18:44Z",
-      "sha256": "bba0a25bdf54c6c683722bcba7a35d606270ee939900d27a634353cf6d418020",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -580,27 +348,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38751/38751.GL698449-GL698469.nuc.fsa",
-      "size": 2180733,
-      "etag": "117842fb4d2c1b890a77ef8ab4a56ed9",
-      "last_modified": "2013-08-15T00:22:36Z",
-      "sha256": "ce09bf7f96347de78b5b54a31bde29149e4ca8f9150635fedefd39e6fc7d7878",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38753/38753.ACRJ01000001-ACRJ01000107.nuc.fsa",
       "size": 2058369,
       "etag": "88e6740b74ae7aaa302a1ffd5b9e029d",
       "last_modified": "2013-08-15T00:22:51Z",
       "sha256": "fbdb34c0f4e9733db551cfa147eb7632ff859ce37aa73c9b4f8212053b8801ca",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38753/38753.GL732466-GL732485.nuc.fsa",
-      "size": 2060764,
-      "etag": "2dcc35756284fa0d4a9b087b8fbedc8c",
-      "last_modified": "2013-08-15T00:23:06Z",
-      "sha256": "66f906068cfc44b7a8fa8cfc3e6499e19b0b20afa9475edc8d0e21e461f23884",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -612,27 +364,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/38755/38755.GG730092-GG730104.nuc.fsa",
-      "size": 1913899,
-      "etag": "e51c6bbc9ba01a03639e328d66d789d2",
-      "last_modified": "2013-08-15T00:23:36Z",
-      "sha256": "78bd3c78bab7a28e6f38c3ca635c77e3812f957d13af48bf8f68633536420bab",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/38757/38757.ACRL01000001-ACRL01000070.nuc.fsa",
       "size": 2242159,
       "etag": "9d21388662cdeebd776df9b1ebd156d8",
       "last_modified": "2013-08-15T00:23:49Z",
       "sha256": "e2c29b3406f81450ff26ea46ba6dbce64a5091dc11f9cf6d93b5267406da1490",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/38757/38757.GL732486-GL732517.nuc.fsa",
-      "size": 2247679,
-      "etag": "32fe453fc3c66fd4d16e4d1a8df77787",
-      "last_modified": "2013-08-15T00:24:03Z",
-      "sha256": "2d49537a35cc2d3caa733bf9f1581e8ae7edb12e2b2a09291171a1b432d8bf95",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -644,27 +380,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/39559/39559.GL945391-GL945427.nuc.fsa",
-      "size": 2771008,
-      "etag": "1cadc1ea71d1c83e329c848b109384cb",
-      "last_modified": "2013-08-15T00:54:32Z",
-      "sha256": "00c2f7fbae0b9c00d144a79d40a7aa30623656164b3c89e66bfc541f3a140996",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/40015/40015.ACWJ01000001-ACWJ01000032.nuc.fsa",
       "size": 1925002,
       "etag": "e611b55c467af6ccff767e625868726d",
       "last_modified": "2013-08-15T01:02:00Z",
       "sha256": "5ed966b4be73fd492c665771aead545163cb93289883aca349673e5c11e25d6a",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/40015/40015.JH414887-JH414899.nuc.fsa",
-      "size": 1928873,
-      "etag": "40ce446cc1becc99ef2d86c4019679d2",
-      "last_modified": "2013-08-15T01:02:19Z",
-      "sha256": "f481448ed86d61f70322e0b94384572c913f8ef0014955fe9bfac3b0341f5c3c",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -676,27 +396,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/40045/40045.GG740010-GG740055.nuc.fsa",
-      "size": 3353434,
-      "etag": "1360796d3258a2c3587b1bb04ac3a284",
-      "last_modified": "2013-08-15T01:12:15Z",
-      "sha256": "f43a730cecee4d38f9f31956a5f73c83a73db99372964fbf8f1fe06f23d95d6e",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/40047/40047.ACWZ01000001-ACWZ01000032.nuc.fsa",
       "size": 2488696,
       "etag": "26b27c1ae7f6aba0965f39ced7c638f0",
       "last_modified": "2013-08-15T01:12:30Z",
       "sha256": "5b87a700c91ed8c418a478abca10aee363c2cc1bfd43be8fea0c510658bd8fcd",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/40047/40047.GG740056-GG740071.nuc.fsa",
-      "size": 2496423,
-      "etag": "fc78d248b2c78bdeea76b5312473a920",
-      "last_modified": "2013-08-15T01:12:51Z",
-      "sha256": "d41e61c4517592f673616505ead8205e9a4f8df61d96dfd9b506969e4419e6a5",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -740,27 +444,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/41563/41563.GG770328-GG770373.nuc.fsa",
-      "size": 2253644,
-      "etag": "f859960f0579101f00348c615d88d1fe",
-      "last_modified": "2013-08-15T01:31:22Z",
-      "sha256": "ff0c214aebe92ec64ab8142f4f3aaae680658bc2adef5184ec816f42a26f9eb3",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/41971/41971.ADCT01000001-ADCT01000195.nuc.fsa",
       "size": 4082893,
       "etag": "d4016a717f338cda65fb1a533a94b4fd",
       "last_modified": "2013-08-15T01:39:08Z",
       "sha256": "0fad339b3888aa7fbe103ced83bdad32fb06528402e56011e566c582b4addd82",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/41971/41971.JH114139-JH114214.nuc.fsa",
-      "size": 4107103,
-      "etag": "d7be349ce5658394def386218b45a9f2",
-      "last_modified": "2013-08-15T01:39:32Z",
-      "sha256": "8bd9aabcd2f160c57f292719f082759f00b2550fcc85b69b6c100db76dd4160b",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -772,14 +460,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/41975/41975.GG770199-GG770214.nuc.fsa",
-      "size": 2201450,
-      "etag": "7f9328c7cb95765b126e013e1b7d35f2",
-      "last_modified": "2013-08-15T01:40:57Z",
-      "sha256": "0652b1fe1aa30172e2788ceeee62b2e0345cd010a39f6a0271f8674090e5ec15",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/41977/41977.ADCW01000001-ADCW01000022.nuc.fsa",
       "size": 2208214,
       "etag": "3416806fed57339c86c000464e8c42d6",
@@ -788,27 +468,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/41977/41977.GG770215-GG770224.nuc.fsa",
-      "size": 2211871,
-      "etag": "8217aef4abcd959e2da171f8050217a1",
-      "last_modified": "2013-08-15T01:41:41Z",
-      "sha256": "0e5e660ede4e667e55984d06dba2fbe6821aa0035c1bc1cc147a6d2f7ecba0bc",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/41987/41987.ADDB01000001-ADDB01000034.nuc.fsa",
       "size": 2506076,
       "etag": "0c96efd88ed867876c04179bc8016ed3",
       "last_modified": "2013-08-15T01:44:19Z",
       "sha256": "f04bc2c8c51beba7a41b8b1d89fcbbaba144bdb846350e93a14fa8ca1f5ab057",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/41987/41987.JH376779-JH376796.nuc.fsa",
-      "size": 2506432,
-      "etag": "f20e7a088d4d98125883fc4cc4573ab5",
-      "last_modified": "2013-08-15T01:44:46Z",
-      "sha256": "dc806b44ce7719d110da682d5b83e313aa7ebb6140fa400e5cdcd29420e137f3",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -828,27 +492,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/42537/42537.GL349564-GL349620.nuc.fsa",
-      "size": 3408688,
-      "etag": "cdfbde12e35ffd639506c23e26d60478",
-      "last_modified": "2013-08-15T01:48:38Z",
-      "sha256": "a1b55996464b98baa8e222ad846b96716bf13b4f0d226fc3d19714b65982cf39",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/43117/43117.ADGI01000001-ADGI01000081.nuc.fsa",
       "size": 2843627,
       "etag": "412a340ac86f37c497945e1e90311742",
       "last_modified": "2013-08-15T01:56:10Z",
       "sha256": "6a0a18203154b8ca2d723ecb1d8621f825e98e3d4c7b70566d25eb585161a0bb",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/43117/43117.JH114215-JH114230.nuc.fsa",
-      "size": 2854654,
-      "etag": "039f07e3d537c578879e9e92f7ec2411",
-      "last_modified": "2013-08-15T01:56:35Z",
-      "sha256": "48af679a184c01070f3853c86e69e7573b5a7934861d751f90adc28d87381f59",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -868,27 +516,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/46417/46417.JH590846-JH590860.nuc.fsa",
-      "size": 2353985,
-      "etag": "51f90d3d0c8ca730b5e3847283dbbbb3",
-      "last_modified": "2013-08-15T02:21:56Z",
-      "sha256": "60ee6db7b7db30216840ea3c8f7644d796a13d99edb7b0f0c1cbdb134fdf482f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/46427/46427.ADME01000001-ADME01000018.nuc.fsa",
       "size": 1848009,
       "etag": "3fc2d56c1ce910551b6c7223b2be2b31",
       "last_modified": "2013-08-15T02:24:17Z",
       "sha256": "23fb02e497e9bbbb3a6a1eaa3d8afe0b623e09ff7e9dddc03979a9e9907c7743",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/46427/46427.GL636615-GL636621.nuc.fsa",
-      "size": 1852389,
-      "etag": "abcaf8c8da880f02c50031ff1a68bf29",
-      "last_modified": "2013-08-15T02:24:35Z",
-      "sha256": "14d1e4b4c52ede86338235dc3d0a49a979e9f4a5b57d53bd116184a475f9eb62",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -932,27 +564,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/49883/49883.JH376762-JH376778.nuc.fsa",
-      "size": 3044494,
-      "etag": "055f05fa7fd4f5435dd80817485ea525",
-      "last_modified": "2013-08-15T04:09:00Z",
-      "sha256": "cdbf3f65737f468655751b9e11c6703ccbd1f287fc852cc3f047ee3cfa973785",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/49885/49885.AFXN01000001-AFXN01000022.nuc.fsa",
       "size": 1962062,
       "etag": "446b990d187586d481a666490f8ea890",
       "last_modified": "2013-08-15T04:09:17Z",
       "sha256": "3f157d9f0ca78845e480e3cd47313f00dcbeb8ba9838295e2fe533fc37f80ea5",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/49885/49885.JH376743-JH376753.nuc.fsa",
-      "size": 1967810,
-      "etag": "f6e17d48b2b7a84eb7f4ea71b8e4ee0a",
-      "last_modified": "2013-08-15T04:09:36Z",
-      "sha256": "846f35156ac75185cf32a0d59f91ba94592af3322da60ed9dce7001a0f722983",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -972,27 +588,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/50403/50403.JH378872-JH378893.nuc.fsa",
-      "size": 1883192,
-      "etag": "1c02f44060ac9d2699729ea8cb8fef6c",
-      "last_modified": "2013-08-15T04:14:18Z",
-      "sha256": "6893dc3517eff59e81c7bec82b6ba47699996ec0f3cad3944e79090213963be7",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/50513/50513.AEER01000001-AEER01000034.nuc.fsa",
       "size": 1710262,
       "etag": "51b718762d53ec1b2af5eadc59487778",
       "last_modified": "2013-08-15T04:15:39Z",
       "sha256": "49f48907b2c95c20dbae2fa1012d195cf5505c83ecf0b5bc496090681c12c79d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/50513/50513.GL405235-GL405245.nuc.fsa",
-      "size": 1734799,
-      "etag": "a534a38593d6aa4e8e9313facae42f17",
-      "last_modified": "2013-08-15T04:16:00Z",
-      "sha256": "d3b2a377d550ca6b690690342f019b6c61ab2e40da668796a4af1549dbbeaaf0",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1004,27 +604,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/50515/50515.GL397179-GL397186.nuc.fsa",
-      "size": 1948873,
-      "etag": "b8dd0ceaafd08fbb9fee0a75ade9907a",
-      "last_modified": "2013-08-15T04:16:41Z",
-      "sha256": "4bed16e1b84eafa6279319ea66215fc5d9205bc4131c4d101cd0ea501e673f72",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/50517/50517.AEEO01000001-AEEO01000090.nuc.fsa",
       "size": 1882079,
       "etag": "d78251c541a68942ceb2d447e2deb683",
       "last_modified": "2013-08-15T04:17:00Z",
       "sha256": "72b18eeedf773b9c3f969f6c650f07943177225cf0c23907df550796b84f634d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/50517/50517.GL397225-GL397253.nuc.fsa",
-      "size": 1953100,
-      "etag": "cb17990f4eb4714879123268c1028e12",
-      "last_modified": "2013-08-15T04:17:20Z",
-      "sha256": "291cbf914014bae9b73ba4ef831d7582220c5117955e530deadaba1edb5ca07b",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1036,14 +620,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/50519/50519.GL397128-GL397137.nuc.fsa",
-      "size": 2119157,
-      "etag": "d357fb07c89ac070014bac413fdc1f3f",
-      "last_modified": "2013-08-15T04:17:57Z",
-      "sha256": "94585d23d341a3499dd327e2f7f61a010e3afa3addb92f9b6346b5a66d06cdde",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/50521/50521.AEEP01000001-AEEP01000020.nuc.fsa",
       "size": 1996193,
       "etag": "39171ac5a84c600fae552c421c0f841b",
@@ -1052,27 +628,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/50521/50521.GL397254-GL397260.nuc.fsa",
-      "size": 2010609,
-      "etag": "2efb2d88554aa1d872c7fe847cca3848",
-      "last_modified": "2013-08-15T04:18:33Z",
-      "sha256": "8702390a67736126739ded79b392ad1a9fa787f878b404a173b7b1b5930faa7d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/50531/50531.AEEI01000001-AEEI01000079.nuc.fsa",
       "size": 2568326,
       "etag": "4a0de48045dc2d3063704a458f292a6b",
       "last_modified": "2013-08-15T04:21:26Z",
       "sha256": "cd09e672ae442f075d45765f6166a50ded88ebcaf83a79251c51550c1592126f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/50531/50531.GL397214-GL397224.nuc.fsa",
-      "size": 2603441,
-      "etag": "8e62e5e2463428e53b62474b594d6f6e",
-      "last_modified": "2013-08-15T04:21:46Z",
-      "sha256": "9a8b16157329fcc7f63db5e3f65e2342280f7b2232e4bb56b333798b17ec2d57",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1108,27 +668,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/51491/51491.GL586311-GL586331.nuc.fsa",
-      "size": 3341573,
-      "etag": "ae84e5356210810fa8c569acfc743743",
-      "last_modified": "2013-08-15T04:28:23Z",
-      "sha256": "3b0752c654c6c624001eb52d472a05ec554d4d754f8ab37ae8fa95f9b670744c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/51495/51495.AEPE02000001-AEPE02000006.nuc.fsa",
       "size": 2881758,
       "etag": "d6316474719249faf7da2e30e0b32cff",
       "last_modified": "2013-08-15T04:29:22Z",
       "sha256": "894c6eff05d68d1ab49ee34c7019a12edd26a487946054724d44e059ec96f75d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/51495/51495.GL833116-GL833119.nuc.fsa",
-      "size": 2887380,
-      "etag": "08ac1fae94c702b541287e14d8ff3a25",
-      "last_modified": "2013-08-15T04:29:45Z",
-      "sha256": "7b27f584a343da6a1bf6b1b80772214974341a8d8754bcdb907e216545c85803",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1148,27 +692,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/52087/52087.JH594521-JH594532.nuc.fsa",
-      "size": 2530888,
-      "etag": "b26a9d0a1a942936feb6a8fa52fb6e9d",
-      "last_modified": "2013-08-15T04:36:23Z",
-      "sha256": "fc21cd4a12f50a9e3034c3fd2b16132a417a37d8db4de274415aa3322bb09777",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/52089/52089.AFXO01000001-AFXO01000013.nuc.fsa",
       "size": 1954941,
       "etag": "7662c1013f889d825cfc6e940b1b5e1e",
       "last_modified": "2013-08-15T04:36:46Z",
       "sha256": "e7e1c43fd9e87c57c4d5c4ca1c7760b07bd4cdb477711a0db7472a6a8b63d278",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/52089/52089.JH376754-JH376761.nuc.fsa",
-      "size": 1955522,
-      "etag": "e8e6fc4678df543232f1076369587ed0",
-      "last_modified": "2013-08-15T04:37:06Z",
-      "sha256": "311a091b4edb8d706f72c17d0f4502f1da70f17a1819d3fb9cba98e4a135a5da",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1180,27 +708,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/52119/52119.JH992936-JH992939.nuc.fsa",
-      "size": 2363435,
-      "etag": "ca20a928bd27ab380686980713bc9af8",
-      "last_modified": "2013-08-15T04:41:17Z",
-      "sha256": "a9a34ca740e171fe928dae3d46de936a82346529a624c20b01b01aa096eb09a0",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/52133/52133.AHAA01000001-AHAA01000010.nuc.fsa",
       "size": 2164111,
       "etag": "22a05a4c961390cb52a6275c8d302041",
       "last_modified": "2013-08-15T04:43:52Z",
       "sha256": "00d243e434fdf885f3896cc634275f15d009b2aaf9c950f766391f7dba0144ae",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/52133/52133.KB373317-KB373320.nuc.fsa",
-      "size": 2176020,
-      "etag": "e74838ef22464aa25c042c397cf1f63f",
-      "last_modified": "2013-08-15T04:44:12Z",
-      "sha256": "65fb099844a037063f9ace23d2ac97dc67cec63c5e7fd71db945f81938611fb3",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1212,27 +724,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/52999/52999.GL698429-GL698448.nuc.fsa",
-      "size": 1773484,
-      "etag": "2c51b454b59a88e469f4f5bedd915fc4",
-      "last_modified": "2013-08-15T05:09:20Z",
-      "sha256": "d415e5c69fcb9045be3e4d39297c9f374de867f757a918550b094d0bf5bac829",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53003/53003.AEVE01000001-AEVE01000084.nuc.fsa",
       "size": 2162709,
       "etag": "6754af14a11bcc87943089e44fe809b6",
       "last_modified": "2013-08-15T05:10:19Z",
       "sha256": "be0f739cfbc6fb8c2f4063ba7b02f1d73e9a0db40e79c9a7304936d42ea0a534",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53003/53003.GL732449-GL732462.nuc.fsa",
-      "size": 2169097,
-      "etag": "df8cb3a653ab17926ef942181f79194e",
-      "last_modified": "2013-08-15T05:10:38Z",
-      "sha256": "56d25ce919ec492f16876d3ee1e2b5f772ebd171c77e53bcef154744118540af",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1244,27 +740,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53005/53005.GL622183-GL622187.nuc.fsa",
-      "size": 2103515,
-      "etag": "f90367a0c9fb7de4ad4832c4024c9391",
-      "last_modified": "2013-08-15T05:11:19Z",
-      "sha256": "4e0133fb696de263b2e4855ded6ad95d3eb411b93924bdfb8b8e093dbb4b01c2",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53055/53055.AEWX01000001-AEWX01000071.nuc.fsa",
       "size": 3093916,
       "etag": "ed1a8f0adad35e498b175d6034897e75",
       "last_modified": "2013-08-15T05:20:25Z",
       "sha256": "53edacdb0ef0425749b2678d2f1a0487c4ab414b9d6f9c69705d732dcee1d2b1",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53055/53055.GL872282-GL872306.nuc.fsa",
-      "size": 3111820,
-      "etag": "5fe1fd0b06154cb65013030127b11738",
-      "last_modified": "2013-08-15T05:20:45Z",
-      "sha256": "73fed8c26746995d78b9ba48d4edbbdb63390dccab0a823442ea5a8ba7c598fb",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1276,27 +756,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53057/53057.GL636070-GL636090.nuc.fsa",
-      "size": 2329046,
-      "etag": "9210b07c8c1f81a5a4c605ce8538db3b",
-      "last_modified": "2013-08-15T05:21:25Z",
-      "sha256": "076e49826f34b94e87e00e2d7887df7c9a69941447ec5a849f69417bd5ec422f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53059/53059.AEVF01000001-AEVF01000017.nuc.fsa",
       "size": 1662698,
       "etag": "db946ed4cf4df3af725474a32637e094",
       "last_modified": "2013-08-15T05:21:46Z",
       "sha256": "b757a9562989a339347711d80a20473dc354d27081a674dc4687180fa61bf3fe",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53059/53059.GL732463-GL732465.nuc.fsa",
-      "size": 1667670,
-      "etag": "47a9d1d87b13b39f7a285a5c12d52ade",
-      "last_modified": "2013-08-15T05:22:04Z",
-      "sha256": "bf22fd5e7f852917b011725f6a786cc3c8e5145fcdc0c972b88d1467ae74b568",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1308,27 +772,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53155/53155.GL878507-GL878513.nuc.fsa",
-      "size": 2319384,
-      "etag": "d830db5535038002c87ef759c5d485a7",
-      "last_modified": "2013-08-15T05:23:22Z",
-      "sha256": "0bab735d60db90386b216f687c168dcaf47c2257b10a0ca0acfacac644b4220f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53157/53157.AFFO01000001-AFFO01000021.nuc.fsa",
       "size": 2300240,
       "etag": "0fbd937c6377a79d2e05a254bc4db433",
       "last_modified": "2013-08-15T05:23:44Z",
       "sha256": "d4be2ffcab744650fa71d3669e7d6ce2015b9a7097f402b19c08d83b958b7934",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53157/53157.GL890985-GL890989.nuc.fsa",
-      "size": 2318041,
-      "etag": "5ae875bb0e26d6cba89f6be1846031e8",
-      "last_modified": "2013-08-15T05:24:05Z",
-      "sha256": "3bcab3d9c34f5f54b038503ad3212d32ca8224269b6ed55a102782a833131058",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1340,27 +788,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53159/53159.GL872376-GL872381.nuc.fsa",
-      "size": 2416388,
-      "etag": "db5b188c8e2dc8320aa64061f1eb42eb",
-      "last_modified": "2013-08-15T05:24:48Z",
-      "sha256": "1bc048b35fa5d3bcad503520c98cf64a30ce255471893459504210e1567f9596",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53161/53161.AEXW01000001-AEXW01000014.nuc.fsa",
       "size": 2375992,
       "etag": "2398571d78590c7d98da1799cb0cf2b6",
       "last_modified": "2013-08-15T05:25:09Z",
       "sha256": "cc5494e8837e41f2729f7da985eabfeb54fca24978ed7a3ab3017e9ffea079ec",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53161/53161.GL872408-GL872412.nuc.fsa",
-      "size": 2386504,
-      "etag": "be0af66f0b711b8a421edccb4c357b29",
-      "last_modified": "2013-08-15T05:25:29Z",
-      "sha256": "cd633a38e0703817c02137dd81e905e31aaf5ea138aa266ef4a49fd53c44eee4",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1372,27 +804,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53163/53163.GL872442-GL872446.nuc.fsa",
-      "size": 2363731,
-      "etag": "55aca2889b7b5c11e67bdaa1ed94efa0",
-      "last_modified": "2013-08-15T05:26:14Z",
-      "sha256": "4c1f6da816a02a44c373de88a8d3ae2249d45e16701ea295a69c4908f9d0c62f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53165/53165.AEXZ01000001-AEXZ01000015.nuc.fsa",
       "size": 2366920,
       "etag": "37313420e0c694db70c1dcaf5dc9fd3f",
       "last_modified": "2013-08-15T05:26:34Z",
       "sha256": "9bed8db660d26369db17afdc46e2bd5c302aaaa60b8c7efe5327ddb1caad9404",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53165/53165.GL872447-GL872451.nuc.fsa",
-      "size": 2373425,
-      "etag": "36ebd10e2c70d120aa18e15f3d4eacbb",
-      "last_modified": "2013-08-15T05:27:04Z",
-      "sha256": "090c714a92a55faa5d862b67169f23a1997dc7ad21ee49ebf3029aa402538227",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1404,27 +820,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53167/53167.GL878548-GL878558.nuc.fsa",
-      "size": 2457383,
-      "etag": "ad8a6bec634c04bf4068fab6dac8c07f",
-      "last_modified": "2013-08-15T05:27:44Z",
-      "sha256": "72fcad07352b32d71e36e3ab7b8f67d4d5b3b57a0e8a7c7b298f83723dc5242d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53169/53169.AFQB01000001-AFQB01000014.nuc.fsa",
       "size": 2438825,
       "etag": "2470bd5044dcbdbecd4a64cf5c02266b",
       "last_modified": "2013-08-15T05:28:04Z",
       "sha256": "573a8eaedaaa14a95eb82364b8599e516ca44fbb4e14da4f84e65a003f44cc61",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53169/53169.GL982563-GL982566.nuc.fsa",
-      "size": 2449400,
-      "etag": "245cd217b6a3987d9f73f0cd074e9fe3",
-      "last_modified": "2013-08-15T05:28:24Z",
-      "sha256": "649036be002177586294d0c5777addb66ac5daa3c75b1e6cd30a9377c7adbc15",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1436,27 +836,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53171/53171.GL872307-GL872309.nuc.fsa",
-      "size": 2339823,
-      "etag": "ec8debb640def59277c7ee2bdfe3c65e",
-      "last_modified": "2013-08-15T05:29:04Z",
-      "sha256": "2d2589efaf22ba0864770fb21f4e8d2138598130d3d91ea546b5a117e0ccb102",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53173/53173.AFFN01000001-AFFN01000037.nuc.fsa",
       "size": 2396908,
       "etag": "aed6919babba35d0e7bab5a1b0403fdb",
       "last_modified": "2013-08-15T05:29:25Z",
       "sha256": "fbea41c5b969fb42daea0f790ae0a2e17467e546d0b3faccf466d0f53b28daa8",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53173/53173.GL890993-GL890998.nuc.fsa",
-      "size": 2410728,
-      "etag": "53037f10eb015ae8f24382a4e683cb82",
-      "last_modified": "2013-08-15T05:29:43Z",
-      "sha256": "15aaf89a53b59efe7b20dca01711719f173570d3f4c7b7079b460e796b85b08c",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1468,27 +852,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53175/53175.GL872310-GL872318.nuc.fsa",
-      "size": 2337777,
-      "etag": "0de37173105b8a051d00c01f81ef63af",
-      "last_modified": "2013-08-15T05:30:24Z",
-      "sha256": "46c49625bea586e1e9ab305beee4119e3247f09fd4ed6041eeb09037726260e8",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53177/53177.AFBE01000001-AFBE01000017.nuc.fsa",
       "size": 2440924,
       "etag": "1dc5dd3280d965f7f4926b205ad75c85",
       "last_modified": "2013-08-15T05:30:47Z",
       "sha256": "a2f40a2cb4c4747458ee1f444a30b439a9ca50c9ffe234cc85b123b4b7242c7c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53177/53177.GL878559-GL878564.nuc.fsa",
-      "size": 2439335,
-      "etag": "fde6e71b32ef971e6a27c08df79f5fad",
-      "last_modified": "2013-08-15T05:31:07Z",
-      "sha256": "bba2e14d54597e878e9bc2de35eeb8a8a63f1d2eb6b418834f7db3c9d32486e1",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1500,27 +868,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53179/53179.GL872319-GL872322.nuc.fsa",
-      "size": 2337558,
-      "etag": "45399a31ce85f2b172567f09e25547e3",
-      "last_modified": "2013-08-15T05:31:47Z",
-      "sha256": "e34a13153eb0e61c2064b5f314c53604b336bb3111a4e1c101541ea2fb706099",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53181/53181.AFFL01000001-AFFL01000012.nuc.fsa",
       "size": 2405443,
       "etag": "b2f729b6cede6c0dcd49c240e99cca45",
       "last_modified": "2013-08-15T05:32:07Z",
       "sha256": "bafbf499c1780107de8986720ddc83431b8742dbaa1da7a76f3c23a855e6b060",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53181/53181.GL890990-GL890992.nuc.fsa",
-      "size": 2416700,
-      "etag": "295cd9ede39ffa3f5dfc29f3a4d7eb68",
-      "last_modified": "2013-08-15T05:32:26Z",
-      "sha256": "9aa5e66836a4605322e57f41d8a5217a23097e8ecaef07275e5237163945810d",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1532,27 +884,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53183/53183.GL878514-GL878518.nuc.fsa",
-      "size": 2388591,
-      "etag": "e5afe198d0e0165da630e999890a6876",
-      "last_modified": "2013-08-15T05:33:08Z",
-      "sha256": "21ce9029a165d0436a1e33322e66f62db1b7091f4b324d4880fe283a438b2498",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53185/53185.AFBF01000001-AFBF01000023.nuc.fsa",
       "size": 2385179,
       "etag": "f3a8ab86c14dbd5bb778e915b59384c1",
       "last_modified": "2013-08-15T05:33:28Z",
       "sha256": "a344cd9c395583d458b47cd82b05515a40c6bb0816333ebd6d79bfc42ecef36c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53185/53185.GL878565-GL878568.nuc.fsa",
-      "size": 2392577,
-      "etag": "3863ec2b05c59d39b25c823c3bd92dd2",
-      "last_modified": "2013-08-15T05:33:47Z",
-      "sha256": "85c0316b8e1ed89151fd4701091143c2ab6b34433f11710a83601946800b0f70",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1564,27 +900,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53187/53187.GL890976-GL890984.nuc.fsa",
-      "size": 2469947,
-      "etag": "fd7345d9be3eb4d4f03528c8080f98d6",
-      "last_modified": "2013-08-15T05:34:26Z",
-      "sha256": "396be31041e79f2df897aa0545ad43bb862e27ee92281066a91fda88f8906cfc",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53189/53189.AFDP01000001-AFDP01000031.nuc.fsa",
       "size": 2350667,
       "etag": "e06f94969e90cdf80cc517c4d96bc398",
       "last_modified": "2013-08-15T05:34:46Z",
       "sha256": "cc2c76575b98125e1e9eaf6219b90c338850c4bf67f63bb3223455d6c7b57142",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53189/53189.GL883609-GL883615.nuc.fsa",
-      "size": 2354538,
-      "etag": "4593fe1ba18e7c6710b80a08ad119fbb",
-      "last_modified": "2013-08-15T05:35:05Z",
-      "sha256": "16dfcd213327daa44c2edf803b511691a5f77debe8d0315e3d0b0c6208404e98",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1596,27 +916,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53191/53191.GL831107-GL831111.nuc.fsa",
-      "size": 2358766,
-      "etag": "507096d314a0fded8f32308e60c738c2",
-      "last_modified": "2013-08-15T05:35:43Z",
-      "sha256": "99e5fe604f71ec126909b4d8c269c61b48266f2e2e2b711bc0e234fd78e9a366",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53193/53193.AEPU01000001-AEPU01000049.nuc.fsa",
       "size": 1654719,
       "etag": "9315d85dca0152cf5d7753d67eb78d9b",
       "last_modified": "2013-08-15T05:36:04Z",
       "sha256": "9f313b765af5b352474e98db91db83f1a05281a6c8938c36374d754b231b4a32",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53193/53193.GL622227-GL622240.nuc.fsa",
-      "size": 1678512,
-      "etag": "2db54a5ebb28500dc685e1f97295c6a9",
-      "last_modified": "2013-08-15T05:36:24Z",
-      "sha256": "396f440ab79ef24e68974777c069a938ead1605bd6de32dcdce6873b77d6f090",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1628,27 +932,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53199/53199.GL629647-GL629686.nuc.fsa",
-      "size": 3334370,
-      "etag": "4af061ba6a5343fc43ec0193d477da6e",
-      "last_modified": "2013-08-15T05:38:33Z",
-      "sha256": "7681fdc4b0d2f6f8262e61e05b5d916d01c0a8b789a6e933e27c734b2ee98d4e",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53201/53201.AEQR01000001-AEQR01000027.nuc.fsa",
       "size": 2148966,
       "etag": "ca328d3f65588804fa7d232f8e91b2b0",
       "last_modified": "2013-08-15T05:38:53Z",
       "sha256": "005edf5d4560c19725361bd31e0b04bac19dda04517158376ab7c3d0a29577cb",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53201/53201.GL636091-GL636096.nuc.fsa",
-      "size": 2166313,
-      "etag": "23e814a15d4aebe2f93f88f045c80ed4",
-      "last_modified": "2013-08-15T05:39:12Z",
-      "sha256": "f9c068da5ec24f84534637d29bc8cc32d3f0f7d3307183c6faa8d7ba373b13dc",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1660,14 +948,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53203/53203.GL732518-GL732522.nuc.fsa",
-      "size": 2016238,
-      "etag": "09b438d9b87543271b658e8f3bf8e23d",
-      "last_modified": "2013-08-15T05:39:57Z",
-      "sha256": "257089c05e6a647605be90f8c93dfb79c00e7d60c92bd45791809d1426ebb4c8",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53205/53205.AEVD01000001-AEVD01000031.nuc.fsa",
       "size": 1919753,
       "etag": "6eb52cbb780c7c7b7ff0117daefd6285",
@@ -1676,27 +956,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/53205/53205.GL732439-GL732448.nuc.fsa",
-      "size": 1939167,
-      "etag": "65685acc4b40f0d9ef4cba3e2f28c4e1",
-      "last_modified": "2013-08-15T05:40:37Z",
-      "sha256": "97068b38609413ce071bd2933dd8869c294b5b20cddeaa6d576dab5fda2d85b7",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/53209/53209.AEVI01000001-AEVI01000102.nuc.fsa",
       "size": 1886263,
       "etag": "9a047177915b40a6191af5d8dccd8f1e",
       "last_modified": "2013-08-15T05:40:57Z",
       "sha256": "daca76fa24b14a6666b5f6125b81974948cde19e7ffb7b2c8159e67a32679694",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/53209/53209.GL831112-GL831132.nuc.fsa",
-      "size": 1907095,
-      "etag": "66997d8deb69c16e3e66fee86709805c",
-      "last_modified": "2013-08-15T05:41:17Z",
-      "sha256": "97d748f6070e9af959b44a1dafc4eb8eba3a5501b4de4e16e371d08f20594f33",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1804,27 +1068,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/64727/64727.GL985141-GL985605.nuc.fsa",
-      "size": 2599311,
-      "etag": "192afdb4ec80c06d533c788d0cb555bc",
-      "last_modified": "2013-08-15T06:03:13Z",
-      "sha256": "bcd5b06e63253900c91baecac5356078ed02ee55fbc9cf2dd23ee0bd00c6c680",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/64735/64735.AFPW01000001-AFPW01000073.nuc.fsa",
       "size": 3303008,
       "etag": "e090483025f835fd4da65e10cd2792a1",
       "last_modified": "2013-08-15T06:04:52Z",
       "sha256": "5e84ed3118eb86468ba7c5d09aa2096aa4ed7b61361b646858d2aa7c7b79c1ed",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/64735/64735.GL982488-GL982512.nuc.fsa",
-      "size": 3344497,
-      "etag": "1fb9fa84f3630978ab1e8619a2e993f7",
-      "last_modified": "2013-08-15T06:05:12Z",
-      "sha256": "270aff0d22cafa2190b6515f765c3369a3d65cd1825f3da44e7613ed27eb3c7f",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1844,27 +1092,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/64739/64739.GL982513-GL982552.nuc.fsa",
-      "size": 3185100,
-      "etag": "924f59a1abe17bc8191658421e20bdd8",
-      "last_modified": "2013-08-15T06:06:31Z",
-      "sha256": "1f709bfadb2ca00374bd1500b4083db557f494f85d036d4c83ae62e34ee9efa6",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/64743/64743.AFQA01000001-AFQA01000034.nuc.fsa",
       "size": 2472227,
       "etag": "d564d4d6f3d0b2f3d920d4f0c82c99e7",
       "last_modified": "2013-08-15T06:07:30Z",
       "sha256": "b26fadee23142e9bebc2d9cc987988b58305a4734f49160e1ec2d6a381b2dd4c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/64743/64743.GL982553-GL982562.nuc.fsa",
-      "size": 2471252,
-      "etag": "d86534831b41dbf44d647b181635c706",
-      "last_modified": "2013-08-15T06:07:51Z",
-      "sha256": "28c0aea91b3d194a6cd92b6df6e085b7ee26491c83941a5768e822ebfd2e8bd5",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1876,27 +1108,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/64879/64879.JH594451-JH594454.nuc.fsa",
-      "size": 2465778,
-      "etag": "357ce8121b0ca15d6e767dcc844f5a87",
-      "last_modified": "2013-08-15T06:25:32Z",
-      "sha256": "306faafdfa9edcdd7325677c1801583992d9075f36490f64191a5bbd4238c7b6",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/64895/64895.AGEK01000001-AGEK01000054.nuc.fsa",
       "size": 3192396,
       "etag": "d56c6fec37d47804a458c39e06434b78",
       "last_modified": "2013-08-15T06:30:44Z",
       "sha256": "d684ae39067c7666e9780033ecdb727534600d1ab05ab2b7c64de008af617fd7",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/64895/64895.JH594500-JH594520.nuc.fsa",
-      "size": 3206445,
-      "etag": "d7b36896e00820c7295a06df331ca368",
-      "last_modified": "2013-08-15T06:31:04Z",
-      "sha256": "20b59d8055bee1d3f5ab24ad9c78463540c7d15635804bd1356992a6bc41f3af",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -1908,14 +1124,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/64899/64899.KB373321.nuc.fsa",
-      "size": 2034117,
-      "etag": "569bb6516713e34c786bfb47f8ffe58a",
-      "last_modified": "2013-08-15T06:32:19Z",
-      "sha256": "bfe0867c32911c9e1b8ce6323f5820f0af22b2b6e4498417a974f46c0d273fa7",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/64901/64901.AGZZ01000001-AGZZ01000013.nuc.fsa",
       "size": 2262430,
       "etag": "e5d8a870f8cf32a5ba18600e25b8076a",
@@ -1924,27 +1132,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/64901/64901.KB373314-KB373316.nuc.fsa",
-      "size": 2268803,
-      "etag": "f1ca1e54da3763d83a5c4ffcb24d9522",
-      "last_modified": "2013-08-15T06:32:58Z",
-      "sha256": "de8fbd1b98f07a0cfa84477c34fe46cc765cd1e41ae18188d9a35368f44a8f5f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/65131/65131.AFZZ01000001-AFZZ01000263.nuc.fsa",
       "size": 3182242,
       "etag": "f22111f3865a8a93536248a0d26476c2",
       "last_modified": "2013-08-15T06:36:05Z",
       "sha256": "7801c78b3e170519880292271911b161f2a39596c0d43943177f310ba1463614",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/65131/65131.JH379330-JH379477.nuc.fsa",
-      "size": 3168531,
-      "etag": "632d12f62ce9925df5b4cd6ed15d79d9",
-      "last_modified": "2013-08-15T06:36:26Z",
-      "sha256": "63e60115c96c55e573bdee0c8f908b48150b181fd6dd046ea309ef008b4e5eb9",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2244,27 +1436,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89165/89165.KB371124-KB371168.nuc.fsa",
-      "size": 2177990,
-      "etag": "f94fdd9d458b753ba239cf4bb36319e2",
-      "last_modified": "2013-08-15T07:52:10Z",
-      "sha256": "b1658cf83e73ba692b547338cdf942a3500250130298d5b96465a5c0e1679a06",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89167/89167.AKQW01000001-AKQW01000038.nuc.fsa",
       "size": 2182710,
       "etag": "a5efcb2055876a4de96cfc03ea511cc9",
       "last_modified": "2013-08-15T07:52:28Z",
       "sha256": "8079477bfabdb721913da4110e62e1ab000d8054afdd718f76e1898a599b21f7",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89167/89167.KB371169-KB371206.nuc.fsa",
-      "size": 2182292,
-      "etag": "774b9d8af64e9d5fc1d57272ac410545",
-      "last_modified": "2013-08-15T07:52:47Z",
-      "sha256": "ec46f64343a144ae6fdb0449a70970e4a4a66d842ce437d97b892c15a57afbc2",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2276,27 +1452,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89171/89171.KB371207-KB371257.nuc.fsa",
-      "size": 2095784,
-      "etag": "b5fca6dbe161e770b522edea0b6b4a4d",
-      "last_modified": "2013-08-15T07:53:26Z",
-      "sha256": "0fc6aa954bda480f809c3f93b01af1d5debad8cd28ff95823dae341c08c4c920",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89173/89173.AKQY01000001-AKQY01000048.nuc.fsa",
       "size": 2130552,
       "etag": "3fd7b5b386b24e828fc535c4a6f30b19",
       "last_modified": "2013-08-15T07:53:43Z",
       "sha256": "da94d005ba4dcbc785c3545daaf7abc974ef9a32500cfe25bfe0abce9b8f444c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89173/89173.KB371258-KB371304.nuc.fsa",
-      "size": 2130854,
-      "etag": "aa8a0062a824462dacea4c5bbe08509e",
-      "last_modified": "2013-08-15T07:54:02Z",
-      "sha256": "aa794d104371b67a737b4827285d69501a3319fa23dde7864ade6458d9172c2c",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2308,27 +1468,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89175/89175.KB371305-KB371475.nuc.fsa",
-      "size": 2102531,
-      "etag": "5571b7e4428729be69e707e21fc9b3d0",
-      "last_modified": "2013-08-15T07:54:40Z",
-      "sha256": "69a4ce28bba49488b1bdc507ce949ad6e1dcdc71d6f486829cba7b9241152af9",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89177/89177.AKRA01000001-AKRA01000032.nuc.fsa",
       "size": 2142062,
       "etag": "e32bd6abf5240ec5cca71df098e2500a",
       "last_modified": "2013-08-15T07:54:59Z",
       "sha256": "64fbeb9026cc905f9dc98ff362ea49ab89e31d890b6e8cdc1d3e75d50161c36c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89177/89177.KB371476-KB371507.nuc.fsa",
-      "size": 2141710,
-      "etag": "2c7fb43b68c91224ecd986ae45107707",
-      "last_modified": "2013-08-15T07:55:17Z",
-      "sha256": "efb9f3382e9962e08293459dcd8a8f4da0d3c93f9220e30bd1e54c5d8f1ff619",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2340,27 +1484,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89179/89179.KB371508-KB371510.nuc.fsa",
-      "size": 2087001,
-      "etag": "a11e3ed5558b24ad11e49970331e8f54",
-      "last_modified": "2013-08-15T07:55:53Z",
-      "sha256": "c2663734a923abd34d2952a7096aa28e4d948f6785dd68f62e55b6cb8556e70a",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89181/89181.AKRC01000001-AKRC01000162.nuc.fsa",
       "size": 2129973,
       "etag": "b71290889088fec4b5ab88f22fb3da91",
       "last_modified": "2013-08-15T07:56:11Z",
       "sha256": "2fdbaefc17c8e97ce8c355c34da29a9ebccd4c2007516f5a5d5b075978db95f3",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89181/89181.KB371511-KB371672.nuc.fsa",
-      "size": 2128191,
-      "etag": "3499f24ac0c570715cd9cf499f75ea0a",
-      "last_modified": "2013-08-15T07:56:29Z",
-      "sha256": "47eb7abbe0a10a18dd8adf5604f596bc188af583d20e35fcf9d70aff69f3e9bb",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2372,27 +1500,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89183/89183.KB372034-KB372158.nuc.fsa",
-      "size": 2093707,
-      "etag": "f548374b311078c788be01fb2feefec6",
-      "last_modified": "2013-08-15T07:57:05Z",
-      "sha256": "d91177a49420c1edaa8132ecd569a6ad989221071fa4e5bf4abe34e1a31a0b8c",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89185/89185.AKRE01000001-AKRE01000181.nuc.fsa",
       "size": 2104521,
       "etag": "2c696b6961e40ea6274e926e76d5e679",
       "last_modified": "2013-08-15T07:57:24Z",
       "sha256": "b5617793c1df40de2ce7ac6e4856a68a214fd1f7533cc7bb3419027f26ae196f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89185/89185.KB371673-KB371853.nuc.fsa",
-      "size": 2102530,
-      "etag": "aeeb1968283d439832691fa468d6e824",
-      "last_modified": "2013-08-15T07:57:41Z",
-      "sha256": "b6db18ef6bdb60b4bc17798815c6e730c54be203b4b9ece41c68d3bf212b9fe4",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2404,27 +1516,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89187/89187.KB371854-KB371874.nuc.fsa",
-      "size": 2114316,
-      "etag": "3d5c9cf5373653763c518874f355ef62",
-      "last_modified": "2013-08-15T07:58:18Z",
-      "sha256": "337628fe8d253eb5f35b98b12c7d2214347ed61ef2c47af56ee78faabdc8b51f",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89189/89189.AKRG01000001-AKRG01000154.nuc.fsa",
       "size": 2137617,
       "etag": "4b0d65886b9ebd731a21e889540215e7",
       "last_modified": "2013-08-15T07:58:37Z",
       "sha256": "e5458e56f88eb5f3476392026e914ee67286bc10e2c7812b76e053791a456c0d",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89189/89189.KB371875-KB372028.nuc.fsa",
-      "size": 2135923,
-      "etag": "2518df542a109c8962ddc042d86220fd",
-      "last_modified": "2013-08-15T07:58:56Z",
-      "sha256": "6cb15902c9552692f8690ee4448e3db2e2cea870f32a5ae15fe140bdfb51ff55",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2436,27 +1532,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89191/89191.KB372029-KB372033.nuc.fsa",
-      "size": 2134471,
-      "etag": "ab8fce9f527bf7a43390aa2ddf1d0338",
-      "last_modified": "2013-08-15T07:59:32Z",
-      "sha256": "747ad1e1a149573a0b4b39b9494d0b87373c28e2ea4d783394025cd59fa13c04",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89199/89199.AKRI01000001-AKRI01000143.nuc.fsa",
       "size": 2105577,
       "etag": "05452fa16a516aa8b709c4e602427718",
       "last_modified": "2013-08-15T07:59:52Z",
       "sha256": "29a01f08fd68165ce13c069a2be67fe8be4ee265863ada5dc33af852c2959260",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89199/89199.KB372159-KB372301.nuc.fsa",
-      "size": 2104004,
-      "etag": "ffd112837fa7130c2c49d1c07887ce6e",
-      "last_modified": "2013-08-15T08:00:10Z",
-      "sha256": "3a16dc4e9d53d86bc52d3671db9db417203ca5773eb4b5c2ac951fb37fecfebe",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2468,14 +1548,6 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89203/89203.KB372302-KB372458.nuc.fsa",
-      "size": 2102991,
-      "etag": "bd0d904139e5c6530308077bb0d2b043",
-      "last_modified": "2013-08-15T08:00:48Z",
-      "sha256": "31b87a52b85039ad641a02a0cfdcb6ad0154eaea96ea51fcb138da7731edfb6e",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89205/89205.AKRK01000001-AKRK01000160.nuc.fsa",
       "size": 2096651,
       "etag": "90008756ec66ef8f15220064b1a04f91",
@@ -2484,27 +1556,11 @@
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
-      "key": "reference_genomes/89205/89205.KB372459-KB372618.nuc.fsa",
-      "size": 2094891,
-      "etag": "9cbaadfa9ee5e9969c3144a000d3d47c",
-      "last_modified": "2013-08-15T08:01:25Z",
-      "sha256": "867280246e1c1b56d90cbf13010b9c6d0bc2a55e004c69d664af9f4303e206db",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
       "key": "reference_genomes/89207/89207.AKRL01000001-AKRL01000159.nuc.fsa",
       "size": 2155759,
       "etag": "f7c92a345a2179c26c0701e773d0194e",
       "last_modified": "2013-08-15T08:01:44Z",
       "sha256": "50a7c393d9121ed52786144647615aa7969809819a76496eff0163102ac93c17",
-      "downloaded_at": "2026-09-17T16:07:22.658272Z"
-    },
-    {
-      "key": "reference_genomes/89207/89207.KB372619-KB372777.nuc.fsa",
-      "size": 2154010,
-      "etag": "08ce378c516eed36363ed6f8702e3f84",
-      "last_modified": "2013-08-15T08:02:03Z",
-      "sha256": "645dca1e2c8c4e57ee7dcca3ef8a740d717621eb5417ff43d13f5932b6bd66c4",
       "downloaded_at": "2026-09-17T16:07:22.658272Z"
     },
     {
@@ -2872,6 +1928,146 @@
       "downloaded": [
         "reference_genomes/50399/50399.JH378894-JH379026.nuc.gbk"
       ]
+    },
+    {
+      "synced_at": "2026-11-10T15:40:37.578246Z",
+      "spec_sha256": "6959fc46f281f51aaace7829c674128fbc341f99d74b05aabc9f7b31f39b46a6",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "human-microbiome-project",
+          "region": "us-west-2",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 198,
+      "bytes": 470468325,
+      "added": [],
+      "changed": [],
+      "removed": [
+        "reference_genomes/20527/20527.DS572674-DS572694.nuc.fsa",
+        "reference_genomes/30025/30025.GG703852-GG703878.nuc.fsa",
+        "reference_genomes/30495/30495.GG665876-GG665928.nuc.fsa",
+        "reference_genomes/30645/30645.GL397173-GL397178.nuc.fsa",
+        "reference_genomes/32419/32419.GG658179-GG658198.nuc.fsa",
+        "reference_genomes/32421/32421.GL987987-GL987994.nuc.fsa",
+        "reference_genomes/32423/32423.GL987995-GL988005.nuc.fsa",
+        "reference_genomes/32469/32469.GG770374-GG770404.nuc.fsa",
+        "reference_genomes/32471/32471.JH594455-JH594499.nuc.fsa",
+        "reference_genomes/32473/32473.GL988006-GL988011.nuc.fsa",
+        "reference_genomes/32475/32475.GL945387-GL945390.nuc.fsa",
+        "reference_genomes/32477/32477.GG657971-GG657998.nuc.fsa",
+        "reference_genomes/32479/32479.GG657999-GG658010.nuc.fsa",
+        "reference_genomes/32483/32483.GG658011-GG658028.nuc.fsa",
+        "reference_genomes/32485/32485.GL988012-GL988028.nuc.fsa",
+        "reference_genomes/32487/32487.JH815228-JH815235.nuc.fsa",
+        "reference_genomes/32501/32501.EQ999802-EQ999877.nuc.fsa",
+        "reference_genomes/33153/33153.GG700642-GG700647.nuc.fsa",
+        "reference_genomes/34637/34637.GG704780-GG704809.nuc.fsa",
+        "reference_genomes/34699/34699.JH815332-JH815481.nuc.fsa",
+        "reference_genomes/37947/37947.GG704939-GG704948.nuc.fsa",
+        "reference_genomes/38329/38329.GG703883-GG703900.nuc.fsa",
+        "reference_genomes/38331/38331.GG698712-GG698737.nuc.fsa",
+        "reference_genomes/38357/38357.GG698790-GG698801.nuc.fsa",
+        "reference_genomes/38519/38519.GG704455-GG704494.nuc.fsa",
+        "reference_genomes/38521/38521.GG740072-GG740132.nuc.fsa",
+        "reference_genomes/38731/38731.GG704824-GG704862.nuc.fsa",
+        "reference_genomes/38733/38733.GG749268-GG749277.nuc.fsa",
+        "reference_genomes/38737/38737.GG739926-GG740009.nuc.fsa",
+        "reference_genomes/38751/38751.GL698449-GL698469.nuc.fsa",
+        "reference_genomes/38753/38753.GL732466-GL732485.nuc.fsa",
+        "reference_genomes/38755/38755.GG730092-GG730104.nuc.fsa",
+        "reference_genomes/38757/38757.GL732486-GL732517.nuc.fsa",
+        "reference_genomes/39559/39559.GL945391-GL945427.nuc.fsa",
+        "reference_genomes/40015/40015.JH414887-JH414899.nuc.fsa",
+        "reference_genomes/40045/40045.GG740010-GG740055.nuc.fsa",
+        "reference_genomes/40047/40047.GG740056-GG740071.nuc.fsa",
+        "reference_genomes/41563/41563.GG770328-GG770373.nuc.fsa",
+        "reference_genomes/41971/41971.JH114139-JH114214.nuc.fsa",
+        "reference_genomes/41975/41975.GG770199-GG770214.nuc.fsa",
+        "reference_genomes/41977/41977.GG770215-GG770224.nuc.fsa",
+        "reference_genomes/41987/41987.JH376779-JH376796.nuc.fsa",
+        "reference_genomes/42537/42537.GL349564-GL349620.nuc.fsa",
+        "reference_genomes/43117/43117.JH114215-JH114230.nuc.fsa",
+        "reference_genomes/46417/46417.JH590846-JH590860.nuc.fsa",
+        "reference_genomes/46427/46427.GL636615-GL636621.nuc.fsa",
+        "reference_genomes/49883/49883.JH376762-JH376778.nuc.fsa",
+        "reference_genomes/49885/49885.JH376743-JH376753.nuc.fsa",
+        "reference_genomes/50403/50403.JH378872-JH378893.nuc.fsa",
+        "reference_genomes/50513/50513.GL405235-GL405245.nuc.fsa",
+        "reference_genomes/50515/50515.GL397179-GL397186.nuc.fsa",
+        "reference_genomes/50517/50517.GL397225-GL397253.nuc.fsa",
+        "reference_genomes/50519/50519.GL397128-GL397137.nuc.fsa",
+        "reference_genomes/50521/50521.GL397254-GL397260.nuc.fsa",
+        "reference_genomes/50531/50531.GL397214-GL397224.nuc.fsa",
+        "reference_genomes/51491/51491.GL586311-GL586331.nuc.fsa",
+        "reference_genomes/51495/51495.GL833116-GL833119.nuc.fsa",
+        "reference_genomes/52087/52087.JH594521-JH594532.nuc.fsa",
+        "reference_genomes/52089/52089.JH376754-JH376761.nuc.fsa",
+        "reference_genomes/52119/52119.JH992936-JH992939.nuc.fsa",
+        "reference_genomes/52133/52133.KB373317-KB373320.nuc.fsa",
+        "reference_genomes/52999/52999.GL698429-GL698448.nuc.fsa",
+        "reference_genomes/53003/53003.GL732449-GL732462.nuc.fsa",
+        "reference_genomes/53005/53005.GL622183-GL622187.nuc.fsa",
+        "reference_genomes/53055/53055.GL872282-GL872306.nuc.fsa",
+        "reference_genomes/53057/53057.GL636070-GL636090.nuc.fsa",
+        "reference_genomes/53059/53059.GL732463-GL732465.nuc.fsa",
+        "reference_genomes/53155/53155.GL878507-GL878513.nuc.fsa",
+        "reference_genomes/53157/53157.GL890985-GL890989.nuc.fsa",
+        "reference_genomes/53159/53159.GL872376-GL872381.nuc.fsa",
+        "reference_genomes/53161/53161.GL872408-GL872412.nuc.fsa",
+        "reference_genomes/53163/53163.GL872442-GL872446.nuc.fsa",
+        "reference_genomes/53165/53165.GL872447-GL872451.nuc.fsa",
+        "reference_genomes/53167/53167.GL878548-GL878558.nuc.fsa",
+        "reference_genomes/53169/53169.GL982563-GL982566.nuc.fsa",
+        "reference_genomes/53171/53171.GL872307-GL872309.nuc.fsa",
+        "reference_genomes/53173/53173.GL890993-GL890998.nuc.fsa",
+        "reference_genomes/53175/53175.GL872310-GL872318.nuc.fsa",
+        "reference_genomes/53177/53177.GL878559-GL878564.nuc.fsa",
+        "reference_genomes/53179/53179.GL872319-GL872322.nuc.fsa",
+        "reference_genomes/53181/53181.GL890990-GL890992.nuc.fsa",
+        "reference_genomes/53183/53183.GL878514-GL878518.nuc.fsa",
+        "reference_genomes/53185/53185.GL878565-GL878568.nuc.fsa",
+        "reference_genomes/53187/53187.GL890976-GL890984.nuc.fsa",
+        "reference_genomes/53189/53189.GL883609-GL883615.nuc.fsa",
+        "reference_genomes/53191/53191.GL831107-GL831111.nuc.fsa",
+        "reference_genomes/53193/53193.GL622227-GL622240.nuc.fsa",
+        "reference_genomes/53199/53199.GL629647-GL629686.nuc.fsa",
+        "reference_genomes/53201/53201.GL636091-GL636096.nuc.fsa",
+        "reference_genomes/53203/53203.GL732518-GL732522.nuc.fsa",
+        "reference_genomes/53205/53205.GL732439-GL732448.nuc.fsa",
+        "reference_genomes/53209/53209.GL831112-GL831132.nuc.fsa",
+        "reference_genomes/64727/64727.GL985141-GL985605.nuc.fsa",
+        "reference_genomes/64735/64735.GL982488-GL982512.nuc.fsa",
+        "reference_genomes/64739/64739.GL982513-GL982552.nuc.fsa",
+        "reference_genomes/64743/64743.GL982553-GL982562.nuc.fsa",
+        "reference_genomes/64879/64879.JH594451-JH594454.nuc.fsa",
+        "reference_genomes/64895/64895.JH594500-JH594520.nuc.fsa",
+        "reference_genomes/64899/64899.KB373321.nuc.fsa",
+        "reference_genomes/64901/64901.KB373314-KB373316.nuc.fsa",
+        "reference_genomes/65131/65131.JH379330-JH379477.nuc.fsa",
+        "reference_genomes/89165/89165.KB371124-KB371168.nuc.fsa",
+        "reference_genomes/89167/89167.KB371169-KB371206.nuc.fsa",
+        "reference_genomes/89171/89171.KB371207-KB371257.nuc.fsa",
+        "reference_genomes/89173/89173.KB371258-KB371304.nuc.fsa",
+        "reference_genomes/89175/89175.KB371305-KB371475.nuc.fsa",
+        "reference_genomes/89177/89177.KB371476-KB371507.nuc.fsa",
+        "reference_genomes/89179/89179.KB371508-KB371510.nuc.fsa",
+        "reference_genomes/89181/89181.KB371511-KB371672.nuc.fsa",
+        "reference_genomes/89183/89183.KB372034-KB372158.nuc.fsa",
+        "reference_genomes/89185/89185.KB371673-KB371853.nuc.fsa",
+        "reference_genomes/89187/89187.KB371854-KB371874.nuc.fsa",
+        "reference_genomes/89189/89189.KB371875-KB372028.nuc.fsa",
+        "reference_genomes/89191/89191.KB372029-KB372033.nuc.fsa",
+        "reference_genomes/89199/89199.KB372159-KB372301.nuc.fsa",
+        "reference_genomes/89203/89203.KB372302-KB372458.nuc.fsa",
+        "reference_genomes/89205/89205.KB372459-KB372618.nuc.fsa",
+        "reference_genomes/89207/89207.KB372619-KB372777.nuc.fsa"
+      ],
+      "downloaded": []
     }
   ]
 }
