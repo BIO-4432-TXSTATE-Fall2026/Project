@@ -187,3 +187,40 @@ def test_filter_gives_up_on_a_stream_that_stops_moving(tmp_path, monkeypatch):
     # The first connection, then three resumes from where it stopped, then no more.
     assert starts == [0, 100, 100, 100]
     assert not out.exists()
+
+
+def test_write_records_rejects_a_stray_line_where_it_breaks_the_framing():
+    good = b"@r1/1\nACGT\n+\nIIII\n"
+    stray = b"WARNING: something\n"
+    sink = io.BytesIO()
+    with pytest.raises(RuntimeError, match=r"not FASTQ at record 2.*WARNING"):
+        filter_cli._write_records(io.BytesIO(good + stray + good), sink, None)
+
+
+def test_write_records_reports_the_line_left_over_at_the_end():
+    good = b"@r1/1\nACGT\n+\nIIII\n"
+    with pytest.raises(RuntimeError, match=r"mid-record after 1 reads.*stray"):
+        filter_cli._write_records(io.BytesIO(good + b"stray\n"), io.BytesIO(), None)
+
+
+def test_filter_reports_a_gate_that_emits_garbage_instead_of_hanging(tmp_path):
+    # More output than a pipe holds, so a writer that stopped reading would block the gate.
+    gate = ["sh", "-c", "cat >/dev/null; yes garbage | head -n 300000"]
+    with pytest.raises(RuntimeError, match="not FASTQ at record 1"):
+        filter_cli.filter_sample(
+            lambda start: io.BytesIO(tarball(ODD_ORDER)[start:]),
+            tmp_path / "out.fastq.gz",
+            gate=gate,
+            decompressor=["bzip2", "-dc"],
+        )
+
+
+def test_filter_keeps_the_jvm_off_the_gate_stdout(tmp_path):
+    gate = ["sh", "-c", 'cat; case "$JAVA_TOOL_OPTIONS" in *-UsePerfData*) ;; *) exit 3;; esac']
+    result = filter_cli.filter_sample(
+        lambda start: io.BytesIO(tarball(ODD_ORDER)[start:]),
+        tmp_path / "out.fastq.gz",
+        gate=gate,
+        decompressor=["bzip2", "-dc"],
+    )
+    assert result.passed == 13

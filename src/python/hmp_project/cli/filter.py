@@ -22,6 +22,7 @@ import argparse
 import contextlib
 import csv
 import gzip
+import os
 import re
 import subprocess
 import sys
@@ -42,6 +43,12 @@ CHUNK = 1 << 20
 #: Consecutive failed reads from the remote before a sample gives up. Reset whenever
 #: bytes arrive, so a long stream may drop many times as long as it keeps moving.
 RESUMES = 6
+
+#: The JVM logs its warnings to stdout, which is the gate's read stream. Its per-process
+#: perf file in the shared ``/tmp`` is the one that collides: containers each number their
+#: processes from 1, so concurrent tasks on a node share ``hsperfdata/<pid>`` and the
+#: warning lands in the reads. No perf file, and whatever else it warns about on stderr.
+JAVA_OPTIONS = "-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr"
 
 #: ``SRS011140.1.fastq``, ``SRS011140.singleton.fastq``, possibly under a directory.
 MEMBER = re.compile(r"\.(1|2|singleton)\.f(?:ast)?q$")
@@ -215,7 +222,12 @@ def filter_sample(
     errors: list[str] = []
 
     unpack = subprocess.Popen(decompressor, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    screen = subprocess.Popen(gate, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    screen = subprocess.Popen(
+        gate,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        env={**os.environ, "JAVA_TOOL_OPTIONS": JAVA_OPTIONS},
+    )
 
     def feed() -> None:
         try:
@@ -236,6 +248,10 @@ def filter_sample(
                 result.passed, result.written = _write_records(screen.stdout, writer, max_reads)
         except BaseException as error:
             errors.append(f"writing {out.name}: {error!r}")
+            # Keep reading so the gate and everything behind it runs to the end instead of
+            # blocking on a full pipe, and the failure is reported rather than a hang.
+            while screen.stdout.read(CHUNK):
+                pass
 
     feeder = threading.Thread(target=feed, daemon=True)
     drainer = threading.Thread(target=drain, daemon=True)
@@ -337,6 +353,10 @@ def _write_records(stream: IO[bytes], writer: IO[bytes], max_reads: int | None) 
     """Copy the four-line records on ``stream`` to ``writer``, up to ``max_reads`` of them,
     and return how many arrived and how many were written. Reading continues past the cap
     so the gate is never blocked and the count stays true.
+
+    Every record is checked for FASTQ framing, because one stray line from the gate
+    shifts every record after it and still groups into fours: the error names the first
+    record that does not parse and the line that broke it.
     """
     passed = written = 0
     record: list[bytes] = []
@@ -344,13 +364,22 @@ def _write_records(stream: IO[bytes], writer: IO[bytes], max_reads: int | None) 
         record.append(line)
         if len(record) < 4:
             continue
+        name, bases, plus, quals = record
+        if not name.startswith(b"@") or not plus.startswith(b"+") or len(bases) != len(quals):
+            raise RuntimeError(
+                f"gate output is not FASTQ at record {passed + 1}: "
+                + " | ".join(repr(part[:80]) for part in record)
+            )
         passed += 1
         if max_reads is None or written < max_reads:
             writer.write(b"".join(record))
             written += 1
         record.clear()
     if record:
-        raise RuntimeError(f"gate output ended mid-record ({len(record)} lines)")
+        raise RuntimeError(
+            f"gate output ended mid-record after {passed} reads: "
+            + " | ".join(repr(part[:80]) for part in record)
+        )
     return passed, written
 
 
