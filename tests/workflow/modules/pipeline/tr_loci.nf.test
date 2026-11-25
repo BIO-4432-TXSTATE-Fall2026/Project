@@ -14,8 +14,8 @@ nextflow_process {
             process {
                 """
                 input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv")
-                input[1] = file("${projectDir}/manifests/hmp/mock-community.json")
-                input[2] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[1] = file("${projectDir}/manifests/reference/hmp-mock.json")
+                input[2] = file("${projectDir}/manifests/reference/hmp-mock.lock.json")
                 input[3] = 'dir'
                 input[4] = 50
                 input[5] = 'tr-loci.fa'

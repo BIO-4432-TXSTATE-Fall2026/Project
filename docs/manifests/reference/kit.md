@@ -1,16 +1,16 @@
-# `contaminants/kit`
+# `reference/kit`
 
 Genomes for the five kit-contaminant genera the spike-in benchmark uses: the contaminant
 half of the TR locus catalog, and the source of the clonal reads laid onto HMP samples.
 Which genera, and why those five, is the rest of this page.
 
 ```sh
-pixi run new contaminants/kit --dataset=slacken \
+pixi run new reference/kit --dataset=slacken \
   --accession=GCF_000284275.1 ...  # one --accession per genome, 30 in all
   --description="Kit-contaminant genomes for the spike-in benchmark: complete RefSeq \
 genomes for Bradyrhizobium, Burkholderia, Methylobacterium, Sphingomonas and \
 Flavobacterium, six species each (Salter et al. 2014 Table 1)"
-pixi run sync manifests/contaminants/kit.json
+pixi run sync manifests/reference/kit.json
 ```
 
 30 genomes, about 192 MB. Every one is a complete RefSeq assembly, one per species, cut
@@ -36,12 +36,12 @@ below. Six species per genus means a synthetic batch can use a strain no other b
 ## Why these five
 
 1. **In Salter et al. Table 1**, which lists genera found in sequenced blank extractions
-   over four years at three labs ([`salter-article.md`](salter-article.md)). Genera with
+   over four years at three labs ([`salter-article.md`](../contaminants/salter-article.md)). Genera with
    a superscript there were reported as contaminants by at least one other study; every
    choice has one.
 2. **No HMP reference genome.** A genus HMP isolated from people could be genuinely
    present in HMP samples, and then a spike-in no longer has a known label. Checked
-   against `list.json` from [`hmp/reference-genomes-list`](../hmp/reference-genomes-list.md):
+   against `list.json` from [`reference/hmp-list`](hmp-list.md):
    24 of the 92 named Table 1 genera have an HMP genome, and none of these five does.
 3. **GC must not give the answer away.** The four Proteobacteria sit at 62–71% GC; every
    HMP target genus (*Streptococcus*, *Prevotella*, *Fusobacterium*, *Veillonella*,

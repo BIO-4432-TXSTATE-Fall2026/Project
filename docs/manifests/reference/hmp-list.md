@@ -1,14 +1,14 @@
-# `hmp/reference-genomes-list`
+# `reference/hmp-list`
 
 The bucket's own index of `reference_genomes/`: `list.json`, mapping each numeric genome
 directory to its organism, body site, and file paths. It is how the directories in
-[`reference-genomes-target.md`](reference-genomes-target.md) were chosen.
+[`hmp-target.md`](hmp-target.md) were chosen.
 
 ```sh
-pixi run new hmp/reference-genomes-list --dataset=hmp --prefix=reference_genomes \
+pixi run new reference/hmp-list --dataset=hmp --prefix=reference_genomes \
   --include=list.json \
   --description="HMP reference genome ID to organism and body site listing (list.json)"
-pixi run sync manifests/hmp/reference-genomes-list.json
+pixi run sync manifests/reference/hmp-list.json
 ```
 
 1 file, 1.8 MB. Last modified 2013-08-15; synced 2026-09-17.

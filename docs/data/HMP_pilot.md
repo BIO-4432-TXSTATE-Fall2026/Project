@@ -61,10 +61,10 @@ body site. 690 of 752 sequenced samples passed HMP QC and are included.
 - Only `*.nuc.fsa` or `*.gbk` files are needed. Most of the 129 GB is BLAST index
   files (`.nin`, `.nhr`, `.nsq`, …).
 - Directories are numeric IDs, mapped to organisms by the bucket's `list.json`
-  (`docs/manifests/hmp/reference-genomes-list.md`). The six genera above are synced in
-  `hmp/reference-genomes-target` (198 genomes, 470 MB); which files, and the ones that
+  (`docs/manifests/reference/hmp-list.md`). The six genera above are synced in
+  `reference/hmp-target` (198 genomes, 470 MB); which files, and the ones that
   needed working around, are on its page
-  (`docs/manifests/hmp/reference-genomes-target.md`).
+  (`docs/manifests/reference/hmp-target.md`).
 
 ### 3. `HHS/HMMC/`: mock community genomes
 
@@ -72,9 +72,9 @@ Reference genomes (0.2 GB) for the HMP mock community strains, including three
 Streptococcus species. Useful as known-identity strains for checking allele calls.
 Only genomes are present; no mock community reads were found in the bucket.
 
-- Synced in `hmp/mock-community`: 22 strain genomes and the strain sheet, 27 MB. Of the
+- Synced in `reference/hmp-mock`: 22 strain genomes and the strain sheet, 27 MB. Of the
   target genera only *Streptococcus* is present. Contents and a misnamed file are on its
-  page (`docs/manifests/hmp/mock-community.md`).
+  page (`docs/manifests/reference/hmp-mock.md`).
 
 ## Maybe
 

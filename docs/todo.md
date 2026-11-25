@@ -158,11 +158,11 @@ Every dataset the project uses, where it comes from, and what it is for. "Tool" 
 ### HMP reference and mock community genomes
 
 - [x] Map `reference_genomes/` directory IDs to organisms
-      (`manifests/hmp/reference-genomes-list.json`)
+      (`manifests/reference/hmp-list.json`)
 - [x] Sync `*.nuc.fsa` or `*.gbk` for target genera: 198 genomes, 470 MB, one file each
-      (`manifests/hmp/reference-genomes-target.json`)
+      (`manifests/reference/hmp-target.json`)
 - [x] Sync `HHS/HMMC/`: 22 strain genomes and the strain sheet, 27 MB
-      (`manifests/hmp/mock-community.json`)
+      (`manifests/reference/hmp-mock.json`)
 
 ### ~~HMP aligned reads~~
 
@@ -219,19 +219,19 @@ The human reference they are screened against is `manifests/reference/chm13.json
       false positives, not kit contaminants, so they label rather than supply spike-ins
 - [x] Sync the Salter et al. (2014) article for Table 1 and the per-kit shotgun profiles
       (`manifests/contaminants/salter-article.json`)
-- [x] Choose spike-in contaminant genera and write `contaminants/kit`: *Bradyrhizobium*
+- [x] Choose spike-in contaminant genera and write `reference/kit`: *Bradyrhizobium*
       (`PSP` kit), *Burkholderia* (FastDNA kit), *Methylobacterium*, *Sphingomonas*, and
       low-GC *Flavobacterium* so GC alone cannot separate them from HMP targets. Six
       complete genomes each, one per species, excluding every genus with an HMP reference
       genome. *Ralstonia* only if HMP stool shows no background
-      (`docs/manifests/contaminants/kit.md`)
+      (`docs/manifests/reference/kit.md`)
 - [x] Genome source: the existing `slacken` dataset cuts complete RefSeq genomes out of
       the release 224 library by byte range, so no NCBI dataset is needed
-- [x] Write `contaminants/misclassified`: three complete genomes each for
+- [x] Write `reference/misclassified`: three complete genomes each for
       *Streptococcus*, *Mycobacterium* and *Staphylococcus*, plus *Waddlia chondrophila*
 - [x] Write `reference/chm13` and a `human-pangenomics` dataset: T2T-CHM13 v2.0, the
       screen for TR loci that also occur in human (`docs/manifests/reference/chm13.md`)
-- [ ] Sync `contaminants/kit`, `contaminants/misclassified` and `reference/chm13` on a
+- [ ] Sync `reference/kit`, `reference/misclassified` and `reference/chm13` on a
       compute node: 192 MB, 32 MB and 982 MB, plus 725 MB of slacken index files on the
       first slacken sync
 - [ ] Screen the misclassified genomes and the TR catalog against CHM13. This is a motif
@@ -375,7 +375,7 @@ fixing before adding a fifth, and each of these makes the microbial path cheaper
       genomes`, which lists one FASTA per genome, converts GenBank to FASTA, and rejects
       a genome with two sequence files. The target spec keeps one file per genome (the
       contigs, not the scaffolds). A spec with no lockfile yet, such as
-      `contaminants/kit`, is synced inside the task
+      `reference/kit`, is synced inside the task
 - [ ] Run inTRuder on target-genus and contaminant-genus reference genomes to build the
       TR locus catalog, one `--catalog_spec` per run, each with its own
       `--catalog_table` and `--catalog_bed` so the runs do not publish over each other.

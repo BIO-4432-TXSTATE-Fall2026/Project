@@ -1,23 +1,23 @@
-# `hmp/reference-genomes-target`
+# `reference/hmp-target`
 
 Isolate genomes for the six target genera, from which inTRuder builds the TR locus
 catalog: where the pipeline looks for repeats.
 
 ```sh
-pixi run new hmp/reference-genomes-target --dataset=hmp --prefix=reference_genomes \
+pixi run new reference/hmp-target --dataset=hmp --prefix=reference_genomes \
   --include='19051/*.nuc.fsa' ...  # one --include per genome directory, 198 in all
   --exclude='64737/64737.AFPX01000001-AFPX01000086.nuc.fsa' \
   --exclude='20527/20527.DS572674-DS572694.nuc.fsa' ...  # one per scaffold FASTA, 119 in all
   --description="HMP reference genomes for target genera (Streptococcus, Prevotella, \
 Fusobacterium, Veillonella, Campylobacter, Porphyromonas); nucleotide FASTA, GenBank \
 where no usable FASTA"
-pixi run sync manifests/hmp/reference-genomes-target.json
+pixi run sync manifests/reference/hmp-target.json
 ```
 
 The spec holds the full list of 198 include and 119 exclude globs; the command above, with
 all of them, reproduces it byte for byte. The directories are those whose GenBank `ORGANISM` line names a target genus. That
 includes *S. infantis* `158721`, which
-[`reference-genomes-list.md`](reference-genomes-list.md) does not list.
+[`hmp-list.md`](hmp-list.md) does not list.
 
 198 files, 470 MB, one per genome. Last modified 2013-08-14 to 2013-08-15; synced
 2026-09-17, then narrowed to one file per genome with `sync --no-download` on 2026-11-10.

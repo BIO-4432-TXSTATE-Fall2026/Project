@@ -13,8 +13,8 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
-                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[0] = file("${projectDir}/manifests/reference/hmp-mock.json")
+                input[1] = file("${projectDir}/manifests/reference/hmp-mock.lock.json")
                 input[2] = 'genome'
                 input[3] = ''
                 input[4] = ''
@@ -47,8 +47,8 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
-                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[0] = file("${projectDir}/manifests/reference/hmp-mock.json")
+                input[1] = file("${projectDir}/manifests/reference/hmp-mock.lock.json")
                 input[2] = 'genome'
                 input[3] = 0.7
                 input[4] = 2
@@ -68,14 +68,14 @@ nextflow_process {
     }
 
     // A spec nobody has synced has no lockfile, and the workflow passes [] for it: the
-    // task syncs and writes the lock itself. contaminants/kit is such a spec.
+    // task syncs and writes the lock itself. reference/kit is such a spec.
     test("runs a spec that has never been synced") {
         options "-stub"
 
         when {
             process {
                 """
-                input[0] = file("${projectDir}/manifests/contaminants/kit.json")
+                input[0] = file("${projectDir}/manifests/reference/kit.json")
                 input[1] = []
                 input[2] = 'genome'
                 input[3] = ''

@@ -135,14 +135,14 @@ def test_include_filters_relative_to_prefix(tmp_path, provider, write_spec):
 
 
 def test_nested_spec_syncs_to_a_mirrored_data_directory(tmp_path, provider, write_spec):
-    spec = write_spec("contaminants/kit", include=["nested/*"])
+    spec = write_spec("reference/kit", include=["nested/*"])
 
     sync(spec, tmp_path / "data", provider=provider)
 
-    assert spec.name == "contaminants/kit"
-    assert spec.lock_path == tmp_path / "manifests/contaminants/kit.lock.json"
-    assert (tmp_path / "data/contaminants/kit/nested/otu_table_v35.txt.gz").read_bytes() == b"v35"
-    assert lock_of(spec)["spec"] == "contaminants/kit.json"
+    assert spec.name == "reference/kit"
+    assert spec.lock_path == tmp_path / "manifests/reference/kit.lock.json"
+    assert (tmp_path / "data/reference/kit/nested/otu_table_v35.txt.gz").read_bytes() == b"v35"
+    assert lock_of(spec)["spec"] == "reference/kit.json"
 
 
 def test_spec_outside_a_manifests_directory_is_named_by_its_stem(tmp_path):

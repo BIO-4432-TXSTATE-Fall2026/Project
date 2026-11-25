@@ -1,13 +1,13 @@
-# `hmp/mock-community`
+# `reference/hmp-mock`
 
 Genomes of the HMP mock community strains: known identities for checking catalog loci
 and allele calls before either is trusted on real samples.
 
 ```sh
-pixi run new hmp/mock-community --dataset=hmp --prefix=HHS/HMMC \
+pixi run new reference/hmp-mock --dataset=hmp --prefix=HHS/HMMC \
   "--include=*/*.nuc.fsa.bz2" --include=HMPRP_sT1-Mock.pdf \
   --description="HMP mock community strain genomes (nucleotide FASTA) and strain sheet"
-pixi run sync manifests/hmp/mock-community.json
+pixi run sync manifests/reference/hmp-mock.json
 ```
 
 23 files, 27 MB: one `*.nuc.fsa.bz2` per strain (22) and the strain sheet

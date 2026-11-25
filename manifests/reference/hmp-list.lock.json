@@ -1,5 +1,5 @@
 {
-  "spec": "hmp/reference-genomes-list.json",
+  "spec": "reference/hmp-list.json",
   "dataset": "hmp",
   "source": "s3://human-microbiome-project/reference_genomes/",
   "files": [

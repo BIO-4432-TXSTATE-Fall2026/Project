@@ -13,8 +13,8 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = file("${projectDir}/manifests/hmp/mock-community.json")
-                input[1] = file("${projectDir}/manifests/hmp/mock-community.lock.json")
+                input[0] = file("${projectDir}/manifests/reference/hmp-mock.json")
+                input[1] = file("${projectDir}/manifests/reference/hmp-mock.lock.json")
                 input[2] = 'genome'
                 input[3] = '0 20'
                 input[4] = '0.8 0.7'

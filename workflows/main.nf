@@ -8,7 +8,7 @@ include { notifyRun; announceStart; announceDone } from './modules/notify'
 
 // A genome spec's lockfile, or nothing if the spec has never been synced. The catalog
 // processes sync inside the task, which writes the lock there, so a spec such as
-// contaminants/kit can be cataloged before anyone has synced it by hand. A missing file
+// reference/kit can be cataloged before anyone has synced it by hand. A missing file
 // cannot be staged, and an empty list stages nothing.
 def specLock(spec) {
     def lock = file("${spec.parent}/${spec.simpleName}.lock.json")

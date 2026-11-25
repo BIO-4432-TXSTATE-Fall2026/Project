@@ -31,7 +31,7 @@ CHM13 v2.0 is gapless, so a locus that survives the screen survives it for a rea
 - **Catalog screen.** Any TR locus inTRuder finds in a bacterial reference genome that
   also matches CHM13 is dropped, or flagged, before allele calling.
 - **Misclassified genera.** The genomes in
-  [`contaminants/misclassified`](../contaminants/misclassified.md) are screened directly:
+  [`reference/misclassified`](misclassified.md) are screened directly:
   how much human sequence sits in the reference genomes of the genera Gihawi et al.
   attribute to human-read misclassification.
 

@@ -40,10 +40,10 @@ def test_new_rejects_bad_names(tmp_path, name):
 
 def test_new_writes_a_nested_spec(tmp_path):
     manifests = tmp_path / "manifests"
-    argv = ["new", "contaminants/kit", "--dataset=hmp", "--prefix=x"]
+    argv = ["new", "reference/kit", "--dataset=hmp", "--prefix=x"]
 
     assert main([*argv, f"--manifests-dir={manifests}"]) == 0
-    assert json.loads((manifests / "contaminants/kit.json").read_text())["prefix"] == "x"
+    assert json.loads((manifests / "reference/kit.json").read_text())["prefix"] == "x"
 
 
 def test_new_writes_an_accession_spec(tmp_path):

@@ -42,7 +42,7 @@ Checked against `ReadMappingSOP.v1.txt.bz2` and the first 20,000 records of
   or fails the threshold. That biases allele calls toward the reference allele.
 - **A different reference, and no random access.** The database is a 2010 snapshot of
   188,039 sequences across 1,610 genera, not the `reference_genomes/` set synced in
-  `manifests/hmp/reference-genomes-target.json`, so its coordinates do not match the
+  `manifests/reference/hmp-target.json`, so its coordinates do not match the
   planned inTRuder catalog. The header is `SO:unsorted` despite the filename and the
   bucket holds no `.bai`, so reaching a locus means streaming all 1.8 TB and re-sorting.
 

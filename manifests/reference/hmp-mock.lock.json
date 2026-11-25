@@ -1,5 +1,5 @@
 {
-  "spec": "hmp/mock-community.json",
+  "spec": "reference/hmp-mock.json",
   "dataset": "hmp",
   "source": "s3://human-microbiome-project/HHS/HMMC/",
   "files": [

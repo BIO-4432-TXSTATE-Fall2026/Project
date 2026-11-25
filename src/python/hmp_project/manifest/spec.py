@@ -50,7 +50,7 @@ class Spec:
     @property
     def name(self) -> str:
         """The spec's path under the nearest ``manifests/`` directory, without ``.json``,
-        so ``manifests/contaminants/kit.json`` is ``contaminants/kit``. A spec outside one,
+        so ``manifests/reference/kit.json`` is ``reference/kit``. A spec outside one,
         such as a copy staged into a pipeline work directory, is named by its stem.
         """
         parts = self.path.with_suffix("").parts

@@ -1,7 +1,7 @@
 # `contaminants/salter-article`
 
 Salter et al. (2014), the paper this project's contaminant side rests on: the source of
-the kit-contaminant genus list in [`kit.md`](kit.md), and the description of the
+the kit-contaminant genus list in [`kit.md`](../reference/kit.md), and the description of the
 experiment behind the reads in [`salter-runs.md`](../../data/derived/salter-runs.md).
 
 ```sh
@@ -31,7 +31,7 @@ only in the supplement.
 
 - **Table 1** is the candidate list for spike-in genera: 92 named genera found in blank
   extractions at three labs over four years, by phylum, with superscripts marking those
-  independently reported elsewhere. [`kit.md`](kit.md) says which five were taken and why.
+  independently reported elsewhere. [`kit.md`](../reference/kit.md) says which five were taken and why.
 - **The shotgun results section** is the only place kits are tied to specific genera:
   FP dominated by *Burkholderia*, PSP by *Bradyrhizobium*, QIA diverse, MB too shallow to
   profile. That is what makes kit a usable batch label for H2.

@@ -1,18 +1,18 @@
-# `contaminants/misclassified`
+# `reference/misclassified`
 
 Genomes for the four genera Gihawi et al. (2023) attribute to human reads counted as
 bacteria, not to reagent contamination. They are here to be screened against the human
 reference: if a TR locus cataloged in one of these genomes also matches
-[`reference/chm13`](../reference/chm13.md), human reads can land on it and produce
+[`reference/chm13`](chm13.md), human reads can land on it and produce
 allele calls for an organism that was never in the sample.
 
 ```sh
-pixi run new contaminants/misclassified --dataset=slacken \
+pixi run new reference/misclassified --dataset=slacken \
   --accession=GCF_000026745.1 ...  # one --accession per genome, 10 in all
   --description="Complete RefSeq genomes for the genera Gihawi et al. (2023) attribute \
 to human-read misclassification: Streptococcus, Mycobacterium and Staphylococcus, three \
 species each, and Waddlia chondrophila"
-pixi run sync manifests/contaminants/misclassified.json
+pixi run sync manifests/reference/misclassified.json
 ```
 
 10 genomes, about 32 MB, complete RefSeq assemblies from the `slacken` library.
@@ -28,7 +28,7 @@ pixi run sync manifests/contaminants/misclassified.json
 
 ## Why these are not spike-ins
 
-[`gihawi-supplement.md`](gihawi-supplement.md) explains the three ways Gihawi et al.
+[`gihawi-supplement.md`](../contaminants/gihawi-supplement.md) explains the three ways Gihawi et al.
 reject a taxon. These four genera are the first way: Poore et al. reported hundreds of
 thousands of reads per sample, the re-analysis found tens, and the cause was human
 sequence left in draft bacterial genomes. That is a database failure, not kit
@@ -43,7 +43,7 @@ contamination, so these genera have no place in the spike-in benchmark
   it establishes that the catalog built from finished genomes is not the source of the
   artifact.
 - ***Streptococcus* is also a target genus.** Its HMP genomes are in
-  [`hmp/reference-genomes-target`](../hmp/reference-genomes-target.md) and are cataloged
+  [`reference/hmp-target`](hmp-target.md) and are cataloged
   as genuine signal. The three here are for the human screen only; keep the two sets
   apart when cataloging, or a target genus picks up ten extra genomes.
 - **Species are a guess.** Gihawi et al. name genera, not species. These are well-studied
