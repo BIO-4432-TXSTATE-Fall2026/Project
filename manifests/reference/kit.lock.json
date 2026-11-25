@@ -1,0 +1,332 @@
+{
+  "spec": "reference/kit.json",
+  "dataset": "slacken",
+  "source": "s3://slacken/index/rspc-224/library/bacteria/",
+  "files": [
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000009485.1/GCF_000009485.1.fna",
+      "size": 8168058,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "ef93ed4f7cd5ef7c0b0eb54a4889a9ffd5ca75aede75b4e3c59238b1915c506b",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000010545.1/GCF_000010545.1.fna",
+      "size": 7106562,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "7603644ade2429898d274a53cf1239b4b2db47d9e07ba045845ae6e2e816be0a",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000012945.1/GCF_000012945.1.fna",
+      "size": 8797031,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "deebee4f990832e2c8668e5814527e9a4222fbe5b3bfd8e7855d0bc14fecad54",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000016645.1/GCF_000016645.1.fna",
+      "size": 6181635,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "0df4751ff32b3b066d8f82b8b3bd1c38b875d218e5c4811fff58475daa44691d",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000019725.1/GCF_000019725.1.fna",
+      "size": 6995892,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "f202474f23419f9e6085040d7cf42d85cf7de5586929fb026b61dcb1d1a265cd",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000022085.1/GCF_000022085.1.fna",
+      "size": 8962598,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "3717a8bb3abbc743a823d2425e9f36df87bf41ae15cfc72b28a585420bd4fbbe",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000203915.1/GCF_000203915.1.fna",
+      "size": 7633509,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "9d1eff747cd708575a4ea3e40d19b2733a52e77eaa325a6b71431d3179bbc3a8",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000253275.1/GCF_000253275.1.fna",
+      "size": 3612974,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "b4ae0c2bf00e393f1d483728eb212ed435a8ef950c826667e8078610470563d7",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000284275.1/GCF_000284275.1.fna",
+      "size": 7332361,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "abb9618a3b7a33b8f091cab55c8517242d043f9e7f01a6b8b5ab563353385c8c",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000344805.1/GCF_000344805.1.fna",
+      "size": 8379033,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "d7ba2c7e7c9c6afdc9b344b31bd17d51f245d0e449bea5a9cc37cd2ee5ba102e",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000455605.1/GCF_000455605.1.fna",
+      "size": 3034772,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "5fcc3f3cf48cdd36fa6728581577cee8be38f7b0de3975f722d96f4a94eb349a",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000512205.2/GCF_000512205.2.fna",
+      "size": 6671914,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "3c84eb530b477783894d8215140229f35ef0cbb9d4e228f6a7527841fa58c504",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000757795.1/GCF_000757795.1.fna",
+      "size": 6374038,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "df2ab7660fe4e6cdbabf513a4711696bbdde9852b277ee8f638ac36fc31e82c3",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000764535.1/GCF_000764535.1.fna",
+      "size": 4118627,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "9bdf5683428be3a2f25b3bafa689eee2a3bac58272361d6dd3444e6f42778ca5",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_000935025.1/GCF_000935025.1.fna",
+      "size": 5301283,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "cc36f4a6e06a8e982af551ae031b26d2e8483a15a2da7b3de9fe04bc0cf8a941",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001028665.1/GCF_001028665.1.fna",
+      "size": 8072352,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "0e8e88c83866d86ead1aea7b17d82739788da396aa2c7aa05e620cb477c99d21",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001411495.1/GCF_001411495.1.fna",
+      "size": 8725857,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "a8a2d6a3358d4b7f6e9df4a508cc0ee8c8e58921db47f8eacbc44e1212d058a4",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001534645.1/GCF_001534645.1.fna",
+      "size": 3367833,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "6bc8fd0b38cba450480cc2e156039f1953ab2fa807f02cc77e1115865fd46533",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001693385.1/GCF_001693385.1.fna",
+      "size": 8438469,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "8326f050bea74687aedbf9d7c7983d13cb76266261bf70dc5e0a2665f6e3c39d",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001693515.2/GCF_001693515.2.fna",
+      "size": 8494180,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "d52f0b52065552d4272c27deff76447fbf4ff33f8c3d166fe32f88e10cdb457a",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001705175.1/GCF_001705175.1.fna",
+      "size": 5180788,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "8755464d078ffd5c71cecf85c3161194375504c38425f82c813c0b96f27396d7",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001717955.1/GCF_001717955.1.fna",
+      "size": 5397075,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "4eecf8b00d1eb4d997d92de544630f8c9aa536a69af7158f6c77cf34dad37fb1",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001761465.1/GCF_001761465.1.fna",
+      "size": 4463842,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "e0c05941374ec909917618596565195aa5ab8f3990c94dfdd28a19f178dc7418",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001922385.1/GCF_001922385.1.fna",
+      "size": 4886380,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "2b0bb474bcf1150572b9a21f13713999308acb25810830e151988a3acb46345c",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_001936175.1/GCF_001936175.1.fna",
+      "size": 6404820,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "feeda1b8ad96b7abd3e3fbab5103922712b94be19804c717d78bc17313b2370d",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_002266435.3/GCF_002266435.3.fna",
+      "size": 7123620,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "c71e48c8dc48803c295be0f48533e600aced4c3a2d05e6ecac2826da9ab1cc54",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_002796605.1/GCF_002796605.1.fna",
+      "size": 5108677,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "fa6c329a0a5d69e617cc9ff4f8882cd66148953583437ceb80826382184c3a90",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_003173715.1/GCF_003173715.1.fna",
+      "size": 6882762,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "6a72a1f69fbb633150e88fe8d39cb9b23ccac49dfe80e55f70c114475ca998d7",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_003173735.1/GCF_003173735.1.fna",
+      "size": 5616745,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "9f6c6e8392930ffa45a27471044c40bf3c9cef38039b40a657624ddafe005248",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    },
+    {
+      "key": "index/rspc-224/library/bacteria/GCF_004114915.1/GCF_004114915.1.fna",
+      "size": 8314238,
+      "etag": "ff625f660f2307d0d1790b97c3844cab-544",
+      "last_modified": "2025-05-20T10:44:04Z",
+      "sha256": "2dbd0e2d4d597f9ccdb7bc310f317a30c001967fafc722b1c6548f87f51e55b4",
+      "downloaded_at": "2026-11-25T21:35:02.043532Z"
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-11-25T21:35:02.043532Z",
+      "spec_sha256": "d7497a76b51026ddfb70446558928af259eacaeea2ca8172b076a211e8313956",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "slacken",
+          "region": "us-east-1",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 30,
+      "bytes": 195147925,
+      "added": [
+        "index/rspc-224/library/bacteria/GCF_000009485.1/GCF_000009485.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000010545.1/GCF_000010545.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000012945.1/GCF_000012945.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000016645.1/GCF_000016645.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000019725.1/GCF_000019725.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000022085.1/GCF_000022085.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000203915.1/GCF_000203915.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000253275.1/GCF_000253275.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000284275.1/GCF_000284275.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000344805.1/GCF_000344805.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000455605.1/GCF_000455605.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000512205.2/GCF_000512205.2.fna",
+        "index/rspc-224/library/bacteria/GCF_000757795.1/GCF_000757795.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000764535.1/GCF_000764535.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000935025.1/GCF_000935025.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001028665.1/GCF_001028665.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001411495.1/GCF_001411495.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001534645.1/GCF_001534645.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001693385.1/GCF_001693385.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001693515.2/GCF_001693515.2.fna",
+        "index/rspc-224/library/bacteria/GCF_001705175.1/GCF_001705175.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001717955.1/GCF_001717955.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001761465.1/GCF_001761465.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001922385.1/GCF_001922385.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001936175.1/GCF_001936175.1.fna",
+        "index/rspc-224/library/bacteria/GCF_002266435.3/GCF_002266435.3.fna",
+        "index/rspc-224/library/bacteria/GCF_002796605.1/GCF_002796605.1.fna",
+        "index/rspc-224/library/bacteria/GCF_003173715.1/GCF_003173715.1.fna",
+        "index/rspc-224/library/bacteria/GCF_003173735.1/GCF_003173735.1.fna",
+        "index/rspc-224/library/bacteria/GCF_004114915.1/GCF_004114915.1.fna"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": [
+        "index/rspc-224/library/bacteria/GCF_000009485.1/GCF_000009485.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000010545.1/GCF_000010545.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000012945.1/GCF_000012945.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000016645.1/GCF_000016645.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000019725.1/GCF_000019725.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000022085.1/GCF_000022085.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000203915.1/GCF_000203915.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000253275.1/GCF_000253275.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000284275.1/GCF_000284275.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000344805.1/GCF_000344805.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000455605.1/GCF_000455605.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000512205.2/GCF_000512205.2.fna",
+        "index/rspc-224/library/bacteria/GCF_000757795.1/GCF_000757795.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000764535.1/GCF_000764535.1.fna",
+        "index/rspc-224/library/bacteria/GCF_000935025.1/GCF_000935025.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001028665.1/GCF_001028665.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001411495.1/GCF_001411495.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001534645.1/GCF_001534645.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001693385.1/GCF_001693385.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001693515.2/GCF_001693515.2.fna",
+        "index/rspc-224/library/bacteria/GCF_001705175.1/GCF_001705175.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001717955.1/GCF_001717955.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001761465.1/GCF_001761465.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001922385.1/GCF_001922385.1.fna",
+        "index/rspc-224/library/bacteria/GCF_001936175.1/GCF_001936175.1.fna",
+        "index/rspc-224/library/bacteria/GCF_002266435.3/GCF_002266435.3.fna",
+        "index/rspc-224/library/bacteria/GCF_002796605.1/GCF_002796605.1.fna",
+        "index/rspc-224/library/bacteria/GCF_003173715.1/GCF_003173715.1.fna",
+        "index/rspc-224/library/bacteria/GCF_003173735.1/GCF_003173735.1.fna",
+        "index/rspc-224/library/bacteria/GCF_004114915.1/GCF_004114915.1.fna"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "spec": "reference/chm13.json",
+  "dataset": "human-pangenomics",
+  "source": "s3://human-pangenomics/T2T/CHM13/assemblies/analysis_set/",
+  "files": [
+    {
+      "key": "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz",
+      "size": 981185361,
+      "etag": "9b0b28db473ab635531081b609283fdc-117",
+      "last_modified": "2022-09-28T16:23:04Z",
+      "sha256": "f274b0ee8bc1bca18d231d0eb80d764650d7f02d1fe07c43819e21168224304d",
+      "downloaded_at": "2026-11-25T21:35:33.690647Z"
+    },
+    {
+      "key": "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz.gzi",
+      "size": 773592,
+      "etag": "e01bda485652adfc1fa652e36fd1175e",
+      "last_modified": "2022-09-28T16:23:04Z",
+      "sha256": "cb9ee1bd52f325e9ff93bb6c8d584a5954d745cb25a69882995a40e1ef528387",
+      "downloaded_at": "2026-11-25T21:35:33.690647Z"
+    }
+  ],
+  "history": [
+    {
+      "synced_at": "2026-11-25T21:35:33.690647Z",
+      "spec_sha256": "c98ce4a6d250dd2d75c1f42f3e77b1599b14b65169921fbf00c4235a2ce789cc",
+      "tooling": {
+        "hmp_project": "0.1.0",
+        "python": "3.14.7",
+        "provider": {
+          "type": "s3",
+          "bucket": "human-pangenomics",
+          "region": "us-west-2",
+          "anonymous": true,
+          "boto3": "1.43.92"
+        }
+      },
+      "files": 2,
+      "bytes": 981958953,
+      "added": [
+        "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz",
+        "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz.gzi"
+      ],
+      "changed": [],
+      "removed": [],
+      "downloaded": [
+        "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz",
+        "T2T/CHM13/assemblies/analysis_set/chm13v2.0.fa.gz.gzi"
+      ]
+    }
+  ]
+}
