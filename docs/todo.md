@@ -9,8 +9,8 @@ Steps for the project in `docs/documents/proposal.pdf`, in rough order. Data cho
 
 What the project has to measure, and against what, to say anything about H1 or H2. The
 sections below are the machinery; this is the experiment. Nothing here has been done —
-there is no entropy code, no allele caller and no classifier in the repository.
-`--stage pipeline` runs only the streaming read filter.
+there is no allele caller, no entropy code and no classifier in the repository.
+`--stage pipeline` runs the catalog and the streaming read filter, and stops there.
 
 1. **Does a catalog locus exist where we say it does?** Call loci in the 22 mock-community
    strains, then screen them back against those same genomes. The only ground truth
