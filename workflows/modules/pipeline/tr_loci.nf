@@ -30,6 +30,10 @@ process TR_LOCI {
 
     script:
     """
+    # The container's home is read-only, and slacken specs cache their assembly index
+    # under \$XDG_CACHE_HOME. Keep that cache in the task directory.
+    export XDG_CACHE_HOME="\$PWD/.cache"
+
     ${params.cli} sync ${spec} --data-dir .
 
     # One FASTA per genome, named exactly as TR_CATALOG named it, because `loci` looks
@@ -38,7 +42,7 @@ process TR_LOCI {
 
     ${params.cli} loci ${catalog} --genomes genomes.tsv --flank ${flank} --out ${loci_fasta}
 
-    rm -rf ./${spec.simpleName} genomes.tsv
+    rm -rf ./${spec.simpleName} genomes.tsv .cache
     """
 
     stub:
