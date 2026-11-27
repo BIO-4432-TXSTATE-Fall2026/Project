@@ -143,7 +143,7 @@ that several references share to the first one loaded, so a fragment is only cre
 the loci that own the k-mers it hit.
 
 It runs twice, by alias, over `--screen_human_spec` (CHM13) and `--screen_mock_spec` (the
-mock community), under the `screen` label (4 CPUs, 8 GB, 12 h).
+mock community), under the `screen` label (4 CPUs, 24 GB, 12 h).
 
 ### `TR_PANEL`
 
