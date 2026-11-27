@@ -7,6 +7,14 @@ include { TR_SCREEN as SCREEN_MOCK } from './modules/pipeline/tr_screen'
 include { TR_PANEL } from './modules/pipeline/tr_panel'
 include { TR_FILTER } from './modules/pipeline/tr_filter'
 include { FILTER_SUMMARY } from './modules/pipeline/filter_summary'
+include { TR_ALLELES } from './modules/pipeline/tr_alleles'
+include { TR_ALLELES as SPIKE_ALLELES } from './modules/pipeline/tr_alleles'
+include { ALLELE_TABLE } from './modules/pipeline/allele_table'
+include { ALLELE_TABLE as SPIKE_TABLE } from './modules/pipeline/allele_table'
+include { SIMULATE_READS } from './modules/pipeline/simulate_reads'
+include { TR_GATE } from './modules/pipeline/tr_gate'
+include { SPIKE_CHECK } from './modules/pipeline/spike_check'
+include { SPIKE_MIX } from './modules/pipeline/spike_mix'
 include { notifyRun; announceStart; announceDone } from './modules/notify'
 
 // A genome spec's lockfile, or nothing if the spec has never been synced. The catalog
@@ -143,6 +151,7 @@ workflow CATALOG {
     loci = TR_LOCI.out.table.mix(TR_LOCI.out.fasta, TR_LOCI.out.stats)
     screens = SCREEN_HUMAN.out.screen.mix(SCREEN_MOCK.out.screen)
     panel = announceDone(TR_PANEL.out.table.mix(TR_PANEL.out.fasta), 'TR panel')
+    panel_table = TR_PANEL.out.table
     panel_fasta = TR_PANEL.out.fasta
 }
 
@@ -193,6 +202,89 @@ workflow FILTER {
     summary = FILTER_SUMMARY.out.summary
 }
 
+// Allele calling: each sample's gated reads turned into repeat lengths per panel locus, and
+// every sample's table gathered into one. The reads' headers name the panel loci they
+// matched, so the panel table is all the caller needs beside them. See
+// docs/workflows/pipeline/README.md.
+//
+// Run on its own, the reads are the ones an earlier filter run published.
+workflow ALLELES {
+    take:
+    reads                  // paths of <sample>.loci.fastq.gz
+    panel_table
+
+    main:
+    // The panel's anchors are `loci_anchor` long; the caller matches that many unless told
+    // otherwise. Nextflow refuses a null `val` input, so the whole anchor crosses as ''.
+    anchor = params.alleles_anchor == null ? params.loci_anchor : params.alleles_anchor
+    samples = reads.map { file -> tuple(file.name.replace('.loci.fastq.gz', ''), file) }
+
+    TR_ALLELES(announceStart(samples, 'TR alleles'), panel_table.first(), anchor,
+               params.alleles_mismatches)
+    ALLELE_TABLE(TR_ALLELES.out.alleles.collect(), TR_ALLELES.out.stats.collect(),
+                 params.alleles_table, params.alleles_stats_table)
+
+    emit:
+    alleles = announceDone(ALLELE_TABLE.out.alleles, 'TR alleles')
+    stats = ALLELE_TABLE.out.stats
+}
+
+// The spike-in benchmark: reads simulated from the kit genomes go through the gate and the
+// caller as a sample's do, and their alleles, whose true lengths the panel records, are
+// scored (SPIKE_CHECK) and mixed into the hosts' alleles as labelled contaminants
+// (SPIKE_MIX). The mix reads the hosts' allele table, which an earlier alleles run
+// published unless the alleles part runs too.
+workflow SPIKE {
+    take:
+    panel_fasta
+    panel_table
+    host_alleles
+
+    main:
+    spec = manifestSpec(params.spike_spec)
+    anchor = params.alleles_anchor == null ? params.loci_anchor : params.alleles_anchor
+    hosts = params.spike_hosts == null ? '' : params.spike_hosts
+
+    SIMULATE_READS(announceStart(channel.of(spec), 'Spike-in reads'), specLock(spec),
+                   params.spike_reads, params.spike_seed)
+
+    simulated = SIMULATE_READS.out.reads.flatten().map { file ->
+        tuple(file.name.replace('.fastq.gz', ''), file)
+    }
+    TR_GATE(simulated, panel_fasta.first(), params.filter_k, params.filter_hdist)
+
+    gated = TR_GATE.out.reads.map { file -> tuple(file.name.replace('.loci.fastq.gz', ''), file) }
+    SPIKE_ALLELES(gated, panel_table.first(), anchor, params.alleles_mismatches)
+    SPIKE_TABLE(SPIKE_ALLELES.out.alleles.collect(), SPIKE_ALLELES.out.stats.collect(),
+                params.spike_alleles_table, params.spike_stats_table)
+
+    SPIKE_CHECK(panel_table.first(), SPIKE_TABLE.out.alleles, SPIKE_TABLE.out.stats)
+    SPIKE_MIX(panel_table.first(), host_alleles.first(), SPIKE_TABLE.out.alleles, hosts)
+
+    emit:
+    check = announceDone(SPIKE_CHECK.out.check, 'Spike-in check')
+    mixed = SPIKE_MIX.out.alleles.mix(SPIKE_MIX.out.labels)
+    tables = SPIKE_TABLE.out.alleles.mix(SPIKE_TABLE.out.stats)
+}
+
+// What a run of `--pipeline` asks for: each part named, `all` meaning every one, and the
+// parts that did not run left for the published outputs of an earlier run to stand in.
+def pipelineParts(selection) {
+    def known = ['catalog', 'filter', 'alleles', 'spike']
+    def named = selection.toString().tokenize(',').collect { part -> part.trim() }
+    def unknown = named.findAll { part -> part != 'all' && !(part in known) }
+    if (unknown || !named) {
+        error("unknown --pipeline '${selection}'; use 'all' or a comma-separated list of " +
+              known.join(', '))
+    }
+    return named.contains('all') ? known : named
+}
+
+// A published output of an earlier run, for a part that starts without the part that makes it.
+def published(path) {
+    return channel.value(file("${workflow.outputDir}/${path}", checkIfExists: true))
+}
+
 workflow {
     main:
     notifyRun()
@@ -209,6 +301,11 @@ workflow {
     reads = channel.empty()
     counts = channel.empty()
     summary = channel.empty()
+    alleles = channel.empty()
+    allele_stats = channel.empty()
+    spike_check = channel.empty()
+    spike_mixed = channel.empty()
+    spike_tables = channel.empty()
     if (params.stage == 'preprocess') {
         if (!(params.preprocess in ['all', 'tables', 'catalog', 'sweep'])) {
             error("unknown --preprocess '${params.preprocess}'; " +
@@ -221,13 +318,12 @@ workflow {
         sweep = out.sweep
     }
     else if (params.stage == 'pipeline') {
-        if (!(params.pipeline in ['all', 'catalog', 'filter'])) {
-            error("unknown --pipeline '${params.pipeline}'; use 'all', 'catalog' or 'filter'")
-        }
-        // The gate's reference. A run that starts at the filter reads the panel an
-        // earlier catalog run published.
+        def parts = pipelineParts(params.pipeline)
+        // The panel the gate and the caller read. A part that starts after the catalog
+        // reads what an earlier catalog run published.
         panel_fasta = channel.empty()
-        if (params.pipeline in ['all', 'catalog']) {
+        panel_table = channel.empty()
+        if ('catalog' in parts) {
             built = CATALOG()
             panel_catalogs = built.catalogs
             panel_beds = built.beds
@@ -235,16 +331,43 @@ workflow {
             screens = built.screens
             panel = built.panel
             panel_fasta = built.panel_fasta
+            panel_table = built.panel_table
         }
         else {
-            panel_fasta = channel.value(file("${workflow.outputDir}/catalog/tr-panel.fa",
-                                             checkIfExists: true))
+            if ('filter' in parts || 'spike' in parts) {
+                panel_fasta = published('catalog/tr-panel.fa')
+            }
+            if ('alleles' in parts || 'spike' in parts) {
+                panel_table = published('catalog/tr-panel.tsv')
+            }
         }
-        if (params.pipeline in ['all', 'filter']) {
+        gated = channel.empty()
+        if ('filter' in parts) {
             filtered = FILTER(panel_fasta)
+            gated = filtered.reads
             reads = filtered.reads
             counts = filtered.counts
             summary = filtered.summary
+        }
+        else if ('alleles' in parts) {
+            gated = channel.fromPath("${workflow.outputDir}/filter/reads/*.loci.fastq.gz",
+                                     checkIfExists: true)
+        }
+        host_alleles = channel.empty()
+        if ('alleles' in parts) {
+            called = ALLELES(gated, panel_table)
+            alleles = called.alleles
+            allele_stats = called.stats
+            host_alleles = called.alleles
+        }
+        else if ('spike' in parts) {
+            host_alleles = published('alleles/alleles.tsv')
+        }
+        if ('spike' in parts) {
+            spiked = SPIKE(panel_fasta, panel_table, host_alleles)
+            spike_check = spiked.check
+            spike_mixed = spiked.mixed
+            spike_tables = spiked.tables
         }
     }
     else {
@@ -264,6 +387,11 @@ workflow {
     reads = reads
     counts = counts
     summary = summary
+    alleles = alleles
+    allele_stats = allele_stats
+    spike_check = spike_check
+    spike_mixed = spike_mixed
+    spike_tables = spike_tables
 }
 
 output {
@@ -320,6 +448,29 @@ output {
     }
     summary {
         path 'filter'
+        mode 'copy'
+    }
+    // Allele calls per sample, and what the caller made of each sample's reads.
+    alleles {
+        path 'alleles'
+        mode 'copy'
+    }
+    allele_stats {
+        path 'alleles'
+        mode 'copy'
+    }
+    // The spike-in benchmark: the caller's score against known lengths, the simulated
+    // genomes' own alleles, and those mixed into the hosts with their labels.
+    spike_check {
+        path 'spike'
+        mode 'copy'
+    }
+    spike_mixed {
+        path 'spike'
+        mode 'copy'
+    }
+    spike_tables {
+        path 'spike'
         mode 'copy'
     }
 }

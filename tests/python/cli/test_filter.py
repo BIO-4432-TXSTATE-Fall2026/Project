@@ -317,3 +317,10 @@ def test_filter_fastq_rejects_a_truncated_file(tmp_path):
 def test_filter_without_a_source_asks_for_one():
     with pytest.raises(SystemExit, match="SPEC and --key, or --fastq"):
         main(["filter", "--gate=none"])
+
+
+def test_mate_reads_the_name_suffix_or_the_illumina_comment():
+    assert filter_cli._mate(b"@r/2\tL000001|g|c:0-9=5\n") == "2"
+    assert filter_cli._mate(b"@SYN_1_a 1:\n") == "1"
+    assert filter_cli._mate(b"@SYN_1_a 2:N:0\n") == "2"
+    assert filter_cli._mate(b"@solo\n") == "singleton"

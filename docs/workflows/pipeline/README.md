@@ -3,8 +3,10 @@
 `--stage pipeline` is the analysis. Its first part, `catalog`, builds the panel of tandem
 repeat loci the gate looks for. Its second, `filter`, streams the HMP1 shotgun reads from
 S3 through a k-mer gate built from that panel and keeps only the reads that touch a locus,
-plus per-sample read counts. Allele calling, the stutter model and everything after read
-that output; none of them exists yet (`docs/todo.md` §3).
+plus per-sample read counts. The third, `alleles`, measures each kept read's repeat between
+the locus's two anchors and tabulates the lengths per sample. The fourth, `spike`, scores
+that caller against simulated genomes of known lengths and mixes them into the real samples
+as labelled contaminants. The stutter model and everything after read the allele tables.
 
 ```sh
 pixi run pipeline --stage pipeline -profile slurm,apptainer --slurm_queue shared
@@ -50,13 +52,27 @@ Two properties of the tarballs shape the pipe:
 | `TR_PANEL`       | `filter`  | Drop human-screened loci, annotate with the mock screen      | `results/catalog/{tr-panel.tsv,tr-panel.fa}` |
 | `TR_FILTER`      | `filter`  | One sample: stream, gate, write                              | `results/filter/{reads,counts}/`            |
 | `FILTER_SUMMARY` | `filter`  | Every sample's counts in one table                           | `results/filter/filter-summary.tsv`         |
+| `TR_ALLELES`     | `filter`  | One sample: anchors in the gated reads, repeat lengths       | (per-sample tables feed `ALLELE_TABLE`)     |
+| `ALLELE_TABLE`   | `filter`  | Every sample's alleles and read statistics in two tables     | `results/alleles/{alleles.tsv,allele-stats.tsv}` |
+| `SIMULATE_READS` | `filter`  | Paired reads from each kit genome at each depth              | (feeds `TR_GATE`)                           |
+| `TR_GATE`        | `filter`  | A local FASTQ through the gate (`filter --fastq`)            | (feeds `TR_ALLELES`)                        |
+| `SPIKE_CHECK`    | `filter`  | Called alleles against the simulated genomes' true lengths   | `results/spike/spike-check.tsv`             |
+| `SPIKE_MIX`      | `filter`  | Spike-in alleles added to each host, with labels             | `results/spike/{alleles-spiked.tsv,spike-labels.tsv}` |
 
 ```
 catalog : TR_CATALOG (one task per panel spec) ─┐
           TR_LOCI (merge + anchors + FASTA) ◄───┘
           TR_SCREEN ×2 (chm13 = exclude, hmp-mock = annotate) → TR_PANEL
 filter  : TR_FILTER (one task per HMP sample, gate = tr-panel.fa) → FILTER_SUMMARY
+alleles : TR_ALLELES (one task per sample) → ALLELE_TABLE
+spike   : SIMULATE_READS → TR_GATE → TR_ALLELES (alias SPIKE_ALLELES) → ALLELE_TABLE (alias SPIKE_TABLE)
+          → SPIKE_CHECK, SPIKE_MIX (the hosts' alleles.tsv comes from the alleles part)
 ```
+
+`--pipeline` takes one part or a comma-separated list. A part that runs without the one
+before it reads that part's published output under `results/`: `filter` the panel,
+`alleles` the panel and `results/filter/reads/`, `spike` the panel and
+`results/alleles/alleles.tsv`.
 
 The filter itself is three processes, which is as far as it divides. The one boundary that
 must not exist is between decompressing and gating, because a process emitting
@@ -162,6 +178,17 @@ magic`, so in a log that message means a truncated stream, not a lbzip2 problem.
 not just a scheduler kill, because a dropped S3 connection is the likeliest failure and it
 is transient.
 
+The gate runs with `rename=t`, so each kept read's header lists the panel loci it matched,
+in the form `TR_SCREEN` reads (a FASTQ header: `@name<TAB>L000007|g|c:0-90=16<TAB>...`).
+`filter` checks every tab-separated field after the name is `reference=count`, as part of
+its FASTQ framing check, so a stray line from the gate still fails the sample. bbduk
+credits a k-mer shared by several loci to the first one loaded, so a read lists the loci
+that own the k-mers it hit, which `alleles` then confirms against the anchors.
+
+`filter --fastq PATH --sample NAME` skips the stream, the decompressor and the tar and
+feeds a local FASTQ (plain or `.gz`) through the same gate and writer, with the same two
+outputs. That is how `TR_GATE` gates the simulated reads.
+
 Each sample writes `<sample>.loci.fastq.gz` and `<sample>.counts.tsv`. Both are published
 by copy, not by symlink, so `nextflow clean` cannot take away reads that took hours to
 stream.
@@ -175,15 +202,82 @@ realigned; reads do not.
 The counts tables merged and sorted, with a `pass_fraction` column. The reads seen per
 sample are the depth covariate §4 needs; the pass fraction decides the disk budget.
 
+### `TR_ALLELES`
+
+One task per sample over `<sample>.loci.fastq.gz` and `tr-panel.tsv`. For each read it takes
+the candidate loci from the header, then searches the read and its reverse complement for
+the locus's left anchor and the right anchor downstream of it, each within
+`--alleles_mismatches` substitutions (Hamming, no gaps). Both anchors make a **spanning**
+read, whose allele is the distance between them; one makes a **flanking** read, counted
+with no length. A read that shows several loci goes to the one with the fewest mismatches,
+spanning before flanking, and a tie is **ambiguous** and counted nowhere else. Mates are
+one fragment: reads are grouped by name stem per locus, so a fragment counts once, and a
+fragment whose mates span different lengths is counted as discordant. No stutter correction:
+the tables hold raw length counts for the entropy stage.
+
+Each sample writes `<sample>.alleles.tsv` (`sample, locus_id, allele_bp, reads`) and
+`<sample>.allele-stats.tsv` (`sample, reads_in, spanning, flanking, ambiguous, unassigned,
+pairs_collapsed, pairs_discordant`). The first five count reads; `pairs_collapsed` counts
+fragments with more than one read and `pairs_discordant` those whose mates disagree.
+
+### `ALLELE_TABLE`
+
+The per-sample tables concatenated under one header and sorted by sample, locus and allele
+length, in the shell style of `FILTER_SUMMARY`. Run again by alias for the spike-ins.
+
+### `SIMULATE_READS`
+
+One task over `--spike_spec` (the kit): sync, then for each genome and each depth in
+`--spike_reads`, `randomreads.sh` draws that many paired 100 bp reads with sequencing
+errors into `<genome>@<reads>.fastq.gz`, and the genomes are deleted. The genome name is
+`genomes --name-from auto`'s, the `genome` column of `tr-panel.tsv`. It is one task, not
+one per genome: sync fetches a spec whole and the kit is 195 MB, so a task per genome
+would fetch all of it thirty times. The files then cross as a flat channel, one gate and
+one caller task each. A depth is a contamination level: the default is a thousand reads to
+a hundred thousand, tumor-like contaminant depth.
+
+### `TR_GATE`
+
+`filter --fastq` on one simulated file against `tr-panel.fa`, with the same `filter_k` and
+`filter_hdist` as the HMP reads. Its outputs are named as `TR_FILTER`'s, so `TR_ALLELES`
+takes either.
+
+### `SPIKE_CHECK`
+
+Every kit genome is a member of some panel loci, so its allele lengths are known: the
+`rep_length` of its `tr-panel.tsv` rows. For each sample (`<genome>@<reads>`) the locus's
+call is its most-supported allele length, and `spike-check.tsv` has one row per sample:
+`genome, reads, loci_expected, loci_called, exact_fraction, within_one_unit_fraction,
+loci_unexpected`. The fractions are over the called loci, so depth shows in `loci_called`
+and not in the accuracy; within one unit means within one motif length. This is the
+ground-truth check of the gate and the caller together: simulated reads have no biology in
+them, so a call that is not the true length is a bug in one of them.
+
+### `SPIKE_MIX`
+
+For each host (`--spike_hosts`, default every sample in `results/alleles/alleles.tsv`),
+simulated genome and depth, the host's allele counts and the genome's are summed into the
+sample `<host>+<genome>@<reads>`. `alleles-spiked.tsv` has the shape of `alleles.tsv`.
+`spike-labels.tsv` (`sample, host, batch, reads, locus_id, contaminant`) has one row per
+locus with reads in the mix: `batch` is the genome, `reads` the simulated pairs added, and
+`contaminant` is `true` when the locus is a member of that genome in the panel. These are
+the labels the contamination model trains on. Mixing after the gate is the same as mixing
+the reads before it, because the gate and the caller judge each read on its own.
+
 ## Parts and parameters
 
-`--pipeline` picks the part, like `--preprocess`:
+`--pipeline` picks the parts, like `--preprocess`, one or a comma-separated list:
 
 | `--pipeline` | Runs                                                                         |
 | ------------ | ---------------------------------------------------------------------------- |
-| `all`        | `catalog`, then `filter` against the panel it built                          |
+| `all`        | `catalog`, `filter`, `alleles` and `spike`, each against the one before      |
 | `catalog`    | The catalogs, `TR_LOCI`, both screens and `TR_PANEL`                         |
 | `filter`     | `TR_FILTER` and the summary, against the published `results/catalog/tr-panel.fa` |
+| `alleles`    | `TR_ALLELES` and `ALLELE_TABLE`, over the published `results/filter/reads/`  |
+| `spike`      | `SIMULATE_READS` to `SPIKE_MIX`, over the published panel and `results/alleles/alleles.tsv` |
+
+Parts run together share their channels: `--pipeline filter,alleles` feeds the filter's
+reads to the caller directly.
 
 | Parameter              | Default              | Meaning                                         |
 | ---------------------- | -------------------- | ----------------------------------------------- |
@@ -200,6 +294,12 @@ sample are the depth covariate §4 needs; the pass fraction decides the disk bud
 | `filter_threads`       | 2                    | bbduk's threads; the decompressor gets the rest |
 | `filter_decompressor`  | `lbzip2`             | `bzip2` is the single-core fallback             |
 | `filter_max_reads`     | null                 | Hits written per sample before writing stops    |
+| `alleles_anchor`       | null                 | Anchor bases matched next to the repeat; null is `loci_anchor` |
+| `alleles_mismatches`   | 1                    | Hamming distance allowed per anchor             |
+| `spike_spec`           | `reference/kit`      | The genomes the reads are simulated from        |
+| `spike_reads`          | `1000 10000 100000`  | Read pairs simulated per genome, space-separated |
+| `spike_seed`           | 1                    | `randomreads` seed                              |
+| `spike_hosts`          | null                 | Comma-separated samples to mix into; null is every sample in `alleles.tsv` |
 
 The catalogs use the `catalog_*` finder settings, shared with `--stage preprocess`. The
 target-genus catalog, the kit catalog and the mock screen all arrive through `panel_specs`
@@ -228,7 +328,7 @@ keeps whatever hits regardless; this is a scope limit for the proposal, not a st
 ## Testing
 
 ```sh
-pixi run test                       # filter: a synthetic .tar.bz2, members out of order
+pixi run test                       # filter, alleles, spike-check, spike-mix, on synthetic reads
 pixi run -e test-catalog test       # loci too: it needs inTRuder and pyfastx
 pixi run test-workflow              # the modules stubbed, and the whole stage stubbed
 ```

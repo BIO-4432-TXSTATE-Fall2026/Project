@@ -57,6 +57,48 @@ nextflow_pipeline {
             assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_PANEL') } == 1
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 7
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:FILTER_SUMMARY') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('ALLELES:TR_ALLELES') } == 7
+            assert workflow.trace.succeeded().count { it.name.startsWith('ALLELES:ALLELE_TABLE') } == 1
+            // The stub kit has two genomes at three depths.
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:TR_GATE') } == 6
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:SPIKE_ALLELES') } == 6
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:SPIKE_CHECK') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:SPIKE_MIX') } == 1
+        }
+    }
+
+    // Parts named together run as one: the filter's reads feed the caller directly, and
+    // neither the catalog nor the spike-ins run.
+    test("runs the filter and the alleles parts from a comma list") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'filter,alleles'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 7
+            assert workflow.trace.succeeded().count { it.name.startsWith('ALLELES:TR_ALLELES') } == 7
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:') } == 0
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:') } == 0
+        }
+    }
+
+    test("stops when one part of the list does not exist") {
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'filter,nonsense'
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("unknown --pipeline 'filter,nonsense'") }
         }
     }
 
@@ -112,6 +154,40 @@ nextflow_pipeline {
         then {
             assert workflow.failed
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 0
+        }
+    }
+
+    // The alleles and spike parts read the published panel and reads, so with none
+    // published they stop rather than calling alleles from nothing.
+    test("stops when the alleles part has no published reads") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'alleles'
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.trace.succeeded().count { it.name.startsWith('ALLELES:TR_ALLELES') } == 0
+        }
+    }
+
+    test("stops when the spike part has no published alleles") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'spike'
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:SIMULATE_READS') } == 0
         }
     }
 }

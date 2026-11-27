@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import csv
 from collections import Counter
+from collections.abc import Iterable, Iterator
 from pathlib import Path
 
 from hmp_project.cli.alleles import ALLELE_COLUMNS, read_table
@@ -56,11 +57,12 @@ def run(args: argparse.Namespace) -> None:
         if wanted is not None and (missing := [h for h in wanted if h not in hosts]):
             raise ValueError(f"not in {args.hosts}: {', '.join(missing)}")
         expected = read_expected(args.panel)
-        mixed = mix(hosts, read_table(args.spikes), expected, wanted)
+        count = write(
+            args.out, args.labels, mix(hosts, read_table(args.spikes), expected, wanted), expected
+        )
     except ValueError as error:
         raise SystemExit(str(error)) from None
-    write(args.out, args.labels, mixed, expected)
-    print(f"{len(mixed)} spiked samples -> {args.out}, {args.labels}")
+    print(f"{count} spiked samples -> {args.out}, {args.labels}")
 
 
 def mix(
@@ -68,29 +70,30 @@ def mix(
     spikes: dict[str, Counter[tuple[str, int]]],
     expected: dict,
     wanted: list[str] | None = None,
-) -> dict[str, tuple[str, str, int, Counter[tuple[str, int]]]]:
-    """``<host>+<genome>@<reads>`` to ``(host, genome, reads, summed counts)``."""
-    mixed = {}
+) -> Iterator[tuple[str, str, str, int, Counter[tuple[str, int]]]]:
+    """``(sample, host, genome, reads, summed counts)`` for each host and spike, the sample
+    named ``<host>+<genome>@<reads>``. One at a time, so only one mix is ever held."""
     for host in sorted(wanted if wanted is not None else hosts):
         for spike in sorted(spikes):
             genome, depth = split_sample(spike)
             if genome not in expected:
                 raise ValueError(f"{spike}: {genome} is not a genome in the panel")
-            mixed[f"{host}+{spike}"] = (host, genome, depth, hosts[host] + spikes[spike])
-    return mixed
+            yield f"{host}+{spike}", host, genome, depth, hosts[host] + spikes[spike]
 
 
-def write(out: Path, labels: Path, mixed: dict, expected: dict) -> None:
-    with out.open("w", newline="") as f:
-        writer = csv.writer(f, delimiter="\t", lineterminator="\n")
-        writer.writerow(ALLELE_COLUMNS)
-        for sample, (_, _, _, counts) in mixed.items():
+def write(out: Path, labels: Path, mixed: Iterable, expected: dict) -> int:
+    """Write both tables as ``mixed`` yields, and return how many samples there were."""
+    count = 0
+    with out.open("w", newline="") as f, labels.open("w", newline="") as g:
+        alleles = csv.writer(f, delimiter="\t", lineterminator="\n")
+        marks = csv.writer(g, delimiter="\t", lineterminator="\n")
+        alleles.writerow(ALLELE_COLUMNS)
+        marks.writerow(LABEL_COLUMNS)
+        for sample, host, genome, depth, counts in mixed:
+            count += 1
             for (locus, allele), reads in sorted(counts.items()):
-                writer.writerow([sample, locus, allele, reads])
-    with labels.open("w", newline="") as f:
-        writer = csv.writer(f, delimiter="\t", lineterminator="\n")
-        writer.writerow(LABEL_COLUMNS)
-        for sample, (host, genome, depth, counts) in mixed.items():
+                alleles.writerow([sample, locus, allele, reads])
             for locus in sorted({locus for locus, _ in counts}):
                 member = str(locus in expected[genome]).lower()
-                writer.writerow([sample, host, genome, depth, locus, member])
+                marks.writerow([sample, host, genome, depth, locus, member])
+    return count

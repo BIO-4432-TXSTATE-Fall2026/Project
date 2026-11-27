@@ -398,9 +398,14 @@ def filter_fastq(
 
 
 def _mate(header: bytes) -> str:
-    """Which mate a FASTQ header names: ``/1``, ``/2``, or a singleton."""
-    name = header.split(None, 1)[0].decode(errors="replace") if header.strip() else ""
-    return name[-1] if name.endswith(("/1", "/2")) else "singleton"
+    """Which mate a FASTQ header names: ``/1`` or ``/2`` on the name, or an Illumina
+    comment ``1:...``/``2:...``; otherwise a singleton."""
+    fields = header.split(None, 2)
+    name = fields[0].decode(errors="replace") if fields else ""
+    if name.endswith(("/1", "/2")):
+        return name[-1]
+    comment = fields[1][:2] if len(fields) > 1 else b""
+    return comment[:1].decode() if comment in (b"1:", b"2:") else "singleton"
 
 
 def _resumable(
