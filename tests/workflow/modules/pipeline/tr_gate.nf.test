@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "TR_GATE"
+    script "workflows/modules/pipeline/tr_gate.nf"
+    process "TR_GATE"
+
+    // Stubbed: the gate is bbduk, run in tests/python/cli/test_filter.py's fixtures. This
+    // checks the wiring -- reads and counts named for the sample, in the schema TR_FILTER's
+    // are, so FILTER_SUMMARY and TR_ALLELES take either.
+    test("emits reads and counts named for the sample") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of(tuple('stub-a@1000',
+                    file("${projectDir}/tests/workflow/fixtures/alleles/S1.alleles.tsv")))
+                input[1] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.fa")
+                input[2] = 25
+                input[3] = 1
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.reads[0].endsWith('stub-a@1000.loci.fastq.gz')
+            assert path(process.out.counts[0]).text.startsWith(
+                'sample\tspec\tkey\treads_1\treads_2\treads_singleton\treads_seen\treads_passed')
+        }
+    }
+}

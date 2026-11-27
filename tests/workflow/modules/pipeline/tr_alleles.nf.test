@@ -1,0 +1,33 @@
+nextflow_process {
+
+    name "TR_ALLELES"
+    script "workflows/modules/pipeline/tr_alleles.nf"
+    process "TR_ALLELES"
+
+    // Stubbed: the caller's logic is tested in tests/python/cli/test_alleles.py. This checks
+    // the wiring -- that the sample crosses as a value beside its reads, and both tables
+    // come back named for it, with the columns ALLELE_TABLE concatenates.
+    test("emits an allele table and statistics named for the sample") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of(tuple('GCF_000009045.2@1000',
+                    file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.fa")))
+                input[1] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.tsv")
+                input[2] = ''
+                input[3] = 1
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.alleles[0].endsWith('GCF_000009045.2@1000.alleles.tsv')
+            assert process.out.stats[0].endsWith('GCF_000009045.2@1000.allele-stats.tsv')
+            assert path(process.out.alleles[0]).text.startsWith('sample\tlocus_id\tallele_bp\treads')
+            assert path(process.out.stats[0]).text.startsWith('sample\treads_in\tspanning\tflanking')
+        }
+    }
+}

@@ -1,0 +1,30 @@
+nextflow_process {
+
+    name "SPIKE_MIX"
+    script "workflows/modules/pipeline/spike_mix.nf"
+    process "SPIKE_MIX"
+
+    // Stubbed: the mixing is tests/python/cli/test_spike.py's business. This checks that
+    // the inputs are staged, an empty host list crosses as '', and both tables come back.
+    test("emits the mixed alleles and their labels") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.tsv")
+                input[1] = file("${projectDir}/tests/workflow/fixtures/alleles/S1.alleles.tsv")
+                input[2] = file("${projectDir}/tests/workflow/fixtures/alleles/S2.alleles.tsv")
+                input[3] = ''
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.alleles[0].endsWith('alleles-spiked.tsv')
+            assert path(process.out.labels[0]).text.startsWith(
+                'sample\thost\tbatch\treads\tlocus_id\tcontaminant')
+        }
+    }
+}

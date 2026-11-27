@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "SIMULATE_READS"
+    script "workflows/modules/pipeline/simulate_reads.nf"
+    process "SIMULATE_READS"
+
+    // Stubbed: the real script syncs the kit from S3 and runs randomreads over each genome.
+    // This checks the wiring -- that the spec and lock are staged, and one file per genome
+    // and depth comes back named `<genome>@<reads>`, which is how the spike check joins on
+    // the genome.
+    test("emits one file per genome and depth") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/manifests/reference/kit.json")
+                input[1] = file("${projectDir}/manifests/reference/kit.lock.json")
+                input[2] = '1000 10000'
+                input[3] = 1
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            def names = process.out.reads.flatten().collect { f -> file(f.toString()).name }.sort()
+            assert names == ['stub-a@1000.fastq.gz', 'stub-a@10000.fastq.gz',
+                             'stub-b@1000.fastq.gz', 'stub-b@10000.fastq.gz']
+        }
+    }
+}

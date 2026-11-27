@@ -1,0 +1,37 @@
+nextflow_process {
+
+    name "ALLELE_TABLE"
+    script "workflows/modules/pipeline/allele_table.nf"
+    process "ALLELE_TABLE"
+
+    // Not stubbed: it is shell over small tables. The fixtures are two samples staged out
+    // of order, and the tables come back with one header and rows sorted by sample, locus
+    // and allele length.
+    test("merges the samples' alleles and statistics") {
+        when {
+            process {
+                """
+                input[0] = files("${projectDir}/tests/workflow/fixtures/alleles/*.alleles.tsv")
+                input[1] = files("${projectDir}/tests/workflow/fixtures/alleles/*.allele-stats.tsv")
+                input[2] = 'alleles.tsv'
+                input[3] = 'allele-stats.tsv'
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert path(process.out.alleles[0]).text.readLines() == [
+                'sample\tlocus_id\tallele_bp\treads',
+                'S1\tL000001\t24\t2',
+                'S1\tL000001\t27\t5',
+                'S2\tL000001\t24\t3',
+                'S2\tL000002\t18\t1',
+            ]
+            def stats = path(process.out.stats[0]).text.readLines()
+            assert stats.size() == 3
+            assert stats[0].startsWith('sample\treads_in\t')
+            assert stats[1].startsWith('S1\t') && stats[2].startsWith('S2\t')
+        }
+    }
+}

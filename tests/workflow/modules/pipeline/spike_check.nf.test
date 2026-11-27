@@ -1,0 +1,28 @@
+nextflow_process {
+
+    name "SPIKE_CHECK"
+    script "workflows/modules/pipeline/spike_check.nf"
+    process "SPIKE_CHECK"
+
+    // Stubbed: the scoring is tests/python/cli/test_spike.py's business. This checks that
+    // the panel and both spike tables are staged and the check comes back named.
+    test("emits the spike check") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.tsv")
+                input[1] = file("${projectDir}/tests/workflow/fixtures/alleles/S1.alleles.tsv")
+                input[2] = file("${projectDir}/tests/workflow/fixtures/alleles/S1.allele-stats.tsv")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.check[0].endsWith('spike-check.tsv')
+            assert path(process.out.check[0]).text.startsWith('genome\treads\tloci_expected')
+        }
+    }
+}
