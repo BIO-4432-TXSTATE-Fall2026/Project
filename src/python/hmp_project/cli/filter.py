@@ -55,7 +55,7 @@ RESUMES = 6
 #: perf file in the shared ``/tmp`` is the one that collides: containers each number their
 #: processes from 1, so concurrent tasks on a node share ``hsperfdata/<pid>`` and the
 #: warning lands in the reads. No perf file, and whatever else it warns about on stderr.
-JAVA_OPTIONS = "-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr"
+JAVA_OPTIONS = "-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr -XX:+ExitOnOutOfMemoryError"
 
 #: ``SRS011140.1.fastq``, ``SRS011140.singleton.fastq``, possibly under a directory.
 MEMBER = re.compile(r"\.(1|2|singleton)\.f(?:ast)?q$")

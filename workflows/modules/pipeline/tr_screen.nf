@@ -35,9 +35,11 @@ process TR_SCREEN {
     path "${spec.simpleName}.screen.tsv", emit: screen
 
     script:
-    // shred runs beside bbduk in the pipe: 2 GB for it, half the task's memory for bbduk's
-    // heap, and the rest left for the JVMs' own overhead.
-    def heap = "${Math.max(1024, task.memory.toMega().intdiv(2))}m"
+    // shred holds a whole chromosome at a time (CHM13's are up to 250 Mb), so it gets a
+    // quarter of the task's memory; bbduk's k-mer table gets three eighths; the rest is left
+    // for the JVMs' own overhead and the pipe buffers.
+    def heap = "${(task.memory.toMega() * 3).intdiv(8)}m"
+    def shred_heap = "${task.memory.toMega().intdiv(4)}m"
     """
     # The container's home is read-only, and slacken specs cache their assembly index
     # under \$XDG_CACHE_HOME. Keep that cache in the task directory.
@@ -45,7 +47,8 @@ process TR_SCREEN {
 
     # The JVM logs its warnings to stdout, which here is the read stream; see
     # hmp_project/cli/filter.py.
-    export JAVA_TOOL_OPTIONS="-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr"
+    # An out-of-memory JVM must exit, not leave its other threads idling on an empty pipe.
+    export JAVA_TOOL_OPTIONS="-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr -XX:+ExitOnOutOfMemoryError"
 
     ${params.cli} sync ${spec} --data-dir .
     ${params.cli} genomes ${spec} --data-dir . --name-from auto --out genomes.tsv
@@ -53,7 +56,7 @@ process TR_SCREEN {
     # rename=t writes each matched reference into the fragment's header, which is all
     # `screen` reads. int=f because the fragments are single-ended.
     while IFS=\$'\\t' read -r name genome ; do
-        shred.sh -Xmx2g in="\$genome" out=stdout.fa length=${fragment} overlap=${overlap}
+        shred.sh -Xmx${shred_heap} in="\$genome" out=stdout.fa length=${fragment} overlap=${overlap}
     done < genomes.tsv \\
         | bbduk.sh -Xmx${heap} in=stdin.fa out=null outm=stdout.fa ref=${reference} \\
             k=${k} hdist=${hdist} threads=${task.cpus} int=f rename=t \\

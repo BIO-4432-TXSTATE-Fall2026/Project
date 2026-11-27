@@ -32,7 +32,7 @@ process SIMULATE_READS {
     def heap = "${Math.max(1024, task.memory.toMega().intdiv(2))}m"
     """
     export XDG_CACHE_HOME="\$PWD/.cache"
-    export JAVA_TOOL_OPTIONS="-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr"
+    export JAVA_TOOL_OPTIONS="-XX:-UsePerfData -Xlog:disable -Xlog:all=warning:stderr -XX:+ExitOnOutOfMemoryError"
 
     ${params.cli} sync ${spec} --data-dir .
     # The genome's name is the one the panel's `genome` column uses, so the check can join.
