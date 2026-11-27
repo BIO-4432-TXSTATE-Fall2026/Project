@@ -4,29 +4,36 @@ nextflow_process {
     script "workflows/modules/pipeline/tr_loci.nf"
     process "TR_LOCI"
 
-    // Stubbed: the real script syncs genomes from S3. This checks the wiring -- that the
-    // catalog and the genome manifests are staged and the reference comes back named.
-    // What goes into the reference is tests/python/cli/test_loci.py's business.
-    test("emits a named reference") {
+    // Stubbed: the real script syncs genomes from S3. This checks the wiring -- that every
+    // spec's catalog, spec and lock are staged, kit being a spec nobody has locked here,
+    // and that the table, reference and statistics come back named. What goes into them
+    // is tests/python/cli/test_loci.py's business.
+    test("emits the loci table, reference and statistics") {
         options "-stub"
 
         when {
             process {
                 """
-                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv")
-                input[1] = file("${projectDir}/manifests/reference/hmp-mock.json")
-                input[2] = file("${projectDir}/manifests/reference/hmp-mock.lock.json")
-                input[3] = 'dir'
-                input[4] = 50
-                input[5] = 'tr-loci.fa'
+                input[0] = files("${projectDir}/tests/workflow/fixtures/filter/tr-catalog.*.tsv")
+                input[1] = [
+                    file("${projectDir}/manifests/reference/hmp-mock.json"),
+                    file("${projectDir}/manifests/reference/kit.json")]
+                input[2] = [file("${projectDir}/manifests/reference/hmp-mock.lock.json")]
+                input[3] = 50
+                input[4] = 20
+                input[5] = 60
                 """
             }
         }
 
         then {
             assert process.success
+            assert process.out.table[0].endsWith('tr-loci.tsv')
+            assert path(process.out.table[0]).text.startsWith('locus_id\tspec\tgenome\tcontig')
             assert process.out.fasta[0].endsWith('tr-loci.fa')
             assert path(process.out.fasta[0]).text.startsWith('>')
+            assert process.out.stats[0].endsWith('tr-loci-stats.tsv')
+            assert path(process.out.stats[0]).text.startsWith('metric\tspec\tvalue')
         }
     }
 }

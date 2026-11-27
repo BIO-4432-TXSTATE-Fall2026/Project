@@ -26,16 +26,18 @@ process TR_CATALOG {
     stageInMode 'copy'
 
     input:
-    path spec
-    path lock              // staged, never named: sync finds it beside the spec; [] if never synced
+    // One task per spec. The output names ride with the spec, so a run over several
+    // specs publishes one table and BED each rather than over each other.
+    tuple path(spec),
+          path(lock),      // staged, never named: sync finds it beside the spec; [] if never synced
+          val(catalog_table),
+          val(catalog_bed)
     val profile
     val min_identity
     val min_seed_units
     val min_seed_length
     val max_extension
-    val genome_from        // 'dir' for HMP layouts, 'file' for one genome per file
-    val catalog_table
-    val catalog_bed
+    val genome_from        // 'dir' for HMP layouts, 'file' for one genome per file, 'auto' by spec
 
     output:
     path catalog_table, emit: catalog

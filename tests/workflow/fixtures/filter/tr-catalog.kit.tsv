@@ -1,0 +1,2 @@
+genome	contig	start	end	motif	purity	motif_length	rep_length	rep_units
+stub	contig_1	100	126	CGG	0.846	3	26	8

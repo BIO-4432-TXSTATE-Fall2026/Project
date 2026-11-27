@@ -1,0 +1,2 @@
+locus_id	spec	genome	contig	start	end	motif	motif_length	rep_length	purity	n_calls	motifs	left_anchor	right_anchor
+L000001	stub	stub	contig_1	100	126	CGG	3	26	0.846	1	CGG	ACGTACGTACGTACGTACGT	TGCATGCATGCATGCATGCA

@@ -34,10 +34,11 @@ nextflow_pipeline {
         }
     }
 
-    // The whole stage, stubbed and with its defaults, as a clean clone runs it: the stage
-    // builds its own catalog, the reference feeds the filter, every plaque sample in the
-    // lock becomes one task, and the summary collects them all. The stage publishes into
-    // results/, which resolves inside the test's own directory.
+    // The whole stage, stubbed and with its defaults, as a clean clone runs it: one
+    // catalog per panel spec, merged into loci, screened twice, and written as the panel;
+    // the panel feeds the filter, every plaque sample in the lock becomes one task, and
+    // the summary collects them all. The stage publishes into results/, which resolves
+    // inside the test's own directory.
     test("runs the pipeline stage end to end") {
         options "-stub"
 
@@ -49,29 +50,67 @@ nextflow_pipeline {
 
         then {
             assert workflow.success
-            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_CATALOG') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_CATALOG') } == 2
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_LOCI') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:SCREEN_HUMAN') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:SCREEN_MOCK') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_PANEL') } == 1
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 7
-            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_LOCI') } == 1
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:FILTER_SUMMARY') } == 1
         }
     }
 
-    // A named catalog is used as given: no TR_CATALOG task, straight to the reference.
-    test("builds the reference from a named catalog") {
+    // The catalog part stops at the panel: no read is streamed.
+    test("builds the panel without streaming reads") {
         options "-stub"
 
         when {
             params {
                 stage = 'pipeline'
-                pipeline = 'loci'
-                loci_catalog = "${projectDir}/tests/workflow/fixtures/filter/tr-catalog.tsv"
+                pipeline = 'catalog'
             }
         }
 
         then {
             assert workflow.success
-            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_CATALOG') } == 0
-            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_LOCI') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_PANEL') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:') } == 0
+        }
+    }
+
+    // One spec is a catalog of one: TR_LOCI then receives a single path, not a list.
+    test("builds the panel from one spec") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'catalog'
+                panel_specs = 'reference/hmp-mock'
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_CATALOG') } == 1
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_LOCI') } == 1
+        }
+    }
+
+    // The filter part gates against the published panel and does not rebuild it, so with
+    // none published it stops rather than streaming against nothing.
+    test("stops when the filter has no published panel") {
+        options "-stub"
+
+        when {
+            params {
+                stage = 'pipeline'
+                pipeline = 'filter'
+            }
+        }
+
+        then {
+            assert workflow.failed
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 0
         }
     }

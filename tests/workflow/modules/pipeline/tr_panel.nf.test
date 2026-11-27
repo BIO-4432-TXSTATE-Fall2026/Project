@@ -1,0 +1,31 @@
+nextflow_process {
+
+    name "TR_PANEL"
+    script "workflows/modules/pipeline/tr_panel.nf"
+    process "TR_PANEL"
+
+    // Stubbed: this checks the wiring -- that the loci and both screens are staged and the
+    // table and reference come back named. What the join excludes is
+    // tests/python/cli/test_panel.py's business.
+    test("emits the panel table and reference") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.tsv")
+                input[1] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.fa")
+                input[2] = file("${projectDir}/tests/workflow/fixtures/filter/chm13.screen.tsv")
+                input[3] = file("${projectDir}/tests/workflow/fixtures/filter/hmp-mock.screen.tsv")
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.table[0].endsWith('tr-panel.tsv')
+            assert process.out.fasta[0].endsWith('tr-panel.fa')
+            assert path(process.out.fasta[0]).text.startsWith('>')
+        }
+    }
+}

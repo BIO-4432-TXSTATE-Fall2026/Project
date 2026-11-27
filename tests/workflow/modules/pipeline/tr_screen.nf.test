@@ -1,0 +1,34 @@
+nextflow_process {
+
+    name "TR_SCREEN"
+    script "workflows/modules/pipeline/tr_screen.nf"
+    process "TR_SCREEN"
+
+    // Stubbed: the real script syncs a genome from S3 and runs shred and bbduk over it.
+    // This checks the wiring -- that the reference, spec and lock are staged and the
+    // screen comes back named for the spec, so two aliases never write the same file.
+    // The parser is tests/python/cli/test_screen.py's business.
+    test("emits a screen named for its spec") {
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = file("${projectDir}/tests/workflow/fixtures/filter/tr-loci.fa")
+                input[1] = file("${projectDir}/manifests/reference/chm13.json")
+                input[2] = file("${projectDir}/manifests/reference/chm13.lock.json")
+                input[3] = 100
+                input[4] = 50
+                input[5] = 25
+                input[6] = 1
+                """
+            }
+        }
+
+        then {
+            assert process.success
+            assert process.out.screen[0].endsWith('chm13.screen.tsv')
+            assert path(process.out.screen[0]).text.startsWith('locus_id\tfragments')
+        }
+    }
+}
