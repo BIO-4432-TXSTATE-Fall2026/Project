@@ -101,3 +101,8 @@ def test_genbank_without_sequence_is_refused(tmp_path):
     src.write_text("LOCUS       X  0 bp\nORIGIN\n//\n")
     with pytest.raises(ValueError, match="record X has no sequence"):
         genbank_to_fasta(src, tmp_path / "a.fa")
+
+
+def test_auto_names_an_hmp_spec_by_directory(synced):
+    listing = synced({"reference_genomes/111/111.AAAA01000001.nuc.fsa": b">c1\nACGT\n"})
+    assert list(listing(name_from="auto")) == ["111"]

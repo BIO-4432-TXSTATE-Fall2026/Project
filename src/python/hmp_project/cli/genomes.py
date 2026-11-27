@@ -6,8 +6,10 @@ genome the same way.
 
 For each genome the command:
 
-- **Names it** after its directory (``--name-from dir``, the HMP and slacken layout) or
-  its file name (``--name-from file``).
+- **Names it** after its directory (``--name-from dir``, the HMP layout) or its file name
+  (``--name-from file``, one genome per file, which is how slacken and CHM13 arrive).
+  ``--name-from auto`` picks by the spec's dataset: ``dir`` for ``hmp``, ``file`` for the
+  rest, so a run over several specs names each as its layout wants.
 - **Makes it readable by inTRuder**, which opens plain or gzip FASTA only. bzip2 files
   are decompressed and GenBank files are converted to FASTA, both in place.
 - **Checks it is one file.** A genome with two sequence files, such as an HMP draft
@@ -30,7 +32,7 @@ from hmp_project.providers import Provider
 
 FASTA_SUFFIXES = (".fsa", ".fna", ".fa", ".fasta")
 GENBANK_SUFFIXES = (".gbk", ".gb", ".gbff")
-NAME_FROM = ("dir", "file")
+NAME_FROM = ("dir", "file", "auto")
 
 
 def add_parser(commands: argparse._SubParsersAction) -> None:
@@ -43,7 +45,7 @@ def add_parser(commands: argparse._SubParsersAction) -> None:
         "--name-from",
         choices=NAME_FROM,
         default="dir",
-        help="name a genome by its directory (HMP, slacken) or by its file name",
+        help="name a genome by its directory (HMP), by its file name, or by the spec's layout",
     )
     parser.add_argument("--out", type=Path, default=Path("genomes.tsv"))
     parser.set_defaults(handler=run)
@@ -96,6 +98,8 @@ def list_genomes(
     """
     if name_from not in NAME_FROM:
         raise ValueError(f"name_from must be one of {NAME_FROM}, got {name_from!r}")
+    if name_from == "auto":
+        name_from = "dir" if spec.dataset == "hmp" else "file"
     lock = read_lock(spec.lock_path)
     if lock is None:
         raise ValueError(f"{spec.lock_path} not found; sync the spec first")
