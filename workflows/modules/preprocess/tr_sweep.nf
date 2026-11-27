@@ -52,6 +52,10 @@ process TR_SWEEP {
 
     script:
     """
+    # The container's home is read-only, and slacken specs cache their assembly index
+    # under \$XDG_CACHE_HOME. Keep that cache in the task directory.
+    export XDG_CACHE_HOME="\$PWD/.cache"
+
     # The genomes land in ./${spec.simpleName}/ and never leave the task directory.
     ${params.cli} sync ${spec} --data-dir .
 
@@ -116,7 +120,7 @@ AWK
     done
 
     # The sequence was only ever the input to the finder.
-    rm -rf ./${spec.simpleName} genomes.tsv point.tsv summarise.awk
+    rm -rf ./${spec.simpleName} genomes.tsv point.tsv summarise.awk .cache
     """
 
     stub:
