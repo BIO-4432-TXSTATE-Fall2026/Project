@@ -18,10 +18,25 @@ from hmp_project.cli import (
     new,
     panel,
     screen,
+    spike_check,
+    spike_mix,
     sync,
 )
 
-SUBCOMMANDS = (new, sync, convert, extract, genomes, loci, screen, panel, filter, alleles)
+SUBCOMMANDS = (
+    new,
+    sync,
+    convert,
+    extract,
+    genomes,
+    loci,
+    screen,
+    panel,
+    filter,
+    alleles,
+    spike_check,
+    spike_mix,
+)
 
 
 def main(argv: list[str] | None = None) -> int:

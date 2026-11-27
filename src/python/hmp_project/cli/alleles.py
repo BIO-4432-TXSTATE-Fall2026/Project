@@ -263,3 +263,12 @@ def write_stats(path: Path, sample: str, stats: dict[str, int]) -> None:
         writer = csv.writer(f, delimiter="\t", lineterminator="\n")
         writer.writerow(STATS_COLUMNS)
         writer.writerow([sample, *(stats[column] for column in STATS_COLUMNS[1:])])
+
+
+def read_table(path: Path) -> dict[str, Counter[tuple[str, int]]]:
+    """A concatenated ``alleles.tsv`` as fragments per ``(locus_id, allele_bp)``, by sample."""
+    samples: dict[str, Counter[tuple[str, int]]] = defaultdict(Counter)
+    with path.open(newline="") as f:
+        for row in csv.DictReader(f, delimiter="\t"):
+            samples[row["sample"]][(row["locus_id"], int(row["allele_bp"]))] += int(row["reads"])
+    return samples
