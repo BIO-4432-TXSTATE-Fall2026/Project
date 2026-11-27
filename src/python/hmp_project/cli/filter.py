@@ -14,6 +14,13 @@ available to a cross-sample entropy measurement.
 Members arrive in whatever order the tarball was written -- it varies between samples --
 so they are routed by name, never by position. Every mate feeds one gate single-ended:
 the read names already carry ``/1`` and ``/2``, so the survivors re-pair by name later.
+
+The gate runs with ``rename=t``, so a kept read's header carries the panel loci it
+matched: ``@name<TAB>L000007|genome|contig:l-r=16<TAB>L000009|...=6``, one
+``reference=k-mer hits`` field per locus. ``alleles`` reads its candidate loci from there.
+
+``--fastq`` feeds a local FASTQ through the same gate and writer instead of a remote
+sample, for reads that are not on S3, such as the spike-in simulations.
 """
 
 from __future__ import annotations
@@ -88,9 +95,18 @@ def add_parser(commands: argparse._SubParsersAction) -> None:
     parser = commands.add_parser(
         "filter", help="stream one sample's reads through a k-mer gate, keeping the hits"
     )
-    parser.add_argument("spec", type=Path, metavar="SPEC", help="the spec whose lock lists KEY")
-    parser.add_argument("--key", required=True, help="the sample's object key, from the lock")
-    parser.add_argument("--sample", help="output name; default: the key's file name, unsuffixed")
+    parser.add_argument(
+        "spec", type=Path, nargs="?", metavar="SPEC", help="the spec whose lock lists KEY"
+    )
+    parser.add_argument("--key", help="the sample's object key, from the lock")
+    parser.add_argument(
+        "--fastq",
+        type=Path,
+        help="gate this local FASTQ (plain or .gz) instead of streaming KEY from the remote",
+    )
+    parser.add_argument(
+        "--sample", help="output name; default: the key's or FASTQ's file name, unsuffixed"
+    )
     parser.add_argument("--ref", type=Path, help="the gate's reference FASTA, from `loci`")
     parser.add_argument(
         "--gate",
@@ -120,6 +136,11 @@ def add_parser(commands: argparse._SubParsersAction) -> None:
 def run(args: argparse.Namespace) -> None:
     if args.gate == "bbduk" and args.ref is None:
         raise SystemExit("--gate bbduk needs --ref")
+    if args.fastq is not None:
+        run_fastq(args)
+        return
+    if args.spec is None or args.key is None:
+        raise SystemExit("filter needs SPEC and --key, or --fastq")
     spec = Spec.load(args.spec)
     try:
         obj = locked_object(spec, args.key)
@@ -144,9 +165,24 @@ def run(args: argparse.Namespace) -> None:
         )
     except RuntimeError as error:
         raise SystemExit(f"{sample}: {error}") from None
-    write_counts(counts, sample, spec, args.key, result)
+    write_counts(counts, sample, spec.name, args.key, result)
+    print(summary_line(sample, result, reads))
+
+
+def run_fastq(args: argparse.Namespace) -> None:
+    sample = args.sample or fastq_name(args.fastq)
+    reads = args.out_dir / f"{sample}.loci.fastq.gz"
+    try:
+        result = filter_fastq(args.fastq, reads, gate=gate_command(args), max_reads=args.max_reads)
+    except (RuntimeError, OSError) as error:
+        raise SystemExit(f"{sample}: {error}") from None
+    write_counts(args.out_dir / f"{sample}.counts.tsv", sample, "-", str(args.fastq), result)
+    print(summary_line(sample, result, reads))
+
+
+def summary_line(sample: str, result: FilterResult, reads: Path) -> str:
     capped = f"; capped at {result.written}" if result.written < result.passed else ""
-    print(
+    return (
         f"{sample}: {result.passed} of {result.seen} reads passed "
         f"({result.bytes_read / 1e9:.2f} GB read in {result.elapsed:.0f} s){capped} -> {reads}"
     )
@@ -155,6 +191,15 @@ def run(args: argparse.Namespace) -> None:
 def sample_name(key: str) -> str:
     """``.../subgingival_plaque/SRS013950.tar.bz2`` is ``SRS013950``."""
     return key.rsplit("/", 1)[-1].split(".", 1)[0]
+
+
+def fastq_name(path: Path) -> str:
+    """``dir/GCF_000009045.2@1000.fastq.gz`` is ``GCF_000009045.2@1000``: only the
+    compression and FASTQ suffixes go, since a genome's name may hold dots."""
+    name = path.name.removesuffix(".gz")
+    for suffix in (".fastq", ".fq"):
+        name = name.removesuffix(suffix)
+    return name
 
 
 def locked_object(spec: Spec, key: str) -> RemoteObject:
@@ -192,6 +237,9 @@ def gate_command(args: argparse.Namespace) -> list[str]:
         f"hdist={args.hdist}",
         f"threads={args.threads}",
         "int=f",
+        # Each kept read's header then lists the panel loci it matched, which `alleles`
+        # reads. The match is credited to the first locus loaded that owns the k-mer.
+        "rename=t",
     ]
 
 
@@ -242,19 +290,10 @@ def filter_sample(
         finally:
             _close(unpack.stdin)
 
-    def drain() -> None:
-        try:
-            with gzip.open(partial, "wb", compresslevel=6) as writer:
-                result.passed, result.written = _write_records(screen.stdout, writer, max_reads)
-        except BaseException as error:
-            errors.append(f"writing {out.name}: {error!r}")
-            # Keep reading so the gate and everything behind it runs to the end instead of
-            # blocking on a full pipe, and the failure is reported rather than a hang.
-            while screen.stdout.read(CHUNK):
-                pass
-
     feeder = threading.Thread(target=feed, daemon=True)
-    drainer = threading.Thread(target=drain, daemon=True)
+    drainer = threading.Thread(
+        target=_drain, args=(screen, partial, out.name, result, errors, max_reads), daemon=True
+    )
     feeder.start()
     drainer.start()
     try:
@@ -283,6 +322,85 @@ def filter_sample(
     partial.replace(out)
     result.elapsed = time.monotonic() - started
     return result
+
+
+def _drain(
+    screen: subprocess.Popen,
+    partial: Path,
+    name: str,
+    result: FilterResult,
+    errors: list[str],
+    max_reads: int | None,
+) -> None:
+    """Drain the gate's output into gzipped FASTQ at ``partial``, recording the counts in
+    ``result`` and any failure in ``errors``."""
+    try:
+        with gzip.open(partial, "wb", compresslevel=6) as writer:
+            result.passed, result.written = _write_records(screen.stdout, writer, max_reads)
+    except BaseException as error:
+        errors.append(f"writing {name}: {error!r}")
+        # Keep reading so the gate and everything behind it runs to the end instead of
+        # blocking on a full pipe, and the failure is reported rather than a hang.
+        while screen.stdout.read(CHUNK):
+            pass
+
+
+def filter_fastq(
+    source: Path, out: Path, *, gate: list[str], max_reads: int | None = None
+) -> FilterResult:
+    """Pass a local FASTQ, plain or gzipped, through ``gate`` into gzipped FASTQ at ``out``.
+    The gate and the writer are ``filter_sample``'s; only the source differs, so the
+    result counts the same way, with each read tallied to its mate by its name.
+    """
+    result = FilterResult()
+    started = time.monotonic()
+    out.parent.mkdir(parents=True, exist_ok=True)
+    partial = out.with_name(f".{out.name}.part")
+    errors: list[str] = []
+    screen = subprocess.Popen(
+        gate,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        env={**os.environ, "JAVA_TOOL_OPTIONS": JAVA_OPTIONS},
+    )
+    drainer = threading.Thread(
+        target=_drain, args=(screen, partial, out.name, result, errors, max_reads), daemon=True
+    )
+    drainer.start()
+    opener = gzip.open if source.suffix == ".gz" else open
+    try:
+        with opener(source, "rb") as f:
+            lines, line = 0, b"\n"
+            for line in f:
+                if lines % 4 == 0:
+                    result.reads[_mate(line)] += 1
+                lines += 1
+                result.bytes_decompressed += len(line)
+                screen.stdin.write(line)
+            if lines % 4 or not line.endswith(b"\n"):
+                errors.append(f"{source} is not whole FASTQ records ({lines} lines)")
+        result.bytes_read = source.stat().st_size
+    except BrokenPipeError:
+        pass  # the gate died; its exit status below says why
+    except (OSError, EOFError) as error:
+        errors.append(f"reading {source}: {error!r}")
+    finally:
+        _close(screen.stdin)
+        drainer.join()
+        if (status := screen.wait()) != 0:
+            errors.append(f"{gate[0]} exited with status {status}")
+    if errors:
+        partial.unlink(missing_ok=True)
+        raise RuntimeError("; ".join(errors))
+    partial.replace(out)
+    result.elapsed = time.monotonic() - started
+    return result
+
+
+def _mate(header: bytes) -> str:
+    """Which mate a FASTQ header names: ``/1``, ``/2``, or a singleton."""
+    name = header.split(None, 1)[0].decode(errors="replace") if header.strip() else ""
+    return name[-1] if name.endswith(("/1", "/2")) else "singleton"
 
 
 def _resumable(
@@ -365,7 +483,12 @@ def _write_records(stream: IO[bytes], writer: IO[bytes], max_reads: int | None) 
         if len(record) < 4:
             continue
         name, bases, plus, quals = record
-        if not name.startswith(b"@") or not plus.startswith(b"+") or len(bases) != len(quals):
+        if (
+            not name.startswith(b"@")
+            or not plus.startswith(b"+")
+            or len(bases) != len(quals)
+            or not _matches_parse(name)
+        ):
             raise RuntimeError(
                 f"gate output is not FASTQ at record {passed + 1}: "
                 + " | ".join(repr(part[:80]) for part in record)
@@ -383,12 +506,19 @@ def _write_records(stream: IO[bytes], writer: IO[bytes], max_reads: int | None) 
     return passed, written
 
 
+def _matches_parse(name: bytes) -> bool:
+    """Whether every tab-separated field after the read name is ``reference=count``, the
+    form ``rename=t`` appends. A header without a tab has none to check."""
+    _, *matches = name.rstrip(b"\r\n").split(b"\t")
+    return all(m.rpartition(b"=")[0] and m.rpartition(b"=")[2].isdigit() for m in matches)
+
+
 def _close(pipe: IO[bytes]) -> None:
     with contextlib.suppress(BrokenPipeError):
         pipe.close()
 
 
-def write_counts(path: Path, sample: str, spec: Spec, key: str, result: FilterResult) -> None:
+def write_counts(path: Path, sample: str, spec: str, key: str, result: FilterResult) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="") as f:
         writer = csv.writer(f, delimiter="\t", lineterminator="\n")
@@ -396,7 +526,7 @@ def write_counts(path: Path, sample: str, spec: Spec, key: str, result: FilterRe
         writer.writerow(
             [
                 sample,
-                spec.name,
+                spec,
                 key,
                 *(result.reads[mate] for mate in MATES),
                 result.seen,

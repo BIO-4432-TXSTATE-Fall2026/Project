@@ -224,3 +224,96 @@ def test_filter_keeps_the_jvm_off_the_gate_stdout(tmp_path):
         decompressor=["bzip2", "-dc"],
     )
     assert result.passed == 13
+
+
+RENAMED = b"@read1/1\tL000001|g|c:0-90=16\tL000002|g|c:0-90=4\nACGT\n+\nIIII\n"
+
+
+def test_write_records_accepts_the_matches_rename_appends_to_a_header():
+    sink = io.BytesIO()
+    assert filter_cli._write_records(io.BytesIO(RENAMED), sink, None) == (1, 1)
+    assert sink.getvalue() == RENAMED
+
+
+def test_write_records_rejects_a_header_field_that_is_not_a_match():
+    bad = b"@read1/1\tnot-a-match\nACGT\n+\nIIII\n"
+    with pytest.raises(RuntimeError, match="not FASTQ at record 1"):
+        filter_cli._write_records(io.BytesIO(bad), io.BytesIO(), None)
+
+
+def test_gate_command_renames_so_headers_list_the_matched_loci(tmp_path):
+    args = main_args("--ref=ref.fa")
+    command = filter_cli.gate_command(args)
+    assert "rename=t" in command
+    assert "int=f" in command
+
+
+def main_args(*extra: str):
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    sub = parser.add_subparsers()
+    filter_cli.add_parser(sub)
+    return parser.parse_args(["filter", *extra])
+
+
+def test_fastq_name_keeps_the_dots_in_a_genome_name():
+    assert filter_cli.fastq_name(filter_cli.Path("x/GCF_000009045.2@1000.fastq.gz")) == (
+        "GCF_000009045.2@1000"
+    )
+    assert filter_cli.fastq_name(filter_cli.Path("sample.fq")) == "sample"
+
+
+def read_gz(path) -> bytes:
+    with gzip.open(path, "rb") as f:
+        return f.read()
+
+
+def test_filter_fastq_runs_a_local_file_through_the_gate_and_the_writer(tmp_path):
+    reads = fastq("1", 4) + fastq("2", 4) + fastq("singleton", 2)
+    source = tmp_path / "reads.fastq.gz"
+    source.write_bytes(gzip.compress(reads))
+    out = tmp_path / "out" / "s.loci.fastq.gz"
+    result = filter_cli.filter_fastq(source, out, gate=["cat"])
+    assert result.reads == {"1": 4, "2": 4, "singleton": 2}
+    assert (result.seen, result.passed, result.written) == (10, 10, 10)
+    assert read_gz(out) == reads
+
+
+def test_filter_fastq_command_writes_the_sample_outputs(tmp_path):
+    source = tmp_path / "GCF_1.2@10.fastq"
+    source.write_bytes(fastq("1", 3))
+    main(
+        [
+            "filter",
+            f"--fastq={source}",
+            "--gate=none",
+            f"--out-dir={tmp_path / 'out'}",
+        ]
+    )
+    assert read_gz(tmp_path / "out" / "GCF_1.2@10.loci.fastq.gz") == fastq("1", 3)
+    counts = read_counts(tmp_path / "out" / "GCF_1.2@10.counts.tsv")
+    assert counts["sample"] == "GCF_1.2@10"
+    assert (counts["reads_1"], counts["reads_seen"], counts["reads_passed"]) == ("3", "3", "3")
+
+
+def test_filter_fastq_keeps_the_matches_the_gate_adds(tmp_path):
+    source = tmp_path / "r.fastq"
+    source.write_bytes(fastq("1", 2))
+    gate = ["sh", "-c", "sed 's/^@read0\\/1$/@read0\\/1\\tL000001|g|c:0-9=5/'"]
+    out = tmp_path / "r.loci.fastq.gz"
+    filter_cli.filter_fastq(source, out, gate=gate)
+    assert read_gz(out).startswith(b"@read0/1\tL000001|g|c:0-9=5\n")
+
+
+def test_filter_fastq_rejects_a_truncated_file(tmp_path):
+    source = tmp_path / "r.fastq"
+    source.write_bytes(fastq("1", 2)[:-5])
+    with pytest.raises(RuntimeError, match="not whole FASTQ records"):
+        filter_cli.filter_fastq(source, tmp_path / "o.loci.fastq.gz", gate=["cat"])
+    assert not (tmp_path / "o.loci.fastq.gz").exists()
+
+
+def test_filter_without_a_source_asks_for_one():
+    with pytest.raises(SystemExit, match="SPEC and --key, or --fastq"):
+        main(["filter", "--gate=none"])
