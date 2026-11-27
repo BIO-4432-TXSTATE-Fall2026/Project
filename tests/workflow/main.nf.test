@@ -67,15 +67,15 @@ nextflow_pipeline {
         }
     }
 
-    // Parts named together run as one: the filter's reads feed the caller directly, and
-    // neither the catalog nor the spike-ins run.
-    test("runs the filter and the alleles parts from a comma list") {
+    // Parts named together run as one: the panel feeds the filter and the filter's reads
+    // feed the caller directly, and the spike-ins do not run.
+    test("runs the catalog, filter and alleles parts from a comma list") {
         options "-stub"
 
         when {
             params {
                 stage = 'pipeline'
-                pipeline = 'filter,alleles'
+                pipeline = 'catalog,filter,alleles'
             }
         }
 
@@ -83,7 +83,7 @@ nextflow_pipeline {
             assert workflow.success
             assert workflow.trace.succeeded().count { it.name.startsWith('FILTER:TR_FILTER') } == 7
             assert workflow.trace.succeeded().count { it.name.startsWith('ALLELES:TR_ALLELES') } == 7
-            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:') } == 0
+            assert workflow.trace.succeeded().count { it.name.startsWith('CATALOG:TR_PANEL') } == 1
             assert workflow.trace.succeeded().count { it.name.startsWith('SPIKE:') } == 0
         }
     }
