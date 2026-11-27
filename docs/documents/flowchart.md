@@ -22,10 +22,10 @@ flowchart TD
 
     subgraph CATALOG["2. Reference cataloging"]
         FIND["TR finder over reference contigs<br/>(inTRuder fork)"]
-        MERGE["Merge calls into loci<br/>canonical motif + overlap"]
+        MERGE["Merge calls into loci<br/>canonical motif + anchors"]
         CAT["TR locus catalog"]
-        SELFCHK{{"Ground-truth check:<br/>do catalog loci recover<br/>in the mock strains?"}}
-        HUMSCR{{"Human screen:<br/>motif also present<br/>in CHM13?"}}
+        SELFCHK{{"Mock screen:<br/>annotate loci that recover<br/>in the mock strains"}}
+        HUMSCR{{"Human screen:<br/>does the locus sequence<br/>match CHM13?"}}
     end
 
     subgraph MEASURE["3. Allele calling"]
@@ -60,8 +60,8 @@ flowchart TD
     CAT --> SELFCHK
     CHM13 --> HUMSCR
     CAT --> HUMSCR
-    SELFCHK -->|"loci that recover"| GATE
-    HUMSCR -->|"loci unique to microbes"| GATE
+    SELFCHK -->|"annotated with mock recovery"| GATE
+    HUMSCR -->|"loci with no human match"| GATE
 
     HMP --> STREAM
     SALT --> STREAM
@@ -96,11 +96,11 @@ flowchart TD
     class REFG,MOCK,CHM13,FIND,MERGE,CAT,SELFCHK,HUMSCR,GATE reference
 ```
 
-A rendered copy of the same diagram is in `docs/flowchart.png`, for viewers that do
-not draw Mermaid. Rebuild it after editing the block above:
+A rendered copy of the same diagram is in `docs/documents/flowchart.png`, for viewers that
+do not draw Mermaid. Rebuild it after editing the block above:
 
 ```sh
-docs/render-flowchart.sh docs/flowchart.md docs/flowchart.png 2
+docs/documents/render-flowchart.sh docs/documents/flowchart.md docs/documents/flowchart.png 2
 ```
 
 The script drives the local Chrome in headless mode: it renders the Mermaid block with
@@ -116,10 +116,12 @@ engine, so the page and the PNG route their edges differently.
   diversity). Tan is the contaminant side (Salter's kits, the clonal spike-ins, the known
   false positives). Purple is reference material — the genomes that say *where* to look,
   and the screens that decide which loci are trustworthy.
-- **The two hexagons in lane 2 are checks, not steps.** Everything downstream is
-  conditional on them: a locus that does not recover in genomes of known strains is a
-  finder artifact, and a motif that also occurs in human cannot separate contamination
-  from host — that is the same confusion one level down.
+- **The two hexagons in lane 2 are screens, not steps.** Everything downstream is
+  conditional on them. The human screen excludes: a locus whose sequence also occurs in
+  human cannot separate contamination from host — that is the same confusion one level
+  down. The mock screen only annotates, with whether the locus recovers in genomes of known
+  strains: most target genera and every kit genus are not in the mock community, so
+  filtering on it would drop most of the panel.
 - **Lane 3 never lands the data.** The HMP samples are ~6.5 TB decompressed, so each is
   read, unpacked and filtered in a single pass on the cluster, and only locus-hitting
   reads are kept.
@@ -128,8 +130,7 @@ engine, so the page and the PNG route their edges differently.
 
 ## State of play
 
-Lanes 1–3 are partly built: data acquisition and the streaming read filter exist, the TR
-finder runs over reference genomes, and the mock-community catalog has been built once.
-The locus merge, the human screen, allele calling, the stutter model, entropy, both
-hypothesis tests and the classifier do not exist yet — `--stage pipeline` stops after the
-read filter. `docs/todo.md` tracks each box.
+Lanes 1–3 are partly built: data acquisition, the TR finder, the locus merge, both screens
+and the streaming read filter exist (`--stage pipeline`, `--pipeline catalog` then
+`filter`). Anchoring reads to loci, allele calling, the stutter model, entropy, both
+hypothesis tests and the classifier do not exist yet. `docs/todo.md` tracks each box.

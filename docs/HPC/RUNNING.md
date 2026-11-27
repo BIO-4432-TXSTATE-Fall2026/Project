@@ -94,24 +94,26 @@ What the stage builds is in `docs/workflows/preprocess/`.
 
 ## The read filter
 
-`--stage pipeline` builds the TR catalog and the filter's reference from the mock
-community, then streams each HMP sample from S3 through the filter, one array task per
-sample. What it runs and why is in `docs/workflows/pipeline/`.
+`--stage pipeline` has two parts. `--pipeline catalog` builds the panel of TR loci: one
+catalog per spec in `--panel_specs`, merged into loci, screened against CHM13 and the mock
+community. `--pipeline filter` then streams each HMP sample from S3 through a gate built
+from the panel, one array task per sample. The default, `all`, runs both. What they run and
+why is in `docs/workflows/pipeline/`.
 
-**Before the first run, refresh the images.** The run needs the `filter` image and a
-`catalog` image new enough to have the `loci` subcommand. Run the Containers workflow in
-GitHub Actions on the pushed commit, then delete any `catalog` image Apptainer already
-converted: images are pulled by the `latest` tag, and a cached copy is reused rather than
-pulled again.
+**Before the first run, refresh the images.** The run needs `catalog` and `filter` images
+new enough to have the `loci`, `screen` and `panel` subcommands. Run the Containers workflow
+in GitHub Actions on the pushed commit, then delete any `catalog` and `filter` image
+Apptainer already converted: images are pulled by the `latest` tag, and a cached copy is
+reused rather than pulled again.
 
 ```sh
-rm -f "${NXF_APPTAINER_CACHEDIR:-work/singularity}"/*project-catalog-latest*
+rm -f "${NXF_APPTAINER_CACHEDIR:-work/singularity}"/*project-{catalog,filter}-latest*
 ```
 
 Then, from the clone:
 
 ```sh
-# 1. the plaque pilot, everything: catalog, reference, 7 samples, summary
+# 1. the plaque pilot, everything: catalogs, panel, 7 samples, summary
 sbatch -p shared -c 1 --mem=4G -t 1-00:00:00 -J nf-filter -o nf-filter-%j.log \
   --wrap "pixi run pipeline --stage pipeline -profile slurm,apptainer \
           --slurm_queue shared -ansi-log false -resume"
@@ -121,7 +123,8 @@ column -t results/filter/filter-summary.tsv
 ```
 
 Then the rest, a site or two at a time, by what the pass fraction projects for disk. The
-catalog and reference are cached, so `-resume` goes straight to the new samples:
+panel is cached, so `-resume` goes straight to the new samples; `--pipeline filter` alone
+does the same from the `results/catalog/tr-panel.fa` an earlier run published:
 
 ```sh
 sbatch -p shared -c 1 --mem=4G -t 2-00:00:00 -J nf-filter -o nf-filter-%j.log \

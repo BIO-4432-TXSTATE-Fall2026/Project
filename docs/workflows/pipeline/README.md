@@ -1,9 +1,10 @@
 # The pipeline stage
 
-`--stage pipeline` is the analysis. Its first part streams the HMP1 shotgun reads from S3
-through a k-mer gate built from the TR catalog and keeps only the reads that touch a
-locus, plus per-sample read counts. Allele calling, the stutter model and everything after
-read that output; none of them exists yet (`docs/todo.md` §3).
+`--stage pipeline` is the analysis. Its first part, `catalog`, builds the panel of tandem
+repeat loci the gate looks for. Its second, `filter`, streams the HMP1 shotgun reads from
+S3 through a k-mer gate built from that panel and keeps only the reads that touch a locus,
+plus per-sample read counts. Allele calling, the stutter model and everything after read
+that output; none of them exists yet (`docs/todo.md` §3).
 
 ```sh
 pixi run pipeline --stage pipeline -profile slurm,apptainer --slurm_queue shared
@@ -41,12 +42,21 @@ Two properties of the tarballs shape the pipe:
 
 ## Modules
 
-| Process          | Image     | Does                                              | Publishes                          |
-| ---------------- | --------- | ------------------------------------------------- | ---------------------------------- |
-| `TR_CATALOG`     | `catalog` | The TR catalog, unless `--loci_catalog` names one | `results/filter/tr-catalog.tsv`    |
-| `TR_LOCI`        | `catalog` | Catalog loci ± `--filter_flank` bp → gate FASTA  | `results/filter/tr-loci.fa`        |
-| `TR_FILTER`      | `filter`  | One sample: stream, gate, write                   | `results/filter/{reads,counts}/`   |
-| `FILTER_SUMMARY` | `filter`  | Every sample's counts in one table                | `results/filter/filter-summary.tsv` |
+| Process          | Image     | Does                                                         | Publishes                                   |
+| ---------------- | --------- | ------------------------------------------------------------ | ------------------------------------------- |
+| `TR_CATALOG`     | `catalog` | One task per `--panel_specs` spec: its TR catalog and BED   | `results/catalog/tr-catalog.<spec>.{tsv,bed}` |
+| `TR_LOCI`        | `catalog` | Merge the catalogs into loci; anchors; padded FASTA          | `results/catalog/{tr-loci.tsv,tr-loci.fa,tr-loci-stats.tsv}` |
+| `TR_SCREEN`      | `filter`  | Screen the loci against a genome spec (run as two aliases)   | `results/catalog/<spec>.screen.tsv`         |
+| `TR_PANEL`       | `filter`  | Drop human-screened loci, annotate with the mock screen      | `results/catalog/{tr-panel.tsv,tr-panel.fa}` |
+| `TR_FILTER`      | `filter`  | One sample: stream, gate, write                              | `results/filter/{reads,counts}/`            |
+| `FILTER_SUMMARY` | `filter`  | Every sample's counts in one table                           | `results/filter/filter-summary.tsv`         |
+
+```
+catalog : TR_CATALOG (one task per panel spec) ─┐
+          TR_LOCI (merge + anchors + FASTA) ◄───┘
+          TR_SCREEN ×2 (chm13 = exclude, hmp-mock = annotate) → TR_PANEL
+filter  : TR_FILTER (one task per HMP sample, gate = tr-panel.fa) → FILTER_SUMMARY
+```
 
 The filter itself is three processes, which is as far as it divides. The one boundary that
 must not exist is between decompressing and gating, because a process emitting
@@ -54,25 +64,80 @@ decompressed FASTQ parks ~25 GB per sample in `work/`.
 
 ### `TR_CATALOG`
 
-The preprocessing stage's process (`docs/workflows/preprocess/`), run here with the same
-`catalog_*` parameters. The catalog is not committed, because its parameters are still
-being swept, so a clean clone has none. The stage builds it itself rather than depending on
-an earlier run. `--loci_catalog <tsv>` skips this and uses a catalog that already exists.
-The catalog is published beside the reference, so the reads can always be traced to the
-loci they were gated against.
+The preprocessing stage's process (`docs/workflows/preprocess/`), run here once per spec
+in `--panel_specs` with the same `catalog_*` parameters. Each task carries its own output
+names, `tr-catalog.<spec>.tsv` and `.bed`, so the specs do not publish over each other.
+Genomes are named by `--name-from auto`: a spec of the `hmp` dataset by directory (the
+organism is in the directory and the file name is an accession), any other by file (one
+genome per file, as slacken and CHM13 arrive).
 
 ### `TR_LOCI`
 
-Syncs the genomes of `--catalog_spec`, writes each locus of the catalog with
-`--filter_flank` bases either side, and deletes the genomes. The same sync, reduce, delete
-shape as `TR_CATALOG`, and the same genome naming, so each catalog row finds its FASTA.
-Genomes are read through inTRuder's `read_fasta`, the reader the catalog was built with, so
-the contig names agree by construction.
+Syncs the genomes of every panel spec, lists them with `genomes`, runs `loci` over all the
+catalogs at once, and deletes the genomes. The same sync, reduce, delete shape as
+`TR_CATALOG`, and the same genome naming, so each catalog row finds its FASTA. Genomes are
+read through inTRuder's `read_fasta`, the reader the catalogs were built with, so the
+contig names agree by construction.
 
-It is its own process, rather than a third output of `TR_CATALOG`, because the flank width
-belongs to the filter: the reference will be rebuilt more often than the catalog, and that
-should not rerun the finder. Records that come out byte-identical are written once. That
-keeps the k-mer table small; it is not the §2 locus merge.
+It is its own process because the merge needs every spec's calls together, and because
+`--filter_flank`, `--loci_anchor` and `--loci_max_rep_length` belong to the gate: it is
+rebuilt more often than the catalogs, and that should not rerun the finder. What `loci`
+does to turn calls into loci:
+
+- **Within a genome**, calls on one contig whose gap is smaller than `--loci_anchor` become
+  one locus spanning their union, so each anchor is free of called repeat. The locus
+  records `n_calls` and the canonical motifs of its calls; its motif is the canonical motif
+  of its longest call.
+- **Anchors** are the `--loci_anchor` bases immediately either side of the locus. A locus
+  whose anchor runs off its contig is dropped.
+- **Across genomes**, loci with the same canonical motif and anchor pair are one group and
+  share a `locus_id` (`L000001`, numbered in sorted key order, so a rerun gives the same
+  ids). The canonical motif folds rotation and reverse complement. The anchor pair is
+  oriented to the lexicographically smaller of `(left, right)` and
+  `(rc(right), rc(left))`, so a locus on the other strand lands in the same group.
+- **Too long to span:** a group whose longest member is longer than
+  `--loci_max_rep_length` is dropped. A 100 bp read minus two 20 bp anchors spans about 60
+  bp (see "A limit worth knowing").
+- Records that come out byte-identical within a group are written once, which keeps the
+  gate's k-mer table small.
+
+`tr-loci.tsv` has one row per member (`locus_id, spec, genome, contig, start, end, motif,
+motif_length, rep_length, purity, n_calls, motifs, left_anchor, right_anchor`), so a group
+has exactly one anchor pair. `tr-loci.fa` pads each member by `--filter_flank` bases, with
+headers `>{locus_id}|{genome}|{contig}:{left}-{right}`. `tr-loci-stats.tsv` counts calls,
+merged regions, edge drops, too-long groups, groups and members, in total and per spec.
+
+### `TR_SCREEN`
+
+Cuts one spec's genomes into `--screen_fragment` bp fragments overlapping by
+`--screen_overlap` (`shred.sh`) and runs them through the same BBDuk match that gates the
+reads, at `--filter_k` and `--filter_hdist`. So a locus a fragment hits is a locus a read
+of that genome would pass the gate through. `bbduk.sh rename=t` appends each matched
+reference, with its k-mer hit count, to the fragment's header, tab separated:
+
+```
+>chrT desc_100-199<TAB>L000001|g1|c1:0-144=26
+>c_0-99<TAB>L000007|a|c:0-1=16<TAB>L000009|b|c:0-1=6
+```
+
+`screen` reads those headers from the pipe and writes `locus_id` and `fragments`, counting
+each locus once per fragment. One bbduk run takes every genome's fragments, so its k-mer
+table is built once, and the fragments themselves are never stored. bbduk credits a k-mer
+that several references share to the first one loaded, so a fragment is only credited to
+the loci that own the k-mers it hit.
+
+It runs twice, by alias, over `--screen_human_spec` (CHM13) and `--screen_mock_spec` (the
+mock community), under the `screen` label (4 CPUs, 8 GB, 12 h).
+
+### `TR_PANEL`
+
+Joins `tr-loci.tsv` with both screens. A group a human fragment hits is excluded: a read
+that matches it cannot be told from host. The mock screen **annotates only**. Most target
+genera and every kit genus are not in the mock community, so filtering on it would drop
+most of the panel; a locus with no mock hit is the usual case, not a failed one.
+`tr-panel.tsv` is the `tr-loci.tsv` columns of the kept loci plus `human_fragments` and
+`mock_fragments`, and `tr-panel.fa` is their records from `tr-loci.fa`: the gate's
+reference.
 
 ### `TR_FILTER`
 
@@ -114,32 +179,36 @@ sample are the depth covariate §4 needs; the pass fraction decides the disk bud
 
 `--pipeline` picks the part, like `--preprocess`:
 
-| `--pipeline` | Runs                                                                 |
-| ------------ | -------------------------------------------------------------------- |
-| `all`        | Everything, the catalog feeding the reference feeding the filter     |
-| `loci`       | The catalog and `TR_LOCI` only                                       |
-| `filter`     | `TR_FILTER` and the summary, against the published `tr-loci.fa`      |
-| `summary`    | `FILTER_SUMMARY` over the published counts                          |
+| `--pipeline` | Runs                                                                         |
+| ------------ | ---------------------------------------------------------------------------- |
+| `all`        | `catalog`, then `filter` against the panel it built                          |
+| `catalog`    | The catalogs, `TR_LOCI`, both screens and `TR_PANEL`                         |
+| `filter`     | `TR_FILTER` and the summary, against the published `results/catalog/tr-panel.fa` |
 
 | Parameter              | Default              | Meaning                                         |
 | ---------------------- | -------------------- | ----------------------------------------------- |
-| `loci_catalog`         | null                 | An existing catalog; null builds one            |
-| `filter_flank`         | 50                   | Bases kept either side of each locus            |
+| `panel_specs`          | `reference/hmp-target,reference/kit` | Comma-separated specs under `manifests/`, one catalog each |
+| `loci_anchor`          | 20                   | Anchor length; calls closer than this merge     |
+| `loci_max_rep_length`  | 60                   | Groups with a longer member are dropped         |
+| `filter_flank`         | 50                   | Bases kept either side of each locus in the reference |
+| `screen_human_spec`    | `reference/chm13`    | The spec whose hits exclude a locus             |
+| `screen_mock_spec`     | `reference/hmp-mock` | The spec whose hits annotate a locus            |
+| `screen_fragment`, `screen_overlap` | 100, 50 | Fragment length and overlap                     |
 | `filter_body_sites`    | `subgingival-plaque` | Comma-separated lockfiles under `manifests/hmp/` |
 | `filter_sample_locks`  | null                 | A glob of lockfiles; overrides the body sites   |
-| `filter_k`, `filter_hdist` | 25, 1            | bbduk's k-mer length and Hamming distance       |
+| `filter_k`, `filter_hdist` | 25, 1            | bbduk's k-mer length and Hamming distance, for the gate and the screens |
 | `filter_threads`       | 2                    | bbduk's threads; the decompressor gets the rest |
 | `filter_decompressor`  | `lbzip2`             | `bzip2` is the single-core fallback             |
 | `filter_max_reads`     | null                 | Hits written per sample before writing stops    |
 
-The catalog is built from `--catalog_spec`, the mock community by default. That is enough
-to check the machinery. The target-genus and contaminant catalogs are §2 work and arrive
-through `--catalog_spec` with nothing here changing.
+The catalogs use the `catalog_*` finder settings, shared with `--stage preprocess`. The
+target-genus catalog, the kit catalog and the mock screen all arrive through `panel_specs`
+and the `screen_*_spec` parameters with nothing here changing.
 
 ## Disk
 
-Decompressed FASTQ never lands. The genomes `TR_LOCI` syncs are 470 MB at most, deleted
-within the task. What stays is the published reads, and their size is set by the one
+Decompressed FASTQ never lands. The genomes `TR_LOCI` and `TR_SCREEN` sync (CHM13 is 982
+MB) are deleted within their task. What stays is the published reads, and their size is set by the one
 unknown, the pass fraction: ~22 GB over all 274 samples at 1%, ~110 GB at 5%. Publishing by
 copy doubles that until `work/` is cleaned.
 
@@ -165,3 +234,4 @@ pixi run test-workflow              # the modules stubbed, and the whole stage s
 ```
 
 `loci`'s tests skip in the default environment, which has neither inTRuder nor pyfastx.
+`screen` and `panel` need neither.

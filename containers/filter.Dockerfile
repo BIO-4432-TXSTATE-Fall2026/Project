@@ -5,8 +5,9 @@
 #   pixi run build-container filter
 #
 # One Dockerfile per stage, named for it, and one pixi environment per stage to match --
-# the same rule preprocess.Dockerfile follows. TR_LOCI, which builds the gate's reference,
-# runs in the catalog image instead, since it reads genomes through inTRuder.
+# the same rule preprocess.Dockerfile follows. TR_LOCI, which merges the catalogs into the
+# loci the gate looks for, runs in the catalog image instead, since it reads genomes
+# through inTRuder.
 #
 # The `filter` environment is why this image needs no dependency list of its own:
 # pixi.lock pins lbzip2 and bbmap, and bbmap brings the JDK bbduk runs on.
